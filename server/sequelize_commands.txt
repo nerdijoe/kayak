@@ -1,0 +1,9 @@
+sequelize model:generate --name User --attributes firstName:string,lastName:string,email:string,password:string,address:string,city:string,state:string,zipcode:string,phone:string,profileImage:string,creditCardNum:string,creditCardFullName:string
+
+
+// adding new column
+sequelize migration:generate --name add_creditCardExpiredDate_column_to_user
+
+
+sequelize model:generate --name Admin --attributes firstName:string,lastName:string,email:string,password:string,address:string,city:string,state:string,zipcode:string,phone:string,profileImage:string
+
