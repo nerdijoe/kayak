@@ -3,9 +3,15 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+const passwordHash = require('password-hash');
 const cors = require('cors');
 const path = require('path');
+require('dotenv').config();
 
+const app = express();
+
+
+// Sequelize setup ####
 const Sequelize = require('sequelize');
 const env = process.env.NODE_ENV || "development";
 const config = require(path.join(__dirname, 'config', 'config.json'))[env];
@@ -28,11 +34,25 @@ sequelize
   .catch(err => {
     console.error('Unable to connect to the database:', err);
   });
+// sequelize setup end ####
+
+
+// mongoose setup ####
+const dbConfig = {
+  development: 'mongodb://127.0.0.1/kayak',
+  test: 'mongodb://127.0.0.1/kayak_test',
+};
+
+const appEnv = app.settings.env;
+mongoose.Promise = global.Promise;
+mongoose.connect(dbConfig[appEnv], { useMongoClient: true }, (err, res) => {
+  console.log(`Connected to DB: ${dbConfig[appEnv]}`);
+});
+// mongoose setup end ####
 
 
 const index = require('./routes/index');
 
-const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
