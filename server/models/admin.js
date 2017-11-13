@@ -10,7 +10,12 @@ module.exports = (sequelize, DataTypes) => {
     state: DataTypes.STRING,
     zipcode: DataTypes.STRING,
     phone: DataTypes.STRING,
-    profileImage: DataTypes.STRING
+    profileImage: DataTypes.STRING,
+    isDeleted: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    }
   }, {
     classMethods: {
       associate: function(models) {

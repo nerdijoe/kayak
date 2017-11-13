@@ -55,6 +55,7 @@ mongoose.connect(dbConfig[appEnv], { useMongoClient: true }, (err, res) => {
 const index = require('./routes/index');
 const auth = require('./routes/auth');
 const authAdmin = require('./routes/authAdmin');
+const users = require('./routes/users');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -64,6 +65,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/auth', auth);
 app.use('/authadmin', authAdmin);
+app.use('/users', users);
 
 app.use(passport.initialize());
 
@@ -98,7 +100,7 @@ passport.use('admin', new LocalStrategy({ usernameField: 'email', passwordField:
     },
   }).then((user) => {
     if (!user) {
-      done('User does not exist');
+      done('Admin does not exist');
     } else if (passwordHash.verify(password, user.password)) {
       done(null, user);
     } else {

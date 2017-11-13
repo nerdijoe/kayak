@@ -12,7 +12,12 @@ module.exports = (sequelize, DataTypes) => {
     phone: DataTypes.STRING,
     profileImage: DataTypes.STRING,
     creditCardNum: DataTypes.STRING,
-    creditCardFullName: DataTypes.STRING
+    creditCardFullName: DataTypes.STRING,
+    isDeleted: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    }
   }, {
     classMethods: {
       associate: function(models) {
