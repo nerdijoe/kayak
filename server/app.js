@@ -56,6 +56,7 @@ const index = require('./routes/index');
 const auth = require('./routes/auth');
 const authAdmin = require('./routes/authAdmin');
 const users = require('./routes/users');
+const admins = require('./routes/admins');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -66,6 +67,7 @@ app.use('/', index);
 app.use('/auth', auth);
 app.use('/authadmin', authAdmin);
 app.use('/users', users);
+app.use('/admins', admins);
 
 app.use(passport.initialize());
 

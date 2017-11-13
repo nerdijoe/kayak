@@ -1,9 +1,9 @@
 const db = require('../models');
 
 exports.getAll = (req, res) => {
-  db.User.findAll()
+  db.Admin.findAll()
     .then((users) => {
-      console.log('getAll users =', users);
+      console.log('getAll Admins =', users);
       res.json(users);
     }).catch((err) => {
       console.log(err);
@@ -12,7 +12,7 @@ exports.getAll = (req, res) => {
 
 exports.getOne = (req, res) => {
   const id = req.params.id;
-  db.User.findOne({
+  db.Admin.findOne({
     where: {
       id,
     },
@@ -29,12 +29,12 @@ exports.getOne = (req, res) => {
 
 exports.edit = (req, res) => {
   const id = req.params.id;
-  db.User.update(req.body, {
+  db.Admin.update(req.body, {
     where: {
       id,
     },
   }).then((status) => {
-    console.log('after edit user, status=', status);
+    console.log('after edit admin, status=', status);
 
     if (status[0] > 0) {
       res.json(true);
@@ -46,14 +46,14 @@ exports.edit = (req, res) => {
 
 exports.delete = (req, res) => {
   const id = req.params.id;
-  db.User.update({
+  db.Admin.update({
     isDeleted: true,
   }, {
     where: {
       id,
     },
   }).then((status) => {
-    console.log('after delete user, status=', status);
+    console.log('after delete admin, status=', status);
 
     if (status[0] > 0) {
       res.json(true);
