@@ -52,7 +52,7 @@ mongoose.connect(dbConfig[appEnv], { useMongoClient: true }, (err, res) => {
 
 
 const index = require('./routes/index');
-
+const auth = require('./routes/auth');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -60,6 +60,8 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
+app.use('/auth', auth);
+app.use(passport.initialize());
 
 const port = process.env.PORT || '3000';
 
