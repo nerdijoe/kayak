@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const Sequelize = require('sequelize');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
@@ -8,11 +9,11 @@ const cors = require('cors');
 const path = require('path');
 require('dotenv').config();
 
+const db = require('./models');
+
 const app = express();
 
-
 // Sequelize setup ####
-const Sequelize = require('sequelize');
 const env = process.env.NODE_ENV || "development";
 const config = require(path.join(__dirname, 'config', 'config.json'))[env];
 
@@ -31,7 +32,7 @@ sequelize
   .then(() => {
     console.log('Sequelize MySQL Connection has been established successfully.');
   })
-  .catch(err => {
+  .catch((err) => {
     console.error('Unable to connect to the database:', err);
   });
 // sequelize setup end ####
@@ -52,7 +53,7 @@ mongoose.connect(dbConfig[appEnv], { useMongoClient: true }, (err, res) => {
 
 
 const index = require('./routes/index');
-
+const auth = require('./routes/auth');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -60,7 +61,29 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
+app.use('/auth', auth);
+app.use(passport.initialize());
 
+passport.use(new LocalStrategy({ usernameField: 'email', passwordField: 'password' }, (username, password, done) => {
+  console.log(`passport----> ${username}, ${password}`);
+
+  db.User.findOne({
+    where: {
+      email: username,
+    },
+  }).then((user) => {
+    if (!user) {
+      done('User does not exist');
+    } else if (passwordHash.verify(password, user.password)) {
+      done(null, user);
+    } else {
+      done('Email and password do not match');
+    }
+  }).catch((err) => {
+    console.log(err);
+    done('Error');
+  });
+}));
 const port = process.env.PORT || '3000';
 
 app.listen(port, () => {
