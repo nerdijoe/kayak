@@ -54,6 +54,7 @@ mongoose.connect(dbConfig[appEnv], { useMongoClient: true }, (err, res) => {
 
 const index = require('./routes/index');
 const auth = require('./routes/auth');
+const authAdmin = require('./routes/authAdmin');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -62,9 +63,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/auth', auth);
+app.use('/authadmin', authAdmin);
+
 app.use(passport.initialize());
 
-passport.use(new LocalStrategy({ usernameField: 'email', passwordField: 'password' }, (username, password, done) => {
+passport.use('user', new LocalStrategy({ usernameField: 'email', passwordField: 'password' }, (username, password, done) => {
   console.log(`passport----> ${username}, ${password}`);
 
   db.User.findOne({
@@ -84,6 +87,29 @@ passport.use(new LocalStrategy({ usernameField: 'email', passwordField: 'passwor
     done('Error');
   });
 }));
+
+// for Admin
+passport.use('admin', new LocalStrategy({ usernameField: 'email', passwordField: 'password' }, (username, password, done) => {
+  console.log(`passport----> ${username}, ${password}`);
+
+  db.Admin.findOne({
+    where: {
+      email: username,
+    },
+  }).then((user) => {
+    if (!user) {
+      done('User does not exist');
+    } else if (passwordHash.verify(password, user.password)) {
+      done(null, user);
+    } else {
+      done('Email and password do not match');
+    }
+  }).catch((err) => {
+    console.log(err);
+    done('Error');
+  });
+}));
+
 const port = process.env.PORT || '3000';
 
 app.listen(port, () => {
