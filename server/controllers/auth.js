@@ -26,3 +26,42 @@ exports.signup = (req, res) => {
     } // eof else
   });
 };
+
+exports.signin = (req, res, next) => {
+  const user = req.user;
+  console.log('auth_sequelize signin', user);
+
+  const email = user.email;
+
+  // create jsonwebtoken
+  const token = jwt.sign({
+    id: user.id,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    email: user.email,
+    address: user.address,
+    city: user.city,
+    state: user.state,
+    zipcode: user.zipcode,
+    phone: user.phone,
+    profileImage: user.profileImage,
+    creditCardNum: user.creditCardNum,
+    creditCardFullName: user.creditCardFullName,
+  }, process.env.JWT_KEY);
+
+  res.send({
+    token,
+    id: user.id,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    email: user.email,
+    address: user.address,
+    city: user.city,
+    state: user.state,
+    zipcode: user.zipcode,
+    phone: user.phone,
+    profileImage: user.profileImage,
+    creditCardNum: user.creditCardNum,
+    creditCardFullName: user.creditCardFullName,
+  });
+};
