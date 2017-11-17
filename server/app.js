@@ -58,6 +58,9 @@ const authAdmin = require('./routes/authAdmin');
 const users = require('./routes/users');
 const admins = require('./routes/admins');
 
+const cars = require('./routes/cars');
+const carDealers = require('./routes/carDealers');
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
@@ -68,6 +71,9 @@ app.use('/auth', auth);
 app.use('/authadmin', authAdmin);
 app.use('/users', users);
 app.use('/admins', admins);
+
+app.use('/cars', cars);
+app.use('/cardealers', carDealers);
 
 app.use(passport.initialize());
 

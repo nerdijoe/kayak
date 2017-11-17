@@ -6,7 +6,7 @@ const carSchema = new Schema({
   type: { type: String, required: true },
   make: { type: String, required: true },
   model: { type: String, required: true },
-  dealer: { type: Schema.Types.ObjectId, ref: 'Dealer' },
+  dealer: { type: Schema.Types.ObjectId, ref: 'CarDealer' },
   description: { type: String, required: true },
   price: { type: Number, required: true },
   doorNumber: { type: Number, required: true },
