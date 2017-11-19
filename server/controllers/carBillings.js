@@ -94,19 +94,79 @@ exports.getOne = (req, res) => {
 };
 
 exports.aggregate = (req, res) => {
+  const type = req.params.type;
 
-  // count how many dealers
-  // CarBilling
-  //   .aggregate([
-  //     {
-  //       $group: {
-  //         _id: '$dealer',
-  //         count: { $sum: 1 },
-  //       },
-  //     }], (err, result) => {
-  //       if (err) res.json(err);
-  //       res.json(result);
-  //     });
+  switch (type) {
+    case 'count': {
+      // count how many dealers
+      CarBilling
+        .aggregate([
+          {
+            $group: {
+              _id: '$dealer',
+              count: { $sum: 1 },
+            },
+          }], (err, result) => {
+          CarDealer.populate(result, { path: '_id' }, (err, populatedTransactions) => {
+            // Your populated translactions are inside populatedTransactions
+            if (err) res.json(err);
+            res.json(populatedTransactions);
+          });
+
+        });
+      break;
+    }
+    case 'total': {
+      // sum of total amount per dealer
+      CarBilling
+        .aggregate([
+          {
+            $group: {
+              _id: '$dealer',
+              total: { $sum: '$totalAmount' },
+            },
+          },
+        ], (err, result) => {
+          CarDealer.populate(result, { path: '_id' }, (err, populatedTransactions) => {
+            // Your populated translactions are inside populatedTransactions
+            if (err) res.json(err);
+            res.json(populatedTransactions);
+          });
+        });
+      break;
+    }
+    case 'monthly': {
+      const monthStartDate = moment('01/01/2017', 'MM/DD/YYYY'); //'2017-01-01';
+      
+      const monthEndDate = moment('12/31/2017', 'MM/DD/YYYY'); //'2017-12-30';
+
+      console.log('monthStartDate = ', monthStartDate);
+      console.log('monthEndDate = ', monthEndDate);
+      
+      CarBilling.aggregate()
+        .project({
+          'month': {
+            '$cond': { if: {
+              '$and': [
+                { $gte: [ 'createdAt', monthStartDate ] },
+                { $lte: [ 'createdAt', monthEndDate ] },
+              ]}, then: 'totalAmount', else: 0
+            } 
+          },
+        })
+        // .group({
+        //    _id: '_id',
+        //    month: { $sum: '$month' },
+        // })
+        .exec(function(err, result) {
+          if (err) res.json(err);
+          res.json(result);
+        })
+      break;
+    }
+    default:
+      res.json('invalid type');
+  }
 
   // sum of total amount per dealer
   // CarBilling
@@ -122,24 +182,7 @@ exports.aggregate = (req, res) => {
   //     res.json(result);
   //   });
 
-  // sum of total amount per dealer
-  CarBilling
-    .aggregate([
-      {
-        $group: {
-          _id: '$dealer',
-          total: { $sum: '$totalAmount' },
-        },
-      },
-    ], (err, result) => {
 
-      CarDealer.populate(result, {path: '_id'}, (err, populatedTransactions) => {
-        // Your populated translactions are inside populatedTransactions
-
-        if (err) res.json(err);
-        res.json(populatedTransactions);
-      });
-    });
 
 
   // CarBilling

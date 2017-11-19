@@ -8,7 +8,7 @@ const carBillingController = require('../controllers/carBillings');
 router.get('/all', carBillingController.getAll);
 router.get('/user', helper.auth, carBillingController.getUserBillings);
 
-router.get('/aggregate', carBillingController.aggregate);
+router.get('/aggregate/:type', carBillingController.aggregate);
 
 router.get('/:billingId', carBillingController.getOne);
 router.post('/:carId', helper.auth, carBillingController.book);
