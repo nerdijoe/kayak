@@ -15,9 +15,9 @@ const hotelSchema = new Schema({
   zipcode: { type: String, required: true },
   reviews: [HotelReview],
   rooms: [HotelRoom],
-  imageUrl: { type: String, required: true },
-  updatedAt: { type: Date, required: false, default: Date.now },
-  createdAt: { type: Date, required: false, default: Date.now },
+  imageUrl: { type: String, required: true }
+}, {
+  timestamps: true,
 });
 
 const Hotel = mongoose.model('Hotel', hotelSchema);
