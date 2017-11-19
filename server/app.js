@@ -77,6 +77,9 @@ app.use('/cars', cars);
 app.use('/cardealers', carDealers);
 app.use('/carbillings', carBillings);
 
+const hotels = require('./routes/hotels');
+app.use('/hotels', hotels);
+
 app.use(passport.initialize());
 
 passport.use('user', new LocalStrategy({ usernameField: 'email', passwordField: 'password' }, (username, password, done) => {
