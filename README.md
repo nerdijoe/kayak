@@ -15,12 +15,21 @@ $ npm start
 
 ```
 
-### Client React.js
+### Kayak Client React.js
 ```
-$ cd client
+$ cd kayak-client
 $ npm install
 $ npm start
 ```
+
+### Admin Client React.js
+**Use admin-client-v2, this admin client is running on localhost:3009**
+```
+$ cd admin-client-v2
+$ npm install
+$ npm start
+```
+
 
 
 ```
