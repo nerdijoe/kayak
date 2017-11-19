@@ -1,0 +1,334 @@
+body{
+    background-image: url("../image/phoenix-hotels-bg.jpg");
+}
+
+header#main-header {
+    border-bottom: 2px solid #e4eddb;
+    border-bottom-color: rgba(255,255,255,0.2);
+    max-width: 72em;
+    margin: 0 auto;
+    padding: 0 2em;
+}
+.logo {
+    background-image: url("../image/kayak-logo.png");
+    background-repeat: no-repeat;
+    width: 100px;
+    height: 34px;
+}
+.header-align {
+    text-align:right
+}
+ul.slimmenu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+ul.slimmenu li {
+    position: relative;
+    display: inline-block;
+}
+ul.slimmenu li a {
+    display: block;
+    padding: 12px 20px;
+    font-size: 15px;
+    font-family: 'Roboto', arial, helvetica, sans-serif;
+    color: #fff;
+    -moz-transition: background-color 0.17s ease-out;
+    -o-transition: background-color 0.17s ease-out;
+    /* transition: background-color 0.17s ease-out; */
+    text-decoration: none;
+}
+
+.search-tabs > .tabbable >.tab-content > .tab-pane {
+    padding: 15px;
+}
+.search-tabs > .tabbable > .nav-tabs > li > a {
+    text-transform: uppercase;
+}
+.search-tabs-abs {
+    position: absolute;
+    top: 0;
+    left: 14%;
+    width: 55%;
+}
+@media (max-width:992px) {
+    .search-tabs-abs {
+        position: relative;
+        width: 100%;
+        left: 0;
+    }
+}
+.search-tabs-abs-bottom {
+    position: absolute;
+    top: 320px;
+}
+@media (max-width:992px) {
+    .search-tabs-abs-bottom {
+        position: relative;
+        top: 0;
+        margin: 50px 0;
+    }
+}
+.search-tabs-bottom {
+    position: absolute;
+    left: 0;
+    bottom: 50px;
+    width: 100%;
+}
+@media (max-width:992px) {
+    .search-tabs-bottom {
+        position: relative;
+        bottom: auto;
+        top: 0;
+        margin-top: 50px;
+    }
+}
+.search-tabs-to-top {
+    position: relative;
+    z-index: 10;
+    margin-top: -120px;
+}
+.search-tabs-bg > h1 {
+    color: #fff;
+    margin-bottom: 25px;
+    margin-top: 70px;
+    text-align: center;
+}
+
+.search-tabs-bg > .tabbable >.tab-content > .tab-pane {
+    background: #e4e5ea;
+    padding: 25px;
+    -webkit-box-shadow: 0 2px 1px rgba(0,0,0,0.15);
+    box-shadow: 0 2px 1px rgba(0,0,0,0.15);
+}
+.search-tabs-bg > .tabbable >.tab-content > .tab-pane .form-control {
+    background: rgba(255,255,255,0.5);
+    border-radius: 0;
+}
+.search-tabs-bg > .tabbable > .nav-tabs {
+    border: none;
+}
+.search-tabs-bg > .tabbable > .nav-tabs > li {
+    margin-bottom: 0;
+    margin-right: 5px;
+}
+
+@media (max-width:992px) {
+    .search-tabs-bg > .tabbable > .nav-tabs > li > a > span {
+        display: none;
+    }
+}
+.search-tabs-bg > .tabbable > .nav-tabs > li > a:hover > .fa {
+    background: #ed8323;
+    -webkit-transition: 0.3s;
+    -moz-transition: 0.3s;
+    -o-transition: 0.3s;
+    -ms-transition: 0.3s;
+    transition: 0.3s;
+}
+
+/*.search-tabs-bg > .tabbable > .nav-tabs > li > a > .fa {*/
+/*display: inline-block;*/
+/*width: 0px;*/
+/*height: 11px;*/
+/*!* line-height: 30px; *!*/
+/*!* margin-right: 2px; *!*/
+/*background: rgba(0,0,0,0.3);*/
+/*-webkit-border-radius: 50%;*/
+/*text-align: center;*/
+/*}*/
+
+.search-tabs-bg > .tabbable > .nav-tabs > li > a > .fa {
+    display: inline-block;
+    width: 0px;
+    height: 11px;
+    /*line-height: 30px;*/
+    /*margin-right: 2px;*/
+    background: rgba(0,0,0,0.3);
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    text-align: center;
+}
+
+.search-tabs-bg > .tabbable > .nav-tabs > li.active > a {
+    background: #FFFFFF;
+    color: #ed8323;
+    /*padding-top: 15px;*/
+    /*margin-top: -5px;*/
+    min-width: 15rem;
+}
+
+.search-tabs-bg > .tabbable > .nav-tabs > li > a {
+    background: #fff;
+    border: none !important;
+    color: #000000;
+    min-width: 15rem;
+    cursor: pointer;
+}
+.search-tabs-bg > .tabbable > .nav-tabs > li > a:hover{
+    background: #fff;
+    border: none !important;
+    color: #ed8323;
+    min-width: 15rem;
+    cursor: pointer;
+}
+
+.search-tabs-bg > .tabbable > .nav-tabs > li.active > a:hover > .fa {
+    background: rgba(0,0,0,0.3);
+}
+.search-tabs-nobox > .tabbable > .tab-content > .tab-pane {
+    padding: 25px 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+.search-tabs-lift-top {
+    margin-top: -50px;
+}
+
+.tab-span {
+    font-family: "HelveticaNeue-Bold",Helvetica,Arial,sans-serif;
+    font-weight: 600;
+    letter-spacing: .03em;
+    line-height: inherit;
+    text-shadow: none;
+    margin-left: 10px;
+    font-size: 12px;
+    padding-left: 4px;
+}
+/* from kayak.com */
+/*.keel *, .keel *:before, .keel *:after {*/
+    /*box-sizing: border-box;*/
+/*}*/
+/*.keel ul, .keel ol {*/
+    /*list-style: none;*/
+    /*margin: 0;*/
+    /*padding: 0;*/
+/*}*/
+/*.keel .Common-Layout-Navigation.aboveForm .verticalsGrid {*/
+     /*flex-flow: row nowrap;*/
+    /*justify-content: center;*/
+     /*overflow: hidden;*/
+    /*margin: 0 -2px;*/
+    /*margin-left: 0;*/
+    /*margin-right: 0;*/
+/*}*/
+
+.tabbable {
+    margin-top: 40px;
+}
+.nav-tabs {
+    display: flex;
+    justify-content: center;
+}
+.nav > li > a {
+    /* position: relative; */
+    display:block;
+    padding:5px 23px; !important;
+}
+
+
+.nav-tabs > li > a {
+  /* margin-right: 2px; */ !important;
+ line-height: 1.42857143;
+/* border: 1px solid transparent; */ !important;
+ /* border-radius: 4px 4px 0 0; */
+}
+
+
+/* CSS for flight starts*/
+ul.slimmenu-flight {
+    list-style: none;
+    padding: 0;
+    width: 100%;
+    padding-bottom: 15px;
+}
+ul.slimmenu-flight li {
+    position: relative;
+    display: inline-block;
+}
+ul.slimmenu-flight li a {
+    display: block;
+    padding: 12px 20px;
+    color: #000000;
+    -moz-transition: background-color 0.17s ease-out;
+    -o-transition: background-color 0.17s ease-out;
+    text-transform: uppercase;
+    font-family: "HelveticaNeue-Bold",Helvetica,Arial,sans-serif;
+    font-size: 12px;
+    padding-left: 4px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+ul.slimmenu-flight > li.active > a {
+    color: #020202;
+    text-decoration: none;
+    border-bottom: 2px solid #ed8323;
+}
+
+.input-daterange .input-group-addon {
+    width: auto;
+    min-width: 16px;
+    padding: 4px 5px;
+    font-weight: normal;
+    line-height: 1.428571429;
+    text-align: center;
+    text-shadow: 0 1px 0 #fff;
+    vertical-align: middle;
+    background-color: #eee;
+    border: solid #ccc;
+    border-width: 1px 0;
+    margin-left: -5px;
+    margin-right: -5px;
+}
+
+.btn-search {
+    background: #ed8323;
+    border-radius: 0;
+    border: none;
+    color: #020202;
+    font-family: "HelveticaNeue",Helvetica,Arial,sans-serif;
+    font-size: 18px;
+
+}
+/* flights end */
+
+/* hotels */
+
+.hotels {
+    padding-top : 30px;
+}
+
+.searchButton {
+    /*padding: 0;*/
+    width: 100%;
+    display: block;
+    margin: 0 auto;
+    box-shadow: 0 5px 8px 0 rgba(0,0,0,0.04);
+    border-radius: 0;
+    color: #fff;
+}
+
+.button.size-l, button.size-l {
+    height: 52px;
+    font-size: 16px;
+}
+
+.Button-Gradient, button.Button-Gradient {
+    background-image: linear-gradient(135deg,#ff690f 0%,#ff4f3a 100%);
+}
+
+.hotel-search-button {
+    padding-top: 22px;
+    padding-right: 41px;
+    padding-bottom: 0px;
+}
+/* hotels end */
+
+/* cars */
+.cars {
+    padding-top : 30px;
+}
+/* hotels end */
+
