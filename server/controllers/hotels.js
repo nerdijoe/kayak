@@ -28,26 +28,24 @@ exports.create = (req, res) => {
   });
 };
 
-// exports.getAll = (req, res) => {
-//   Car
-//     .find({})
-//     .populate('dealer')
-//     .exec((err, results) => {
-//       console.log('getAll results=', results);
-//       if (err) res.json(err);
-//       res.json(results);
-//     });
-// };
-//
-// exports.getOne = (req, res) => {
-//   const id = mongoose.Types.ObjectId(req.params.id);
-//
-//   Car
-//     .findById(id)
-//     .populate('dealer')
-//     .exec((err, result) => {
-//       console.log('getOne result=', result);
-//       if (err) res.json(err);
-//       res.json(result);
-//     });
-// };
+exports.getAll = (req, res) => {
+  Hotel
+    .find({})
+    .exec((err, results) => {
+      console.log('getAll results=', results);
+      if (err) res.json(err);
+      res.json(results);
+    });
+};
+
+exports.getOne = (req, res) => {
+  const id = mongoose.Types.ObjectId(req.params.id);
+
+  Hotel
+    .findById(id)
+    .exec((err, result) => {
+      console.log('getOne result=', result);
+      if (err) res.json(err);
+      res.json(result);
+    });
+};
