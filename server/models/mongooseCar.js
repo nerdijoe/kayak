@@ -11,8 +11,8 @@ const carSchema = new Schema({
   price: { type: Number, required: true },
   doorNumber: { type: Number, required: true },
   capacity: { type: Number, required: true },
-  createdAt: { type: Date, required: false, default: Date.now },
-  updatedAt: { type: Date, required: false, default: Date.now },
+}, {
+  timestamps: true,
 });
 
 const Car = mongoose.model('Car', carSchema);

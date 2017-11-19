@@ -9,8 +9,8 @@ const carDealerSchema = new Schema({
   state: { type: String, required: true },
   country: { type: String, required: true },
   zipcode: { type: String, required: true },
-  createdAt: { type: Date, required: false, default: Date.now },
-  updatedAt: { type: Date, required: false, default: Date.now },
+}, {
+  timestamps: true,
 });
 
 const CarDealer = mongoose.model('CarDealer', carDealerSchema);
