@@ -1,9 +1,28 @@
 import React, {Component} from 'react';
 import { NavItem, Nav, NavDropdown, MenuItem } from 'react-bootstrap';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 
+import { adminSignOut } from '../../actions';
 
-class HeaderLinks extends Component{
-    render(){
+class HeaderLinks extends Component {
+  handleSignOut() {
+    // console.log('handleSignOut this.props.history', this.props.history);
+    // this.props.history.push('/signin');
+    console.log('handleSignOUt clicked..');
+    // console.log(this.props);
+    // this.props.adminSignOut();
+
+    localStorage.removeItem('admin_token');
+    localStorage.removeItem('admin_id');
+    localStorage.removeItem('admin_firstname');
+    localStorage.removeItem('admin_lastname');
+    localStorage.removeItem('admin_email');
+
+    // this.props.history.push('/signin');
+  }
+
+    render() {
         const notification = (
             <div>
                 <i className="fa fa-globe"></i>
@@ -42,11 +61,24 @@ class HeaderLinks extends Component{
                         <MenuItem divider />
                         <MenuItem eventKey={2.5}>Separated link</MenuItem>
                     </NavDropdown>
-                    <NavItem eventKey={3} href="#">Log out</NavItem>
+                    <NavItem eventKey={3} href="/" onClick={this.handleSignOut}>Log out</NavItem>
                 </Nav>
             </div>
         );
     }
 }
 
-export default HeaderLinks;
+const mapStateToProps = (state) => {
+  return {
+    is_authenticated: state.AdminReducer.is_authenticated,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    adminSignOut: () => { dispatch(adminSignOut()); },
+  };
+};
+
+const connectedHeaderLinks = withRouter(connect(mapStateToProps, mapDispatchToProps)(HeaderLinks));
+export default connectedHeaderLinks;

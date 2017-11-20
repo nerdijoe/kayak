@@ -68,6 +68,10 @@ class App extends Component {
       this.props.axiosFetchCarBillingCount();
       this.props.axiosFetchCarBillingTotal();
       
+      if(localStorage.getItem('admin_token') == null) {
+        this.props.history.push('/signin');
+      }
+
         this.setState({_notificationSystem: this.refs.notificationSystem});
         var _notificationSystem = this.refs.notificationSystem;
         var color = Math.floor((Math.random() * 4) + 1);

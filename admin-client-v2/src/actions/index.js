@@ -2,6 +2,42 @@ import axios from 'axios';
 
 import * as actionType from './constants';
 
+export const adminSignIn = (data) => {
+  return {
+    type: actionType.ADMIN_SIGNIN,
+    data,
+  };
+};
+
+export const adminSignOutReducer = () => {
+  return {
+    type: actionType.ADMIN_SIGNOUT,
+  };
+};
+
+export const adminSignOut = () => (dispatch) => {
+  console.log('adminSignOut');
+
+  // need to log before clearing out localStorage
+  // dispatch(axiosAddActivity(actionType.adminSignOut, 'User sign out'));
+  
+  localStorage.removeItem('admin_token');
+  localStorage.removeItem('admin_id');
+  localStorage.removeItem('admin_firstname');
+  localStorage.removeItem('admin_lastname');
+  localStorage.removeItem('admin_email');
+
+  // router.push('/');
+  dispatch(adminSignOutReducer());
+
+  console.log("here");
+
+  // return {
+  //   type: actionType.USER_SIGN_OUT,
+  // };
+};
+
+
 export const fetchCarBillingAll = (data) => {
   return {
     type: actionType.FETCH_CAR_BILLING_ALL,
@@ -21,6 +57,34 @@ export const fetchCarBillingTotal = (data) => {
     type: actionType.FETCH_CAR_BILLING_TOTAL,
     data,
   };
+};
+
+export const axiosSignIn = (data, router) => (dispatch) => {
+  axios.post('http://localhost:3000/authadmin/signin', {
+    email: data.email,
+    password: data.password,
+  }).then((res) => {
+    // if signin is successful, then save the token in the local storage
+    console.log('axiosSignIn done', res);
+    localStorage.setItem('admin_token', res.data.token);
+    localStorage.setItem('admin_id', res.data.id);
+    localStorage.setItem('admin_firstname', res.data.firstname);
+    localStorage.setItem('admin_lastname', res.data.lastname);
+    localStorage.setItem('admin_email', res.data.email);
+
+    router.push('/dashboardkayak');
+
+    dispatch(adminSignIn(data));
+
+    // dispatch(signInErrorClear());
+    // dispatch(signUpErrorClear());
+    // dispatch(signUpSuccessClear());
+    // dispatch(axiosAddActivity(actionType.USER_SIGN_IN, 'User sign in'));
+  }).catch((err) => {
+    console.log('Error when signin', err);
+    // display the error message
+    // dispatch(signInError({ message: 'Sign in failed. Please check your username and password.' }));
+  });
 };
 
 
