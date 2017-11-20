@@ -37,6 +37,12 @@ export const adminSignOut = () => (dispatch) => {
   // };
 };
 
+export const fetchCar = (data) => {
+  return {
+    type: actionType.FETCH_CAR,
+    data,
+  };
+};
 
 export const fetchCarBillingAll = (data) => {
   return {
@@ -85,6 +91,20 @@ export const axiosSignIn = (data, router) => (dispatch) => {
     // display the error message
     // dispatch(signInError({ message: 'Sign in failed. Please check your username and password.' }));
   });
+};
+
+export const axiosFetchCar = () => (dispatch) => {
+  //get admin token
+
+  axios.get('http://localhost:3000/cars')
+    .then((res) => {
+      console.log('--- after axiosFetchCar');
+      console.log(res.data);
+
+      dispatch(fetchCar(res.data));
+    }).catch((err) => {
+      console.log(err);
+    });
 };
 
 
