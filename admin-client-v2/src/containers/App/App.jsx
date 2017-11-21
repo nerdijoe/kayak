@@ -17,6 +17,7 @@ import appRoutes from 'routes/app.jsx';
 
 import {
   axiosFetchCar,
+  axiosFetchCarDealer,
   axiosFetchCarBillingAll,
   axiosFetchCarBillingCount,
   axiosFetchCarBillingTotal,
@@ -66,6 +67,7 @@ class App extends Component {
 
     componentDidMount(){
       this.props.axiosFetchCar();
+      this.props.axiosFetchCarDealer();
       this.props.axiosFetchCarBillingAll();
       this.props.axiosFetchCarBillingCount();
       this.props.axiosFetchCarBillingTotal();
@@ -154,6 +156,7 @@ class App extends Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     axiosFetchCar: () => { dispatch(axiosFetchCar()); },
+    axiosFetchCarDealer: () => { dispatch(axiosFetchCarDealer()); },
     axiosFetchCarBillingAll: () => { dispatch(axiosFetchCarBillingAll());},
     axiosFetchCarBillingCount: () => { dispatch(axiosFetchCarBillingCount());},
     axiosFetchCarBillingTotal: () => { dispatch(axiosFetchCarBillingTotal());},

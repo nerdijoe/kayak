@@ -37,9 +37,24 @@ export const adminSignOut = () => (dispatch) => {
   // };
 };
 
+export const addNewCar = (data) => {
+  return {
+    type: actionType.ADD_NEW_CAR,
+    data,
+  };
+};
+
+
 export const fetchCar = (data) => {
   return {
     type: actionType.FETCH_CAR,
+    data,
+  };
+};
+
+export const fetchCarDealer = (data) => {
+  return {
+    type: actionType.FETCH_CAR_DEALER,
     data,
   };
 };
@@ -93,6 +108,33 @@ export const axiosSignIn = (data, router) => (dispatch) => {
   });
 };
 
+export const axiosAddNewCar = data => (dispatch) => {
+  const admin_token = localStorage.getItem('admin_token');
+  console.log('axiosAddNewCar data=', data);
+  axios.post('http://localhost:3000/cars', {
+    type: data.type,
+    make: data.make,
+    model: data.model,
+    dealer: data.dealer,
+    description: data.description,
+    price: data.price,
+    doorNumber: data.doorNumber,
+    capacity: data.capacity,
+  }, {
+    headers: {
+      admin_token,
+    },
+  })
+    .then((res) => {
+      console.log('-------------------after axiosAddNewCar');
+      console.log(res);
+
+      dispatch(addNewCar(res.data));
+    }).catch((err) => {
+      console.log(err);
+    });
+};
+
 export const axiosFetchCar = () => (dispatch) => {
   //get admin token
 
@@ -102,6 +144,20 @@ export const axiosFetchCar = () => (dispatch) => {
       console.log(res.data);
 
       dispatch(fetchCar(res.data));
+    }).catch((err) => {
+      console.log(err);
+    });
+};
+
+export const axiosFetchCarDealer = () => (dispatch) => {
+  //get admin token
+
+  axios.get('http://localhost:3000/cardealers')
+    .then((res) => {
+      console.log('--- after axiosFetchCarDealer');
+      console.log(res.data);
+
+      dispatch(fetchCarDealer(res.data));
     }).catch((err) => {
       console.log(err);
     });

@@ -17,7 +17,14 @@ exports.create = (req, res) => {
     doorNumber: data.doorNumber,
     capacity: data.capacity,
   }, (err, newCar) => {
-    res.json(newCar);
+    // res.json(newCar);
+
+    CarDealer.populate(newCar, { path: 'dealer' }, (err, populatedResult) => {
+      // Your populated translactions are inside populatedTransactions
+      if (err) res.json(err);
+      res.json(populatedResult);
+    });
+    
   });
 };
 
@@ -84,6 +91,12 @@ exports.edit = (req, res) => {
       // }
       if (err) res.json(false);
       res.json(true);
+
+      // CarDealer.populate(result, { path: 'dealer' }, (err, populatedResult) => {
+      //   // Your populated translactions are inside populatedTransactions
+      //   if (err) res.json(err);
+      //   res.json(populatedResult);
+      // });
     }
   );
 };
