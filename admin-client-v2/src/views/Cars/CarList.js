@@ -54,7 +54,7 @@ class CarList extends Component {
       <div className="Content">
         <Row>
           <Col md={8} >
-            <Button bsStyle="success" pullRight bsSize="large" onClick={() => this.openModal() }>Add New Car</Button>
+            <Button bsStyle="success" bsSize="large" onClick={() => this.openModal() }>Add New Car</Button>
           </Col>
         </Row>
 
