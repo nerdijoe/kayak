@@ -4,6 +4,9 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "setup-sequelize": "node_modules/sequelize-cli/lib/sequelize db:migrate",
+    "setup-mongodb": "sh ./data/import-data.sh",
+    "prestart": "npm run setup-sequelize && npm run setup-mongodb",
     "start": "nodemon app.js",
     "dev": "nodemon app.js",
     "test": "NODE_ENV=test mocha"
