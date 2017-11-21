@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const FlightPrice = require('./mongooseFlightPrice').schema;
 
 const flightSchema = new Schema({
-  flightNumber: { type: String, required: true },
+  flightNumber: { type: String, required: true, unique: true },
   departureTime: { type: Date, required: true },
   arrivalTime: { type: Date, required: true },
   departureAirport: { type: Schema.Types.ObjectId, ref: 'FlightAirport' },
