@@ -44,3 +44,64 @@ exports.getOne = (req, res) => {
       res.json(result);
     });
 };
+
+exports.edit = (req, res) => {
+  const id = req.params.id;
+
+  // Car.findById(id)
+  //   .exec((err, result) => {
+  //     if (err) res.json(err);
+
+  //     result.type = req.body.type;
+  //     result.make = req.body.make;
+  //     result.model = req.body.model;
+  //     result.description = req.body.description;
+  //     result.price = req.body.price
+  //     result.
+  //   });
+
+  // skip updating dealer for now.
+  Car.findByIdAndUpdate(
+    id,
+    {
+      $set: {
+        type: req.body.type,
+        make: req.body.make,
+        model: req.body.model,
+        description: req.body.description,
+        price: req.body.price,
+        doorNumber: req.body.doorNumber,
+        capacity: req.body.capacity,
+      },
+    },
+    (err, result) => {
+      console.log('after edit car result=', result);
+      // if (result.nModified === 1) {
+      //   console.log(`car id=[${id}] has been updated successfully`);
+      //   res.json(true);
+      // } else {
+      //   res.json(false);
+      // }
+      if (err) res.json(false);
+      res.json(true);
+    }
+  );
+};
+
+exports.delete = (req, res) => {
+  const id = req.params.id;
+
+  Car.findByIdAndUpdate(
+    id,
+    {
+      $set: {
+        isDeleted: true,
+      },
+    },
+    (err, result) => {
+      console.log('after car delete result=', result);
+      if (err) res.json(false);
+      res.json(true);
+    }
+  );
+};

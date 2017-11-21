@@ -16,9 +16,10 @@ import {style} from "variables/Variables.jsx";
 import appRoutes from 'routes/app.jsx';
 
 import {
-    axiosFetchCarBillingAll,
-    axiosFetchCarBillingCount,
-    axiosFetchCarBillingTotal,
+  axiosFetchCar,
+  axiosFetchCarBillingAll,
+  axiosFetchCarBillingCount,
+  axiosFetchCarBillingTotal,
 } from '../../actions';
 
 
@@ -64,10 +65,15 @@ class App extends Component {
     }
 
     componentDidMount(){
+      this.props.axiosFetchCar();
       this.props.axiosFetchCarBillingAll();
       this.props.axiosFetchCarBillingCount();
       this.props.axiosFetchCarBillingTotal();
       
+      if(localStorage.getItem('admin_token') == null) {
+        this.props.history.push('/signin');
+      }
+
         this.setState({_notificationSystem: this.refs.notificationSystem});
         var _notificationSystem = this.refs.notificationSystem;
         var color = Math.floor((Math.random() * 4) + 1);
@@ -146,11 +152,12 @@ class App extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return {
-        axiosFetchCarBillingAll: () => { dispatch(axiosFetchCarBillingAll());},
-        axiosFetchCarBillingCount: () => { dispatch(axiosFetchCarBillingCount());},
-        axiosFetchCarBillingTotal: () => { dispatch(axiosFetchCarBillingTotal());},
-    };
+  return {
+    axiosFetchCar: () => { dispatch(axiosFetchCar()); },
+    axiosFetchCarBillingAll: () => { dispatch(axiosFetchCarBillingAll());},
+    axiosFetchCarBillingCount: () => { dispatch(axiosFetchCarBillingCount());},
+    axiosFetchCarBillingTotal: () => { dispatch(axiosFetchCarBillingTotal());},
+  };
 };
 
 const connectedApp = connect(null, mapDispatchToProps)(App);
