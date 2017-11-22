@@ -13,21 +13,22 @@ import {
 } from 'react-bootstrap';
 
 import {
-  axiosAddNewCar,
+  axiosEditCar,
 } from '../../actions';
 
 class CarNewForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      type: '',
-      make: '',
-      model: '',
-      dealer: this.props.dealers[0]._id,
-      description: '',
-      price: '',
-      doorNumber: '4',
-      capacity: '4',
+      _id: this.props.editCarData._id,
+      type: this.props.editCarData.type,
+      make: this.props.editCarData.make,
+      model: this.props.editCarData.model,
+      dealer: this.props.editCarData.dealer._id,
+      description: this.props.editCarData.description,
+      price: this.props.editCarData.price,
+      doorNumber: this.props.editCarData.doorNumber,
+      capacity: this.props.editCarData.capacity,
       formErrors: { firstname: '', lastname: '', email: '', password: '' },
       emailValid: false,
       passwordValid: false,
@@ -35,6 +36,10 @@ class CarNewForm extends Component {
       lastnameValid: false,
       formValid: false,
     };
+  }
+  componentDidMount() {
+    console.log('componentDidMount');
+    console.log('  this.props.editCarData=', this.props.editCarData);
   }
 
   handleChange(e) {
@@ -49,7 +54,7 @@ class CarNewForm extends Component {
   handleSubmit(e) {
     e.preventDefault();
     console.log('handleSubmit', this.state);
-    this.props.axiosAddNewCar(this.state);
+    this.props.axiosEditCar(this.state);
 
     // this.props.history.push('/signin');
   }
@@ -162,7 +167,7 @@ class CarNewForm extends Component {
           <FormGroup>
             <Col smOffset={10} sm={2}>
               <Button bsStyle="success" type="submit">
-                Add
+                Edit
               </Button>
             </Col>
           </FormGroup>
@@ -180,7 +185,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    axiosAddNewCar: (data) => { dispatch(axiosAddNewCar(data)); },
+    axiosEditCar: (data) => { dispatch(axiosEditCar(data)); },
   };
 };
 

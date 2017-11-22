@@ -39,7 +39,13 @@ export const adminSignOut = () => (dispatch) => {
 
 export const addNewCar = (data) => {
   return {
-    type: actionType.ADD_NEW_CAR,
+    type: actionType.CAR_ADD,
+    data,
+  };
+};
+export const editCar = (data) => {
+  return {
+    type: actionType.CAR_EDIT,
     data,
   };
 };
@@ -134,6 +140,35 @@ export const axiosAddNewCar = data => (dispatch) => {
       console.log(err);
     });
 };
+
+export const axiosEditCar = data => (dispatch) => {
+  const admin_token = localStorage.getItem('admin_token');
+  console.log('axiosAddNewCar data=', data);
+
+  axios.put(`http://localhost:3000/cars/${data._id}`, {
+    type: data.type,
+    make: data.make,
+    model: data.model,
+    dealer: data.dealer,
+    description: data.description,
+    price: data.price,
+    doorNumber: data.doorNumber,
+    capacity: data.capacity,
+  }, {
+    headers: {
+      admin_token,
+    },
+  })
+    .then((res) => {
+      console.log('-------------------after axiosEditCar');
+      console.log(res);
+
+      dispatch(editCar(res.data));
+    }).catch((err) => {
+      console.log(err);
+    });
+};
+
 
 export const axiosFetchCar = () => (dispatch) => {
   //get admin token

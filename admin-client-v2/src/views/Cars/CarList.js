@@ -16,6 +16,7 @@ import {
 } from '../../actions';
 
 import CarNewForm from './CarNewForm';
+import CarEditForm from './CarEditForm';
 
 class CarList extends Component {
   constructor(props) {
@@ -23,6 +24,8 @@ class CarList extends Component {
 
     this.state = {
       showModal: false,
+      editModal: false,
+      editCarData: {},
     };
   }
   getInitialState() {
@@ -37,6 +40,18 @@ class CarList extends Component {
     console.log('open');
     this.setState({ showModal: true });
   }
+
+  closeEditModal() {
+    this.setState({ editModal: false });
+  }
+
+  openEditModal(car) {
+    console.log('open');
+    this.setState({ editModal: true });
+    this.setState({ editCarData: car });
+  }
+
+
 
   render() {
     const popover = (
@@ -85,7 +100,7 @@ class CarList extends Component {
                     <td>{car.price}</td>
                     <td>{car.doorNumber}</td>
                     <td>{car.capacity}</td>
-                    <td><Button bsStyle="info">edit</Button></td>
+                    <td><Button bsStyle="info" onClick={() => this.openEditModal(car) }>edit</Button></td>
                   </tr>              
                 )
               })
@@ -105,6 +120,20 @@ class CarList extends Component {
           </Modal.Body>
           <Modal.Footer>
             <Button onClick={() => this.closeModal()}>Close</Button>
+          </Modal.Footer>
+        </Modal>
+
+        <Modal show={this.state.editModal} onHide={() => this.closeEditModal()}>
+          <Modal.Header closeButton>
+            <Modal.Title>Edit Car</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <h4>Form</h4>
+            <CarEditForm editCarData={this.state.editCarData} />
+
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={() => this.closeEditModal()}>Close</Button>
           </Modal.Footer>
         </Modal>
 

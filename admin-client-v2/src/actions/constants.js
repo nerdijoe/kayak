@@ -1,7 +1,10 @@
 export const ADMIN_SIGNIN = 'ADMIN_SIGNIN';
 export const ADMIN_SIGNOUT = 'ADMIN_SIGNOUT';
 
-export const ADD_NEW_CAR = 'ADD_NEW_CAR';
+export const CAR_ADD = 'CAR_ADD';
+export const CAR_EDIT = 'CAR_EDIT';
+export const CAR_DELETE = 'CAR_DELETE';
+
 export const FETCH_CAR = 'FETCH_CAR';
 export const FETCH_CAR_DEALER = 'FETCH_CAR_DEALER';
 
