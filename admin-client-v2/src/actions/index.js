@@ -185,7 +185,7 @@ export const axiosEditUser = (user) => (dispatch) => {
     //get admin token
     const id = user.id;
     console.log("before edit user, the id is : "+ id);
-    axios.put('http://localhost:3000/users/id', user)
+    axios.put(`http://localhost:3000/users/${id}`, user)
         .then((res) => {
             console.log('-------------- after axiosEditUser--------------');
             console.log(res.data);
