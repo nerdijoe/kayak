@@ -10,6 +10,7 @@ import Upgrade from 'views/Upgrade/Upgrade';
 import SignIn from 'views/Auth/SignIn';
 
 import CarList from 'views/Cars/CarList';
+import UserList from 'views/Users/UserList';
 
 const appRoutes = [
     { path: "/dashboardkayak", name: "Dashboard K", icon: "pe-7s-graph", component: DashboardKayak },
@@ -22,6 +23,7 @@ const appRoutes = [
     { path: "/notifications", name: "Notifications", icon: "pe-7s-bell", component: Notifications },
     { path: "/car", name: "Car Listing", icon: "pe-7s-car", component: CarList },
     { path: "/signin", name: "Sign In", icon: "pe-7s-bell", component: SignIn },
+    { path: "/userlist", name: "User Listing", icon: "pe-7s-car", component: UserList },
     // { upgrade: true, path: "/upgrade", name: "Upgrade to PRO", icon: "pe-7s-rocket", component: Upgrade },
     // { redirect: true, path:"/", to:"/dashboard", name: "Dashboard" }
 ];
