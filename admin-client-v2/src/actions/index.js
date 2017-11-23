@@ -93,6 +93,7 @@ export const axiosSignIn = (data, router) => (dispatch) => {
   }).then((res) => {
     // if signin is successful, then save the token in the local storage
     console.log('axiosSignIn done', res);
+    console.log('axiosSignIn res.status', res.status);
     localStorage.setItem('admin_token', res.data.token);
     localStorage.setItem('admin_id', res.data.id);
     localStorage.setItem('admin_firstname', res.data.firstname);
@@ -109,6 +110,7 @@ export const axiosSignIn = (data, router) => (dispatch) => {
     // dispatch(axiosAddActivity(actionType.USER_SIGN_IN, 'User sign in'));
   }).catch((err) => {
     console.log('Error when signin', err);
+    console.log('---err.response.status', err.response.status);
     // display the error message
     // dispatch(signInError({ message: 'Sign in failed. Please check your username and password.' }));
   });
