@@ -115,8 +115,6 @@ class UserList extends Component {
                         <th>State</th>
                         <th>Zip Code</th>
                         <th>Phone</th>
-                        <th>Profile Image</th>
-                        <th>is Deleted</th>
                         <th>Ation</th>
                     </tr>
                     </thead>
@@ -133,8 +131,6 @@ class UserList extends Component {
                                     <td>{user.state}</td>
                                     <td>{user.zipcode}</td>
                                     <td>{user.phone}</td>
-                                    <td>{user.profileImage}</td>
-                                    <td>{user.isDeleted}</td>
                                     <td><DropdownButton bsStyle="info" title="view or modify">
                                         <MenuItem eventKey="1" active
                                                   onClick={() => this.openModalView(user)}>View</MenuItem>
