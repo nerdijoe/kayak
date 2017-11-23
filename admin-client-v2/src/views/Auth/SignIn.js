@@ -35,6 +35,7 @@ class SignIn extends Component {
       this.props.history.push('/dashboard');
     }
 
+
     // this.props.signInErrorClear();
     // this.props.signUpSuccessClear();
   }
