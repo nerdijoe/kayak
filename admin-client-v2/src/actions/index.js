@@ -65,6 +65,23 @@ export const fetchCarBillingTotal = (data) => {
   };
 };
 
+// add by NaYue 11/21/2017
+export const fetchUser = (data) => {
+    return {
+        type: actionType.FETCH_USER,
+        data,
+    };
+};
+
+// add by NaYue 11/22/2017
+export const editUser = (data) => {
+    return {
+        type: actionType.EDIT_USER,
+        data,
+    };
+};
+
+
 export const axiosSignIn = (data, router) => (dispatch) => {
   axios.post('http://localhost:3000/authadmin/signin', {
     email: data.email,
@@ -147,5 +164,33 @@ export const axiosFetchCarBillingTotal = () => (dispatch) => {
       dispatch(fetchCarBillingTotal(res.data));
     }).catch((err) => {
       console.log(err);
+    });
+};
+
+export const axiosFetchUser = () => (dispatch) => {
+    //get admin token
+
+    axios.get('http://localhost:3000/users')
+        .then((res) => {
+            console.log('--- after axiosFetchUser');
+            console.log(res.data);
+
+            dispatch(fetchUser(res.data));
+        }).catch((err) => {
+        console.log(err);
+    });
+};
+
+export const axiosEditUser = (user) => (dispatch) => {
+    //get admin token
+    const id = user.id;
+    console.log("before edit user, the id is : "+ id);
+    axios.put('http://localhost:3000/users/id', user)
+        .then((res) => {
+            console.log('-------------- after axiosEditUser--------------');
+            console.log(res.data);
+            dispatch(editUser(user));
+        }).catch((err) => {
+        console.log(err);
     });
 };

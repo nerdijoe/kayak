@@ -20,6 +20,7 @@ import {
   axiosFetchCarBillingAll,
   axiosFetchCarBillingCount,
   axiosFetchCarBillingTotal,
+  axiosFetchUser,
 } from '../../actions';
 
 
@@ -69,6 +70,8 @@ class App extends Component {
       this.props.axiosFetchCarBillingAll();
       this.props.axiosFetchCarBillingCount();
       this.props.axiosFetchCarBillingTotal();
+
+      this.props.axiosFetchUser();
       
       if(localStorage.getItem('admin_token') == null) {
         this.props.history.push('/signin');
@@ -138,6 +141,10 @@ class App extends Component {
                                             return (
                                                 <Redirect from={prop.path} to={prop.to} key={key}/>
                                             );
+                                        if(prop.name === "User Listing")
+                                            return(
+                                                <Route exact path={prop.path} component={prop.component} key={key}/>
+                                            );
                                         return (
                                             <Route path={prop.path} component={prop.component} key={key}/>
                                         );
@@ -157,6 +164,8 @@ const mapDispatchToProps = (dispatch) => {
     axiosFetchCarBillingAll: () => { dispatch(axiosFetchCarBillingAll());},
     axiosFetchCarBillingCount: () => { dispatch(axiosFetchCarBillingCount());},
     axiosFetchCarBillingTotal: () => { dispatch(axiosFetchCarBillingTotal());},
+
+    axiosFetchUser: () => { dispatch(axiosFetchUser()); },
   };
 };
 
