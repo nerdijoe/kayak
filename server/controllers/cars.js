@@ -17,7 +17,14 @@ exports.create = (req, res) => {
     doorNumber: data.doorNumber,
     capacity: data.capacity,
   }, (err, newCar) => {
-    res.json(newCar);
+    // res.json(newCar);
+
+    CarDealer.populate(newCar, { path: 'dealer' }, (err, populatedResult) => {
+      // Your populated translactions are inside populatedTransactions
+      if (err) res.json(err);
+      res.json(populatedResult);
+    });
+    
   });
 };
 
@@ -68,6 +75,7 @@ exports.edit = (req, res) => {
         type: req.body.type,
         make: req.body.make,
         model: req.body.model,
+        dealer: req.body.dealer,
         description: req.body.description,
         price: req.body.price,
         doorNumber: req.body.doorNumber,
@@ -82,8 +90,22 @@ exports.edit = (req, res) => {
       // } else {
       //   res.json(false);
       // }
-      if (err) res.json(false);
-      res.json(true);
+      // if (err) res.json(false);
+      // res.json(true);
+
+      Car
+        .findById(result._id)
+        .populate('dealer')
+        .exec((err, populatedResult) => {
+          console.log('populate result=', populatedResult);
+          if (err) res.json(err);
+          res.json(populatedResult);
+        });
+          // CarDealer.populate(result, { path: 'dealer' }, (err, populatedResult) => {
+      //   // Your populated translactions are inside populatedTransactions
+      //   if (err) res.json(err);
+      //   res.json(populatedResult);
+      // });
     }
   );
 };
@@ -105,3 +127,24 @@ exports.delete = (req, res) => {
     }
   );
 };
+
+exports.search = (req, res) => {
+  const city = req.body.city;
+  CarDealer
+    .find({ city })
+    .exec((err, results) => {
+      if (err) res.json(err);
+      res.json(results);
+    });
+
+  // Car
+  //   .find({})
+  //   .populate('dealer')
+  //   .exec((err, results) => {
+  //     console.log('getAll results=', results);
+  //     if (err) res.json(err);
+  //     res.json(results);
+  //   });
+
+
+}

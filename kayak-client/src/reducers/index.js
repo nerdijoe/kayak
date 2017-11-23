@@ -3,10 +3,10 @@
  */
 /*jshint esversion: 6 */
 import {combineReducers} from 'redux';
-
+import loginReducer from './loginReducer';
 
 const allReducers = combineReducers({
-    // loginState: loginStateReducer,
+    loginData: loginReducer
     // userMenu: userMenuReducer,
     // loginData: loginDataReducer,
     // interestUpdate: loginDataReducer,

@@ -51,7 +51,7 @@ class HeaderLinks extends Component {
                     </NavItem>
                 </Nav>
                 <Nav pullRight>
-                    <NavItem eventKey={1} href="#">Account</NavItem>
+                    {/* <NavItem eventKey={1} href="#">Account</NavItem>
                     <NavDropdown eventKey={2} title="Dropdown" id="basic-nav-dropdown-right">
                         <MenuItem eventKey={2.1}>Action</MenuItem>
                         <MenuItem eventKey={2.2}>Another action</MenuItem>
@@ -60,7 +60,7 @@ class HeaderLinks extends Component {
                         <MenuItem eventKey={2.5}>Something</MenuItem>
                         <MenuItem divider />
                         <MenuItem eventKey={2.5}>Separated link</MenuItem>
-                    </NavDropdown>
+                    </NavDropdown> */}
                     <NavItem eventKey={3} href="/" onClick={this.handleSignOut}>Log out</NavItem>
                 </Nav>
             </div>

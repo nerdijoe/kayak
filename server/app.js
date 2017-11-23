@@ -87,15 +87,20 @@ passport.use('user', new LocalStrategy({ usernameField: 'email', passwordField: 
       email: username,
     },
   }).then((user) => {
+
+    // User does not exist or password does not match
+    //  will return HTTP Status Code 500
     if (!user) {
       done('User does not exist');
     } else if (passwordHash.verify(password, user.password)) {
+      // will return HTTP Status Code 200
       done(null, user);
     } else {
       done('Email and password do not match');
     }
   }).catch((err) => {
     console.log(err);
+    // this will return HTTP Status Code 400
     done('Error');
   });
 }));
@@ -109,15 +114,21 @@ passport.use('admin', new LocalStrategy({ usernameField: 'email', passwordField:
       email: username,
     },
   }).then((user) => {
+    // User does not exist or password does not match
+    //  will return HTTP Status Code 500
+
     if (!user) {
       done('Admin does not exist');
     } else if (passwordHash.verify(password, user.password)) {
+      // will return HTTP Status Code 200
       done(null, user);
     } else {
       done('Email and password do not match');
     }
   }).catch((err) => {
     console.log(err);
+    // this will return HTTP Status Code 400
+
     done('Error');
   });
 }));

@@ -60,8 +60,7 @@ class UserList extends Component {
         this.setState({userSelected: user});
     }
 
-    onFieldChange = (e) => {
-
+    onFieldChange(e) {
         console.log(e.target.name);
         console.log(e.target.value);
         this.setState({
@@ -69,7 +68,7 @@ class UserList extends Component {
         })
     };
 
-    handleSubmit = (e) => {
+    handleSubmit(e) {
         e.preventDefault();
         console.log("after modify -----"+this.state.userSelected);
         console.log(this.state.userSelected);

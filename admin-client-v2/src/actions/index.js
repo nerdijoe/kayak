@@ -37,9 +37,30 @@ export const adminSignOut = () => (dispatch) => {
   // };
 };
 
+export const addNewCar = (data) => {
+  return {
+    type: actionType.CAR_ADD,
+    data,
+  };
+};
+export const editCar = (data) => {
+  return {
+    type: actionType.CAR_EDIT,
+    data,
+  };
+};
+
+
 export const fetchCar = (data) => {
   return {
     type: actionType.FETCH_CAR,
+    data,
+  };
+};
+
+export const fetchCarDealer = (data) => {
+  return {
+    type: actionType.FETCH_CAR_DEALER,
     data,
   };
 };
@@ -89,6 +110,7 @@ export const axiosSignIn = (data, router) => (dispatch) => {
   }).then((res) => {
     // if signin is successful, then save the token in the local storage
     console.log('axiosSignIn done', res);
+    console.log('axiosSignIn res.status', res.status);
     localStorage.setItem('admin_token', res.data.token);
     localStorage.setItem('admin_id', res.data.id);
     localStorage.setItem('admin_firstname', res.data.firstname);
@@ -105,10 +127,67 @@ export const axiosSignIn = (data, router) => (dispatch) => {
     // dispatch(axiosAddActivity(actionType.USER_SIGN_IN, 'User sign in'));
   }).catch((err) => {
     console.log('Error when signin', err);
+    console.log('---err.response.status', err.response.status);
     // display the error message
     // dispatch(signInError({ message: 'Sign in failed. Please check your username and password.' }));
   });
 };
+
+export const axiosAddNewCar = data => (dispatch) => {
+  const admin_token = localStorage.getItem('admin_token');
+  console.log('axiosAddNewCar data=', data);
+  axios.post('http://localhost:3000/cars', {
+    type: data.type,
+    make: data.make,
+    model: data.model,
+    dealer: data.dealer,
+    description: data.description,
+    price: data.price,
+    doorNumber: data.doorNumber,
+    capacity: data.capacity,
+  }, {
+    headers: {
+      admin_token,
+    },
+  })
+    .then((res) => {
+      console.log('-------------------after axiosAddNewCar');
+      console.log(res);
+
+      dispatch(addNewCar(res.data));
+    }).catch((err) => {
+      console.log(err);
+    });
+};
+
+export const axiosEditCar = data => (dispatch) => {
+  const admin_token = localStorage.getItem('admin_token');
+  console.log('axiosAddNewCar data=', data);
+
+  axios.put(`http://localhost:3000/cars/${data._id}`, {
+    type: data.type,
+    make: data.make,
+    model: data.model,
+    dealer: data.dealer,
+    description: data.description,
+    price: data.price,
+    doorNumber: data.doorNumber,
+    capacity: data.capacity,
+  }, {
+    headers: {
+      admin_token,
+    },
+  })
+    .then((res) => {
+      console.log('-------------------after axiosEditCar');
+      console.log(res);
+
+      dispatch(editCar(res.data));
+    }).catch((err) => {
+      console.log(err);
+    });
+};
+
 
 export const axiosFetchCar = () => (dispatch) => {
   //get admin token
@@ -119,6 +198,20 @@ export const axiosFetchCar = () => (dispatch) => {
       console.log(res.data);
 
       dispatch(fetchCar(res.data));
+    }).catch((err) => {
+      console.log(err);
+    });
+};
+
+export const axiosFetchCarDealer = () => (dispatch) => {
+  //get admin token
+
+  axios.get('http://localhost:3000/cardealers')
+    .then((res) => {
+      console.log('--- after axiosFetchCarDealer');
+      console.log(res.data);
+
+      dispatch(fetchCarDealer(res.data));
     }).catch((err) => {
       console.log(err);
     });
