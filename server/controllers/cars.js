@@ -127,3 +127,24 @@ exports.delete = (req, res) => {
     }
   );
 };
+
+exports.search = (req, res) => {
+  const city = req.body.city;
+  CarDealer
+    .find({ city })
+    .exec((err, results) => {
+      if (err) res.json(err);
+      res.json(results);
+    });
+
+  // Car
+  //   .find({})
+  //   .populate('dealer')
+  //   .exec((err, results) => {
+  //     console.log('getAll results=', results);
+  //     if (err) res.json(err);
+  //     res.json(results);
+  //   });
+
+
+}
