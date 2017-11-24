@@ -220,8 +220,12 @@ export const axiosFetchCarDealer = () => (dispatch) => {
 
 export const axiosFetchCarBillingAll = () => (dispatch) => {
   //get admin token
-
-  axios.get('http://localhost:3000/carbillings/all')
+  const token = localStorage.getItem('admin_token');
+  axios.get('http://localhost:3000/carbillings', {
+    headers: {
+      token,
+    },
+  })
     .then((res) => {
       console.log('--- after axiosFetchCarBillingAll');
       console.log(res.data);
@@ -234,8 +238,13 @@ export const axiosFetchCarBillingAll = () => (dispatch) => {
 
 export const axiosFetchCarBillingCount = () => (dispatch) => {
   //get admin token
+  const token = localStorage.getItem('admin_token');
 
-  axios.get('http://localhost:3000/carbillings/aggregate/count')
+  axios.get('http://localhost:3000/carbillings/aggregate/count', {
+    headers: {
+      token,
+    },
+  })
     .then((res) => {
       console.log('--- after axiosFetchCarBillingCount');
       console.log(res.data);
@@ -248,8 +257,13 @@ export const axiosFetchCarBillingCount = () => (dispatch) => {
 
 export const axiosFetchCarBillingTotal = () => (dispatch) => {
   //get admin token
+  const token = localStorage.getItem('admin_token');
 
-  axios.get('http://localhost:3000/carbillings/aggregate/total')
+  axios.get('http://localhost:3000/carbillings/aggregate/total', {
+    headers: {
+      token,
+    },
+  })
     .then((res) => {
       console.log('--- after axiosFetchCarBillingTotal');
       console.log(res.data);
