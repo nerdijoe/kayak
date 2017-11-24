@@ -24,6 +24,19 @@ const CarReducer = (state = initialState, action) => {
         cars: updatedCars,
       };
     }
+    case actionType.CAR_DELETE: {
+      const updatedCars = [...state.cars];
+      const pos = updatedCars.findIndex(i => i._id === action.data._id);
+      if (pos !== -1) {
+        // updatedCars.splice(pos, 1, action.data);
+        updatedCars[pos].isDeleted = true;
+      }
+      return {
+        ...state,
+        cars: updatedCars,
+      };
+    }
+
     case actionType.FETCH_CAR: {
       return {
         ...state,

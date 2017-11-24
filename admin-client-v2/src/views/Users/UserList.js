@@ -86,7 +86,6 @@ class UserList extends Component {
             }
         });*/
         this.setState({userSelected: {}});
-
     }
 
     render() {
@@ -157,7 +156,7 @@ class UserList extends Component {
 
                     <Modal.Body>
 
-                        <Form horizontal onSubmit={this.handleSubmit}>
+                        <Form horizontal onSubmit={(e) => {this.handleSubmit(e)}}>
                             <fieldset disabled={!this.state.isEdit}>
                                 <FormGroup>
                                     <Col componentClass={ControlLabel} sm={2}>
@@ -180,7 +179,7 @@ class UserList extends Component {
                                             <Col sm={10}>
                                                 <FormControl type="input" name={keyName}
                                                              value={this.state.userSelected[keyName]}
-                                                             onChange={this.onFieldChange}
+                                                             onChange={(e) => {this.onFieldChange(e)}}
                                                 />
                                             </Col>
                                         </FormGroup>

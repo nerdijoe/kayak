@@ -49,6 +49,12 @@ export const editCar = (data) => {
     data,
   };
 };
+export const deleteCar = (data) => {
+  return {
+    type: actionType.CAR_DELETE,
+    data,
+  };
+};
 
 
 export const fetchCar = (data) => {
@@ -188,6 +194,24 @@ export const axiosEditCar = data => (dispatch) => {
     });
 };
 
+export const axiosDeleteCar = data => (dispatch) => {
+  const admin_token = localStorage.getItem('admin_token');
+  console.log('axiosAddNewCar data=', data);
+
+  axios.delete(`http://localhost:3000/cars/${data._id}`, {
+    headers: {
+      admin_token,
+    },
+  })
+    .then((res) => {
+      console.log('-------------------after axiosDeleteCar');
+      console.log(res);
+
+      dispatch(deleteCar(data));
+    }).catch((err) => {
+      console.log(err);
+    });
+};
 
 export const axiosFetchCar = () => (dispatch) => {
   //get admin token

@@ -167,7 +167,7 @@ class CarNewForm extends Component {
           <FormGroup>
             <Col smOffset={10} sm={2}>
               <Button bsStyle="success" type="submit">
-                Edit
+                Save
               </Button>
             </Col>
           </FormGroup>
