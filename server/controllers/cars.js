@@ -129,22 +129,22 @@ exports.delete = (req, res) => {
 };
 
 exports.search = (req, res) => {
-  const city = req.body.city;
+  console.log('car search');
+  const searchString = req.body.searchString;
+  console.log('    searchString=', searchString);
+
   CarDealer
-    .find({ city })
+    .find({ $text: { $search: searchString } })
     .exec((err, results) => {
-      if (err) res.json(err);
-      res.json(results);
+      console.log('CarDealer.find results=', results);
+
+      Car
+        .find({ dealer: { $in: results } })
+        .populate('dealer')
+        .exec((err, cars) => {
+          console.log('Car.find cars=', cars);
+          if (err) res.json(err);
+          res.json(cars);
+        });
     });
-
-  // Car
-  //   .find({})
-  //   .populate('dealer')
-  //   .exec((err, results) => {
-  //     console.log('getAll results=', results);
-  //     if (err) res.json(err);
-  //     res.json(results);
-  //   });
-
-
-}
+};
