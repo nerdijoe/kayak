@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import NotificationSystem from 'react-notification-system';
+
 import {
   Table,
   Button,
@@ -9,10 +11,13 @@ import {
   Tooltip,
   Row,
   Col,
+  DropdownButton,
+  MenuItem,
 } from 'react-bootstrap';
 
 import {
   axiosAddNewCar,
+  axiosDeleteCar,
 } from '../../actions';
 
 import CarNewForm from './CarNewForm';
@@ -25,11 +30,27 @@ class CarList extends Component {
     this.state = {
       showModal: false,
       editModal: false,
+      deleteModal: false,
       editCarData: {},
+      deleteCarData: {
+        dealer: { name: ''},
+        type: '',
+        make: '',
+        model: '',
+        price: '',
+        doorNumber: '',
+        capacity: '',
+      },
+      _notificationSystem: null,
     };
   }
+
   getInitialState() {
     return { showModal: false };
+  }
+
+  componentDidMount() {
+    this._notificationSystem = this.refs.notificationSystem;
   }
 
   closeModal() {
@@ -51,7 +72,31 @@ class CarList extends Component {
     this.setState({ editCarData: car });
   }
 
+  closeDeleteModal() {
+    this.setState({ deleteModal: false });
+  }
 
+  openDeleteModal(car) {
+    console.log('open');
+    this.setState({ deleteModal: true });
+    this.setState({ deleteCarData: car });
+  }
+
+  _addNotification(event) {
+    event.preventDefault();
+    this._notificationSystem.addNotification({
+      message: `Car at dealer [${this.state.deleteCarData.dealer.name}] and type [${this.state.deleteCarData.make}] is deleted.`,
+      level: 'success',
+    });
+  }
+
+  handleDelete(e) {
+    console.log('delete');
+    this.props.axiosDeleteCar(this.state.deleteCarData);
+    this.setState({ deleteModal: false });
+    
+    this._addNotification(e);
+  }
 
   render() {
     const popover = (
@@ -73,7 +118,7 @@ class CarList extends Component {
           </Col>
         </Row>
 
-
+        <NotificationSystem ref="notificationSystem" />
 
         <Table responsive>
           <thead>
@@ -90,7 +135,7 @@ class CarList extends Component {
           </thead>
           <tbody>
             {
-              this.props.cars.map((car) => {
+              this.props.cars.filter(car => car.isDeleted !== true).map((car) => {
                 return (
                   <tr key={car._id}>
                     <td>{car.dealer.name}</td>
@@ -100,7 +145,13 @@ class CarList extends Component {
                     <td>{car.price}</td>
                     <td>{car.doorNumber}</td>
                     <td>{car.capacity}</td>
-                    <td><Button bsStyle="info" onClick={() => this.openEditModal(car) }>edit</Button></td>
+                    <td>
+                      <Button bsStyle="info" onClick={() => this.openEditModal(car) }>edit</Button>
+                      <DropdownButton title="..." id="bg-nested-dropdown">
+                        <MenuItem eventKey="1" onClick={() => this.openEditModal(car)}>Edit</MenuItem>
+                        <MenuItem eventKey="2" onClick={() => this.openDeleteModal(car)}>Delete</MenuItem>
+                      </DropdownButton>
+                    </td>
                   </tr>              
                 )
               })
@@ -137,6 +188,45 @@ class CarList extends Component {
           </Modal.Footer>
         </Modal>
 
+        <Modal show={this.state.deleteModal} onHide={() => this.closeDeleteModal()}>
+          <Modal.Header closeButton>
+            <Modal.Title>Delete Car</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Table responsive>
+              <thead>
+                <tr>
+                  <th>Dealer</th>
+                  <th>Type</th>
+                  <th>Make</th>
+                  <th>Model</th>
+                  <th>Price</th>
+                  <th>Doors</th>
+                  <th>Capacity</th>
+                </tr>
+              </thead>
+
+              <tr>
+                <td>{this.state.deleteCarData.dealer.name}</td>
+                <td>{this.state.deleteCarData.type}</td>
+                <td>{this.state.deleteCarData.make}</td>
+                <td>{this.state.deleteCarData.model}</td>
+                <td>{this.state.deleteCarData.price}</td>
+                <td>{this.state.deleteCarData.doorNumber}</td>
+                <td>{this.state.deleteCarData.capacity}</td>
+              </tr>
+            </Table>
+            <p>Do you want to delete this car?</p>
+
+            <Button bsStyle="danger" onClick={(e) => { this.handleDelete(e); }}>Yes</Button>
+            <Button bsStyle="primary" onClick={() => this.closeDeleteModal() }>No</Button>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={() => this.closeDeleteModal()}>Close</Button>
+          </Modal.Footer>
+        </Modal>
+
+
       </div>
     );
   }
@@ -145,6 +235,7 @@ class CarList extends Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     axiosAddNewCar: (data) => { dispatch(axiosAddNewCar(data)); },
+    axiosDeleteCar: (data) => { dispatch(axiosDeleteCar(data)); },
   };
 };
 
