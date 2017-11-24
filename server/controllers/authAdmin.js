@@ -45,7 +45,7 @@ exports.signin = (req, res, next) => {
     zipcode: user.zipcode,
     phone: user.phone,
     profileImage: user.profileImage,
-  }, process.env.JWT_KEY);
+  }, process.env.JWT_KEY_ADMIN);
 
   res.send({
     token,

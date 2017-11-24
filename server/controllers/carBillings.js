@@ -8,8 +8,9 @@ const CarBilling = require('../models/mongooseCarBilling');
 
 exports.book = (req, res) => {
   console.log('carBillings book req.decoded.id=', req.decoded.id);
-
-  const id = mongoose.Types.ObjectId(req.params.carId);
+  console.log('    req.body', req.body);
+  const id = mongoose.Types.ObjectId(req.body.carId);
+  
   const data = req.body;
 
   Car
