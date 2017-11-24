@@ -13,6 +13,11 @@ const carDealerSchema = new Schema({
   updatedAt: { type: Date, required: false, default: Date.now },
 });
 
+carDealerSchema.index({
+  name: 'text',
+  city: 'text',
+});
+
 const CarDealer = mongoose.model('CarDealer', carDealerSchema);
 
 module.exports = CarDealer;
