@@ -96,9 +96,13 @@ export const fetchUser = (data) => {
 
 // add by NaYue 11/22/2017
 export const editUser = (data) => {
+    console.log("in editUser, action data");
+    console.log(data);
     return {
         type: actionType.EDIT_USER,
         data,
+
+
     };
 };
 
@@ -276,12 +280,15 @@ export const axiosFetchUser = () => (dispatch) => {
 
 export const axiosEditUser = (user) => (dispatch) => {
     //get admin token
+    const admin_token = localStorage.getItem('admin_token');
     const id = user.id;
     console.log("before edit user, the id is : "+ id);
+    console.log(user);
     axios.put(`http://localhost:3000/users/${id}`, user)
         .then((res) => {
             console.log('-------------- after axiosEditUser--------------');
             console.log(res.data);
+            console.log(user);
             dispatch(editUser(user));
         }).catch((err) => {
         console.log(err);

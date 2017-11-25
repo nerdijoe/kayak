@@ -60,34 +60,26 @@ class UserList extends Component {
         this.setState({userSelected: user});
     }
 
-    onFieldChange(e) {
-        console.log(e.target.name);
-        console.log(e.target.value);
+    onFieldChange (e){
+
         this.setState({
-            userSelected: {...this.state.userSelected, [e.target.name]: e.target.value}
-        })
+           userSelected: {...this.state.userSelected, [e.target.name]: e.target.value }
+        });
+
     };
 
-    handleSubmit(e) {
+    handleSubmit (e) {
         e.preventDefault();
         console.log("after modify -----"+this.state.userSelected);
         console.log(this.state.userSelected);
         this.props.axiosEditUser(this.state.userSelected);
-        this.props.axiosFetchUser();
+
+        console.log("after edit, can come here");
         this.setState({showModal: false});
         this.setState({isEdit: false});
-        /*const id = this.state.userSelected.id;
-        this.props.users.map((user,index) => {
-            if(user.id === id) {
-                user = this.state.userSelected;
-                console.log(index);
-                this.props.users[index] = user;
-                console.log(this.props.users);
-            }
-        });*/
         this.setState({userSelected: {}});
 
-    }
+    };
 
     render() {
         const popover = (
@@ -153,36 +145,173 @@ class UserList extends Component {
 
                     <Modal.Body>
 
-                        <Form horizontal onSubmit={this.handleSubmit}>
+                        <Form horizontal onSubmit={this.handleSubmit.bind(this)}>
                             <fieldset disabled={!this.state.isEdit}>
                                 <FormGroup>
                                     <Col componentClass={ControlLabel} sm={2}>
                                         First Name
                                     </Col>
                                     <Col sm={10}>
-                                        <FormControl type="input" value={this.state.userSelected.firstName}
-                                                     onChange={this.onFirstNameChange}
+                                        <FormControl type="input" name="firstName" value={this.state.userSelected.firstName}
+                                                     onChange={this.onFieldChange.bind(this)}
                                         />
                                     </Col>
                                 </FormGroup>
 
+                                <FormGroup>
+                                    <Col componentClass={ControlLabel} sm={2}>
+                                        Last Name
+                                    </Col>
+                                    <Col sm={10}>
+                                        <FormControl type="input" name="lastName" value={this.state.userSelected.lastName}
+                                                     onChange={this.onFieldChange.bind(this)}
+                                        />
+                                    </Col>
+                                </FormGroup>
 
-                                {Object.keys(this.state.userSelected).map((keyName) => {
-                                    return (
-                                        <FormGroup>
-                                            <Col componentClass={ControlLabel} sm={2}>
-                                                {keyName}
-                                            </Col>
-                                            <Col sm={10}>
-                                                <FormControl type="input" name={keyName}
-                                                             value={this.state.userSelected[keyName]}
-                                                             onChange={this.onFieldChange}
-                                                />
-                                            </Col>
-                                        </FormGroup>
-                                    )
-                                })
-                                }
+                                <FormGroup>
+                                    <Col componentClass={ControlLabel} sm={2}>
+                                        Email
+                                    </Col>
+                                    <Col sm={10}>
+                                        <FormControl type="email" name="email" value={this.state.userSelected.email}
+                                                     onChange={this.onFieldChange.bind(this)}
+                                        />
+                                    </Col>
+                                </FormGroup>
+
+                                <FormGroup>
+                                    <Col componentClass={ControlLabel} sm={2}>
+                                        Password
+                                    </Col>
+                                    <Col sm={10}>
+                                        <FormControl type="text" name="password" value={this.state.userSelected.password}
+                                                     onChange={this.onFieldChange.bind(this)}
+                                        />
+                                    </Col>
+                                </FormGroup>
+
+                                <FormGroup>
+                                    <Col componentClass={ControlLabel} sm={2}>
+                                        Address
+                                    </Col>
+                                    <Col sm={10}>
+                                        <FormControl type="text" name="address" value={this.state.userSelected.address}
+                                                     onChange={this.onFieldChange.bind(this)}
+                                        />
+                                    </Col>
+                                </FormGroup>
+
+                                <FormGroup>
+                                    <Col componentClass={ControlLabel} sm={2}>
+                                        City
+                                    </Col>
+                                    <Col sm={10}>
+                                        <FormControl type="text" name="city" value={this.state.userSelected.city}
+                                                     onChange={this.onFieldChange.bind(this)}
+                                        />
+                                    </Col>
+                                </FormGroup>
+
+                                <FormGroup>
+                                    <Col componentClass={ControlLabel} sm={2}>
+                                        State
+                                    </Col>
+                                    <Col sm={10}>
+                                        <FormControl type="text" name="state" value={this.state.userSelected.state}
+                                                     onChange={this.onFieldChange.bind(this)}
+                                        />
+                                    </Col>
+                                </FormGroup>
+
+                                <FormGroup>
+                                    <Col componentClass={ControlLabel} sm={2}>
+                                        Zipcode
+                                    </Col>
+                                    <Col sm={10}>
+                                        <FormControl type="text" name="zipcode" value={this.state.userSelected.zipcode}
+                                                     onChange={this.onFieldChange.bind(this)}
+                                        />
+                                    </Col>
+                                </FormGroup>
+
+                                <FormGroup>
+                                    <Col componentClass={ControlLabel} sm={2}>
+                                        Phone
+                                    </Col>
+                                    <Col sm={10}>
+                                        <FormControl type="text" name="phone" value={this.state.userSelected.phone}
+                                                     onChange={this.onFieldChange.bind(this)}
+                                        />
+                                    </Col>
+                                </FormGroup>
+
+                                <FormGroup>
+                                    <Col componentClass={ControlLabel} sm={2}>
+                                        ProfileImage
+                                    </Col>
+                                    <Col sm={10}>
+                                        <FormControl type="text" name="profileimage" value={this.state.userSelected.profileimage}
+                                                     onChange={this.onFieldChange.bind(this)}
+                                        />
+                                    </Col>
+                                </FormGroup>
+
+                                <FormGroup>
+                                    <Col componentClass={ControlLabel} sm={2}>
+                                        Credit Card Number
+                                    </Col>
+                                    <Col sm={10}>
+                                        <FormControl type="number" name="creditCardNum" value={this.state.userSelected.creditCardNum}
+                                                     onChange={this.onFieldChange.bind(this)}
+                                        />
+                                    </Col>
+                                </FormGroup>
+
+                                <FormGroup>
+                                    <Col componentClass={ControlLabel} sm={2}>
+                                        Credit Card Full Name
+                                    </Col>
+                                    <Col sm={10}>
+                                        <FormControl type="text" name="creditCardFullName" value={this.state.userSelected.creditCardFullName}
+                                                     onChange={this.onFieldChange.bind(this)}
+                                        />
+                                    </Col>
+                                </FormGroup>
+
+                                <FormGroup>
+                                    <Col componentClass={ControlLabel} sm={2}>
+                                        Is Deleted
+                                    </Col>
+                                    <Col sm={10}>
+                                        <FormControl type="text" name="isDeleted" value={this.state.userSelected.isDeleted}
+                                                     onChange={this.onFieldChange.bind(this)}
+                                        />
+                                    </Col>
+                                </FormGroup>
+
+                                <FormGroup>
+                                    <Col componentClass={ControlLabel} sm={2}>
+                                        Created At
+                                    </Col>
+                                    <Col sm={10}>
+                                        <FormControl type="text" name="createdAt" value={this.state.userSelected.createdAt}
+                                                     onChange={this.onFieldChange.bind(this)}
+                                        />
+                                    </Col>
+                                </FormGroup>
+
+                                <FormGroup>
+                                    <Col componentClass={ControlLabel} sm={2}>
+                                        Updated At
+                                    </Col>
+                                    <Col sm={10}>
+                                        <FormControl type="text" name="updatedAt" value={this.state.userSelected.updatedAt}
+                                                     onChange={this.onFieldChange.bind(this)}
+                                        />
+                                    </Col>
+                                </FormGroup>
+
                             </fieldset>
                             {this.state.isEdit?
                                 (<FormGroup>
@@ -214,7 +343,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         axiosEditUser: (data) => { dispatch(axiosEditUser(data)); },
-        axiosFetchUser: () => { dispatch(axiosFetchUser()); },
     };
 };
 
