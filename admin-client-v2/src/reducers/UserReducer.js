@@ -14,7 +14,7 @@ const UserReducer = (state = initialState, action) => {
     }
     case actionType.EDIT_USER: {
       const updateUsers = [...state.users];
-      const editedIndex = updateUsers.findIndex(i => i._id === action.data._id);
+      const editedIndex = updateUsers.findIndex(i => i.id === action.data.id);
 
       if (editedIndex !== -1) {
         updateUsers.splice(editedIndex, 1, action.data);
