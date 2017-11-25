@@ -3,6 +3,28 @@ const Hotel = require('../models/mongooseHotel');
 // const HotelReview = require('../models/mongooseHotelReview');
 // const HotelRoom = require('../models/mongooseHotelRoom');
 
+exports.search = (req, res) => {
+  console.log('search flight');
+  const data = req.query;
+  console.log(data);
+
+  var where = data.where;
+
+  var result = [];
+
+  Hotel.find({city: where})
+    .exec(function(err, hotels){
+      if (err){
+        console.error(err);
+      } else{
+        console.log(hotels);
+        res.json(hotels);
+      }
+    });
+
+
+};
+
 exports.create = (req, res) => {
   console.log('createNewHotel');
   const data = req.body;
