@@ -110,7 +110,7 @@ export const editUser = (data) => {
 
 
 export const axiosSignIn = (data, router) => (dispatch) => {
-  axios.post('http://localhost:3000/authadmin/signin', {
+  axios.post('http://localhost:3010/authadmin/signin', {
     email: data.email,
     password: data.password,
   }).then((res) => {
@@ -142,7 +142,7 @@ export const axiosSignIn = (data, router) => (dispatch) => {
 export const axiosAddNewCar = data => (dispatch) => {
   const admin_token = localStorage.getItem('admin_token');
   console.log('axiosAddNewCar data=', data);
-  axios.post('http://localhost:3000/cars', {
+  axios.post('http://localhost:3010/cars', {
     type: data.type,
     make: data.make,
     model: data.model,
@@ -170,7 +170,7 @@ export const axiosEditCar = data => (dispatch) => {
   const admin_token = localStorage.getItem('admin_token');
   console.log('axiosAddNewCar data=', data);
 
-  axios.put(`http://localhost:3000/cars/${data._id}`, {
+  axios.put(`http://localhost:3010/cars/${data._id}`, {
     type: data.type,
     make: data.make,
     model: data.model,
@@ -198,7 +198,7 @@ export const axiosDeleteCar = data => (dispatch) => {
   const admin_token = localStorage.getItem('admin_token');
   console.log('axiosAddNewCar data=', data);
 
-  axios.delete(`http://localhost:3000/cars/${data._id}`, {
+  axios.delete(`http://localhost:3010/cars/${data._id}`, {
     headers: {
       admin_token,
     },
@@ -216,7 +216,7 @@ export const axiosDeleteCar = data => (dispatch) => {
 export const axiosFetchCar = () => (dispatch) => {
   //get admin token
 
-  axios.get('http://localhost:3000/cars')
+  axios.get('http://localhost:3010/cars')
     .then((res) => {
       console.log('--- after axiosFetchCar');
       console.log(res.data);
@@ -230,7 +230,7 @@ export const axiosFetchCar = () => (dispatch) => {
 export const axiosFetchCarDealer = () => (dispatch) => {
   //get admin token
 
-  axios.get('http://localhost:3000/cardealers')
+  axios.get('http://localhost:3010/cardealers')
     .then((res) => {
       console.log('--- after axiosFetchCarDealer');
       console.log(res.data);
@@ -245,7 +245,7 @@ export const axiosFetchCarDealer = () => (dispatch) => {
 export const axiosFetchCarBillingAll = () => (dispatch) => {
   //get admin token
   const token = localStorage.getItem('admin_token');
-  axios.get('http://localhost:3000/carbillings', {
+  axios.get('http://localhost:3010/carbillings', {
     headers: {
       token,
     },
@@ -264,7 +264,7 @@ export const axiosFetchCarBillingCount = () => (dispatch) => {
   //get admin token
   const token = localStorage.getItem('admin_token');
 
-  axios.get('http://localhost:3000/carbillings/aggregate/count', {
+  axios.get('http://localhost:3010/carbillings/aggregate/count', {
     headers: {
       token,
     },
@@ -283,7 +283,7 @@ export const axiosFetchCarBillingTotal = () => (dispatch) => {
   //get admin token
   const token = localStorage.getItem('admin_token');
 
-  axios.get('http://localhost:3000/carbillings/aggregate/total', {
+  axios.get('http://localhost:3010/carbillings/aggregate/total', {
     headers: {
       token,
     },
@@ -301,7 +301,7 @@ export const axiosFetchCarBillingTotal = () => (dispatch) => {
 export const axiosFetchUser = () => (dispatch) => {
     //get admin token
 
-    axios.get('http://localhost:3000/users')
+    axios.get('http://localhost:3010/users')
         .then((res) => {
             console.log('--- after axiosFetchUser');
             console.log(res.data);
@@ -318,7 +318,7 @@ export const axiosEditUser = user => (dispatch) => {
   const id = user.id;
   console.log("before edit user, the id is : "+ id);
   console.log(user);
-  axios.put(`http://localhost:3000/users/${id}`, user)
+  axios.put(`http://localhost:3010/users/${id}`, user)
     .then((res) => {
       console.log('-------------- after axiosEditUser--------------');
       console.log(res.data);
