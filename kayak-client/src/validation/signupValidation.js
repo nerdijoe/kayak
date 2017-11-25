@@ -52,7 +52,7 @@ export const signup = (data) => {
     //     return msg;
     // }
     // if(!(phonePattern.test(data.phone))){
-    //     msg="Enter correct phone";
+    //     msg="Enter correct Phone Number";
     //     return msg;
     // }
     // if(!(cardNamePattern.test(data.creditCardName))){
@@ -72,6 +72,68 @@ export const login = (data) => {
     }
     if (!(emailPattern.test(data.email))) {
         msg = "Enter correct email";
+        return msg;
+    }
+    return msg;
+};
+
+export const update = (data) => {
+    let msg = "";
+    const namePattern = /^[a-zA-Z\s]+$/;
+    const cardNamePattern = /^[a-zA-Z\s]+$/;
+    // const emailPattern = /^[\w.]*@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+    const passwordPattern = /^([a-zA-Z0-9@*#]{8,14})$/;
+    const phonePattern = /^\+[1][\s-(]?\d{3}\)?[\s-]?\d{3}[\s-]?\d{4}/;
+    const creditCardPattern = /[0-9]{4}[0-9]{4}[0-9]{4}[0-9]{4}/;
+    const zipcodePattern  = /^\d{5}(?:[-]\d{4})?$/;
+    // const statePattern = /^(?-i:A[LKSZRAEP]|C[AOT]|D[EC]|F[LM]|G[AU]|HI|I[ADLN]|K[SY]|LA|M[ADEHINOPST]|N[CDEHJMVY]|O[HKR]|P[ARW]|RI|S[CD]|T[NX]|UT|V[AIT]|W[AIVY])$/;
+
+    if(data.firstName ==='' || data.lastName ==='' || data.password ==='' ||
+        data.address ==='' || data.city ==='' || data.state ==='' || data.zipcode ==='' ||
+        data.phone ==='' || data.creditCardNumber ==='' || data.creditCardName ==='' ){
+        msg = "All fields are mandatory. Please fill all details";
+        return msg;
+    }
+    if (!(namePattern.test(data.firstName))) {
+        msg = "Enter correct First Name";
+        return msg;
+    }
+
+    if(!(namePattern.test(data.lastName))){
+        msg = "Enter correct Last Name";
+        return msg;
+    }
+
+    if (data.password.length<8 || data.password.length>14) {
+        msg = "Password must be 8 to 15 character long";
+        return msg;
+    }
+    if (!(passwordPattern.test(data.password))) {
+        msg = "Password should contain one small letter, \n one capital letter, one digit \nand one special character (@,#) ";
+        return msg;
+    }
+    if(!(namePattern.test(data.city))){
+        msg="Enter correct city";
+        return msg;
+    }
+    if(!(namePattern.test(data.state))){
+        msg="Enter correct state";
+        return msg;
+    }
+    if(!(zipcodePattern.test(data.zipcode))){
+        msg="Enter valid zipcode";
+        return msg;
+    }
+    if(data.creditCardNumber.length>16 || !(creditCardPattern.test(data.creditCardNumber))){
+        msg="Credit card number should be 16 characters long with no spaces or '-' in between";
+        return msg;
+    }
+    if(!(phonePattern.test(data.phone))){
+        msg="Enter correct Phone Number";
+        return msg;
+    }
+    if(!(cardNamePattern.test(data.creditCardName))){
+        msg="Enter correct Credit card name";
         return msg;
     }
     return msg;

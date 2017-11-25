@@ -5,7 +5,7 @@ body{
 header#main-header {
     border-bottom: 2px solid #e4eddb;
     border-bottom-color: rgba(255,255,255,0.2);
-    max-width: 72em;
+    /*max-width: 72em;*/
     margin: 0 auto;
     padding: 0 2em;
 }
@@ -332,3 +332,63 @@ ul.slimmenu-flight > li.active > a {
 }
 /* hotels end */
 
+/* for Bookings */
+.home-access .starred-item {
+    font-smoothing: auto;
+    background-color: transparent;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    border-bottom: solid 1px #ed8323;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    height: 64px;
+    padding: 0;
+}
+
+.home-access-sections-groups {
+    width: 100%;
+    margin: 0 0px 0 35px;
+    padding: 0 20px 0 0;
+}
+
+.home-access {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-flow: column wrap;
+    flex-flow: column wrap;
+    font-size: 14px;
+}
+.home-access-section {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    margin: 0 0 24px 0;
+}
+.home-access-sections {
+    width: 100%;
+    margin: 0 0 0 35px;
+    padding: 0;
+}
+.home-access-section__header {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    margin: 0;
+    padding: 0 11px 0 12px;
+    font-weight: 400;
+    line-height: 40px;
+    font-size: 18px;
+    color: #637282;
+    border-bottom: solid 1px #ed8323;
+}
