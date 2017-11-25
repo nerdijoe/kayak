@@ -149,7 +149,7 @@ passport.use('admin', new LocalStrategy({ usernameField: 'email', passwordField:
   });
 }));
 
-const port = process.env.PORT || '3000';
+const port = process.env.PORT || '3010';
 
 app.listen(port, () => {
   console.log(`Kayak server is listening on port ${port}`);
