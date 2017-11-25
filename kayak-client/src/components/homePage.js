@@ -8,11 +8,13 @@ import React, {Component} from 'react';
 // import Car from './cars';
 // import Header from './header';
 import Search from './search';
+import UpdateUser from './updateUser';
 import * as API from '../api/userLogin';
 import {Route, withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {loginData} from '../actions/index';
 import * as Validate from '../validation/signupValidation';
+import MyBookings from'./myBookings';
 import {Button, Modal, OverlayTrigger, Popover, Tooltip} from 'react-bootstrap';
 class HomePage extends Component {
     constructor(props) {
@@ -70,6 +72,15 @@ class HomePage extends Component {
         console.log('open');
         this.setState({ showModalLogin: true });
     }
+
+    componentDidMount() {
+        // if (localStorage.getItem('user_token') !== null) {
+        //     this.props.history.push('/dashboard');
+        // }
+
+        // this.props.signInErrorClear();
+        // this.props.signUpSuccessClear();
+    }
     handleUserSignIn = (event) => {
         var valid = Validate.signup(this.state);
         if(valid === ''){
@@ -87,9 +98,22 @@ class HomePage extends Component {
                 creditCardFullName: this.state.creditCardName,
             }
             let user = {
-                "firstName" : "Manali"
+                "firstName" : "Manali",
+                "lastName": 'Jain',
+                "email": 'manali.jain@gmail.com',
+                "password": 'kjfkkfs',
+                "address" : 'jfdjff',
+                "city" : 'sdsd',
+                "state" : 'dsds',
+                "zipcode" : '12435',
+                "phone" : '333 3333 3333',
+                "creditCardNumber" : '23345454534',
+                "creditCardName" : 'mnlai dif'
             }
             this.closeModal();
+            localStorage.setItem('user_token', "123456678990");
+            localStorage.setItem('user_login_data', JSON.stringify(user));
+            localStorage.setItem('is_user_logged', true);
             this.props.loginData(true, user);
             // API.signup(payload)
             //     .then((res) => {
@@ -181,6 +205,21 @@ class HomePage extends Component {
             event.preventDefault();
         }
     }
+
+    handleLogout = () => {
+        // API.signout()
+        //     .then((res) => {
+        //         if (res.data.statusCode === 401) {
+        //             window.sessionStorage.removeItem('jwtToken');
+        //             this.props.loginState(false);
+        //         } else {
+        //             console.log("error occured");
+        //         }
+        //     });
+        localStorage.removeItem('user_token');
+        localStorage.removeItem('user_login_data');
+        localStorage.removeItem('is_user_logged');
+    }
     render() {
 
         let messagediv =null;
@@ -201,35 +240,43 @@ class HomePage extends Component {
             messageDivLogin = <div></div>;
         }
 
-        let loginData = this.props.loginDataProp;
-
+        // let loginData = this.props.loginDataProp;
+        let bookings = null;
         let isLoggedIn =null;
-        if(loginData.isLogged === false){
+        let loggedFlag = localStorage.getItem('is_user_logged');
+
+        if(loggedFlag === null){
             isLoggedIn = <li><a href="#" onClick={() => {
                             //this.props.history.push("/signup");
                             this.openModal();
                             }}>SignUp</a>
                         </li>
         } else{
-            let name = loginData.loginData.firstName;
-            isLoggedIn = <li><a>Hello {name}</a>
-                        </li>
+            let loginData = localStorage.getItem('user_login_data');
+            let name = JSON.parse(loginData);
+            isLoggedIn = <li><a href="/updateUser" onClick={() => {
+                        this.props.history.push("/updateUser");
+                        }}>Hello {name.firstName}</a>
+                         </li>
         }
 
         let signout =null;
-        if(loginData.isLogged === false){
+        if(loggedFlag === null){
             signout = <li><a href="/#" onClick={() => {
                         // this.props.history.push("/signin");
                         this.openModalLogin();
                     }}>SignIn</a>
                     </li>
         } else{
-            let name = loginData.loginData.firstName;
             signout = <li><a href="/#" onClick={() => {
-                        // this.props.history.push("/signin");
-                        // this.openModalLogin();
-                    }}>Logout</a>
-                    </li>
+                            this.handleLogout();
+                        }}>Logout</a>
+                      </li>
+
+            bookings = <li><a href="/myBookings" onClick={() => {
+                            this.props.history.push("/myBookings");
+                        }}>My Bookings</a>
+                        </li>
         }
 
         return (
@@ -238,7 +285,7 @@ class HomePage extends Component {
                     <div className="container">
                         <div className="nav">
                             <div className="row">
-                                <div className="col-sm-5">
+                                <div className="col-sm-offset-1 col-sm-5">
                                     <ul className="slimmenu">
                                         <li className="logo"> </li>
                                         <li><a href="/hotels" onClick={() => {
@@ -260,10 +307,11 @@ class HomePage extends Component {
                                         </li>
                                     </ul>
                                 </div>
-                                <div className="col-sm-3 col-sm-offset-3">
+                                <div className="col-sm-4 col-sm-offset-2">
                                     <ul className="slimmenu">
                                         {isLoggedIn}
                                         {signout}
+                                        {bookings}
                                     </ul>
                                 </div>
                             </div>
@@ -465,7 +513,16 @@ class HomePage extends Component {
                         <Search selection="cars"/>
                     </div>
                 )}/>
-
+                <Route exact path="/updateUser" render={() => (
+                    <div>
+                        <UpdateUser/>
+                    </div>
+                )}/>
+                <Route exact path="/myBookings" render={() => (
+                    <div>
+                        <MyBookings/>
+                    </div>
+                )}/>
             </div>
         )
     }
@@ -478,7 +535,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-    console.log("state App", state)
+    console.log("state App", state);
     return{
         loginDataProp : state.loginData
     };
