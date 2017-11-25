@@ -12,6 +12,18 @@ const UserReducer = (state = initialState, action) => {
         users: [...action.data],
       };
     }
+      case actionType.EDIT_USER: {
+          const updateUsers = [...state.users];
+          const editedIndex = updateUsers.findIndex(i => i._id === action.data._id);
+
+          if (editedIndex !== -1) {
+              updateUsers.splice(editedIndex, 1, action.data);
+          }
+          return {
+              ...state,
+              users: updateUsers,
+      };
+      }
     default:
       return state;
   }
