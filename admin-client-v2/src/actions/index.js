@@ -312,6 +312,7 @@ export const axiosFetchUser = () => (dispatch) => {
     });
 };
 
+
 export const axiosEditUser = user => (dispatch) => {
   //get admin token
   const admin_token = localStorage.getItem('admin_token');
@@ -327,4 +328,5 @@ export const axiosEditUser = user => (dispatch) => {
     }).catch((err) => {
       console.log(err);
     });
+
 };
