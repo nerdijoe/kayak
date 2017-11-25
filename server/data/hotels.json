@@ -1,0 +1,103 @@
+[
+  {
+    "name": "Hyatt",
+    "stars": 5,
+    "address": "282 Almaden Blvd",
+    "city": "San Jose",
+    "state": "CA",
+    "country": "US",
+    "zipcode": "95133",
+    "reviews": [{
+      "user": "frank",
+      "content": "good",
+      "rating": 4
+    }, {
+      "user": "ruby",
+      "content": "normal",
+      "rating": 3
+    }],
+    "rooms": [{
+      "type": "small",
+      "description": "small room",
+      "price": 100,
+      "capacity": 2,
+      "imageUrl": "images/room/hilton_small_room"
+
+    }, {
+      "type": "big",
+      "description": "big room",
+      "price": 200,
+      "capacity": 4,
+      "imageUrl": "images/room/hilton_big_room"
+    }
+    ],
+    "imageUrl": "/images/hotel/Hyatt.jpg"
+  },
+  {
+    "name": "Wyndham Garden",
+    "stars": 4,
+    "address": "399 Silicon Valley Blvd",
+    "city": "San Jose",
+    "state": "CA",
+    "country": "US",
+    "zipcode": "95138",
+    "reviews": [{
+      "user": "frank",
+      "content": "not bad",
+      "rating": 3
+    }, {
+      "user": "ruby",
+      "content": "good",
+      "rating": 4
+    }],
+    "rooms": [{
+      "type": "small",
+      "description": "small room",
+      "price": 120,
+      "capacity": 2,
+      "imageUrl": "images/room/hilton_small_room"
+
+    }, {
+      "type": "big",
+      "description": "big room",
+      "price": 150,
+      "capacity": 4,
+      "imageUrl": "images/room/hilton_big_room"
+    }
+    ],
+    "imageUrl": "/images/hotel/Wyndham.jpg"
+  }, {
+  "name": "Pavilion Inn",
+  "stars": 2,
+  "address": "1280 North 4th Street",
+  "city": "San Jose",
+  "state": "CA",
+  "country": "US",
+  "zipcode": "95112",
+  "reviews": [{
+    "user": "frank",
+    "content": "normal",
+    "rating": 2
+  }, {
+    "user": "ruby",
+    "content": "bit bad",
+    "rating": 1
+  }],
+  "rooms": [{
+    "type": "small",
+    "description": "small room",
+    "price": 50,
+    "capacity": 2,
+    "imageUrl": "images/room/hilton_small_room"
+
+  }, {
+    "type": "big",
+    "description": "big room",
+    "price": 80,
+    "capacity": 4,
+    "imageUrl": "images/room/hilton_big_room"
+  }
+  ],
+  "imageUrl": "/images/hotel/Pavilion.jpg"
+  }
+]

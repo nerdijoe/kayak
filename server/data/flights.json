@@ -1,0 +1,55 @@
+[
+  {
+    "flightNumber": "United 1449",
+    "departureTime": "01:11:00 AM",
+    "arrivalTime": "04:45:00 AM",
+    "departureAirport": "5a19e16fb8522edae904b643",
+    "arrivalAirport": "5a19e16fb8522edae904b544",
+    "airline": "5a19e168b8522edae904a705",
+    "prices": [{
+      "type": "business",
+      "price": 1607
+    }, {
+      "type": "economic",
+      "price": 472
+    }, {
+      "type": "first",
+      "price": 2115
+    }]
+  },{
+  "flightNumber": "United 1450",
+  "departureTime": "07:11:00 PM",
+  "arrivalTime": "10:45:00 PM",
+  "departureAirport": "5a19e16fb8522edae904b544",
+  "arrivalAirport": "5a19e16fb8522edae904b643",
+  "airline": "5a19e168b8522edae904a705",
+  "prices": [{
+    "type": "business",
+    "price": 1657
+  }, {
+    "type": "economic",
+    "price": 522
+  }, {
+    "type": "first",
+    "price": 2165
+  }]
+},
+  {
+    "flightNumber": "Delta 5795",
+    "departureTime": "04:33:13 PM",
+    "arrivalTime": "06:22:17 PM",
+    "departureAirport": "5a19e16fb8522edae904b544",
+    "arrivalAirport": "5a19e16fb8522edae904b5f5",
+    "airline": "5a19e168b8522edae904a705",
+    "prices": [{
+      "type": "business",
+      "price": 967
+    }, {
+      "type": "economic",
+      "price": 353
+    }, {
+      "type": "first",
+      "price": 1497
+    }]
+  }
+]
