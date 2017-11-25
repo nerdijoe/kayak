@@ -11,8 +11,8 @@ const carBillingSchema = new Schema({
   totalAmount: { type: Number, required: true },
   startDate: { type: Date, required: true, default: Date.now },
   endDate: { type: Date, required: true, default: Date.now },
-  createdAt: { type: Date, required: false, default: Date.now },
-  updatedAt: { type: Date, required: false, default: Date.now },
+}, {
+  timestamps: true,
 });
 
 const CarBilling = mongoose.model('CarBilling', carBillingSchema);
