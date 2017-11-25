@@ -6,6 +6,45 @@ const moment = require('moment');
 // const HotelReview = require('../models/mongooseHotelReview');
 // const HotelRoom = require('../models/mongooseHotelRoom');
 
+
+//- Search Flight
+//Get /flights/search?departure=SJC&arrivalAt=SFO&class=Economy
+
+exports.search = (req, res) => {
+  console.log('search flight');
+  const data = req.query;
+  console.log(data);
+
+  var departure = data.departure;
+  var arrivalAt = data.arrivalAt;
+  var flightClass = data.class;
+
+  var result = [];
+
+  Flight.find({})
+    .populate('departureAirport')
+    .populate('arrivalAirport')
+    .populate('airline')
+    .exec(function(err, flights){
+      if (err){
+        console.error(err);
+      } else{
+        console.log(flights);
+
+        for (var i = 0; i < flights.length; i++){
+          var flight = flights[i];
+          if(flight.departureAirport.iata === departure && flight.arrivalAirport.iata === arrivalAt){
+            result.push(flight);
+          }
+        }
+
+        res.json(result);
+      }
+    });
+
+
+};
+
 exports.create = (req, res) => {
   console.log('createNewFlight');
   const data = req.body;

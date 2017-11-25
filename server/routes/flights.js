@@ -5,6 +5,8 @@ router.post('/', flightController.create);
 router.get('/', flightController.getAll);
 router.get('/airports', flightController.getAllAirports);
 router.get('/airlines', flightController.getAllAirlines);
+
+router.get('/search', flightController.search);
 router.get('/:id', flightController.getOne);
 // router.put('/:id', userController.edit);
 // router.delete('/:id', userController.delete);
