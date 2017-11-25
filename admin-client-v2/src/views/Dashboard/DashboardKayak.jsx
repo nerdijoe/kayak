@@ -4,7 +4,7 @@ import { Grid, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import Moment from 'moment';
 import ReactGridLayout from 'react-grid-layout';
-
+import { Responsive, WidthProvider } from 'react-grid-layout';
 
 import {Card} from 'components/Card/Card.jsx';
 import {StatsCard} from 'components/StatsCard/StatsCard.jsx';
@@ -21,6 +21,8 @@ import {
     responsiveBar,
     legendBar
 } from 'variables/VariablesKayak.jsx';
+
+const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 class Dashboard extends Component {
     createLegend(json){
@@ -95,9 +97,9 @@ class Dashboard extends Component {
     console.log('customDataBar=', customDataBar);
 
     const layout = [
-      {i: 'a', x: 0, y: 0, w: 1, h: 2, static: true},
-      {i: 'b', x: 1, y: 0, w: 3, h: 2, minW: 2, maxW: 4},
-      {i: 'c', x: 4, y: 0, w: 1, h: 2}
+      {i: 'a', x: 0, y: 0, w: 2, h: 2},
+      {i: 'b', x: 2, y: 1, w: 2, h: 2},
+      {i: 'c', x: 4, y: 0, w: 2, h: 2}
     ];
 
 
@@ -201,10 +203,66 @@ class Dashboard extends Component {
                 </Grid>
 
                 <ReactGridLayout className="layout" layout={layout} cols={12} rowHeight={30} width={1200}>
-                  <div key="a">a</div>
-                  <div key="b">b</div>
-                  <div key="c">c</div>
+                  <div key="a">
+                    <StatsCard
+                      bigIcon={<i className="pe-7s-car text-warning"></i>}
+                      statsText="Total Rentals"
+                      statsValue={totalRentals}
+                      statsIcon={<i className="fa fa-refresh"></i>}
+                      statsIconText="Updated now"
+                    />
+                  </div>
+                  <div key="b">
+                    <StatsCard
+                      bigIcon={<i className="pe-7s-wallet text-success"></i>}
+                      statsText="Total Revenue"
+                      statsValue={totalRevenue}
+                      statsIcon={<i className="fa fa-calendar-o"></i>}
+                      statsIconText="Last day"
+                    />
+                  </div>
+                  <div key="c">
+                    <StatsCard
+                      bigIcon={<i className="pe-7s-date text-danger"></i>}
+                      statsText="Days Booked"
+                      statsValue={totalRentalsDays}
+                      statsIcon={<i className="fa fa-clock-o"></i>}
+                      statsIconText="In the last hour"
+                    />
+                  </div>
                 </ReactGridLayout>
+
+                <ResponsiveReactGridLayout className="layout"
+                  breakpoints={{lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0}}
+                  cols={{lg: 12, md: 10, sm: 6, xs: 4, xxs: 2}}>
+                  <div key="1">
+                    <StatsCard
+                      bigIcon={<i className="pe-7s-car text-warning"></i>}
+                      statsText="Total Rentals"
+                      statsValue={totalRentals}
+                      statsIcon={<i className="fa fa-refresh"></i>}
+                      statsIconText="Updated now"
+                    />
+                  </div>
+                  <div key="2">
+                    <StatsCard
+                      bigIcon={<i className="pe-7s-wallet text-success"></i>}
+                      statsText="Total Revenue"
+                      statsValue={totalRevenue}
+                      statsIcon={<i className="fa fa-calendar-o"></i>}
+                      statsIconText="Last day"
+                    />
+                  </div>
+                  <div key="3">
+                    <StatsCard
+                      bigIcon={<i className="pe-7s-date text-danger"></i>}
+                      statsText="Days Booked"
+                      statsValue={totalRentalsDays}
+                      statsIcon={<i className="fa fa-clock-o"></i>}
+                      statsIconText="In the last hour"
+                    />
+                  </div>
+                </ResponsiveReactGridLayout>
             </div>
         );
     }
