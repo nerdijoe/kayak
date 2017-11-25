@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const CarDealer = require('../models/mongooseCarDealer');
 
 exports.create = (req, res) => {
-  console.log('createNewCar');
+  console.log('create New Car Dealer');
   const data = req.body;
 
   CarDealer.create({
