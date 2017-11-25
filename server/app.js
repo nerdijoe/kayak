@@ -39,8 +39,16 @@ sequelize
 
 
 // mongoose setup ####
+// const dbConfig = {
+//   development: 'mongodb://127.0.0.1/kayak',
+//   test: 'mongodb://127.0.0.1/kayak_test',
+// };
+
+const username = process.env.MONGODB_ATLAS_USERNAME;
+const password = process.env.MONGODB_ATLAS_PASSWORD;
 const dbConfig = {
-  development: 'mongodb://127.0.0.1/kayak',
+  production: `mongodb://${username}:${password}@cluster0-shard-00-00-i5u9w.mongodb.net:27017,cluster0-shard-00-01-i5u9w.mongodb.net:27017,cluster0-shard-00-02-i5u9w.mongodb.net:27017/kayak?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin`,
+  development: `mongodb://${username}:${password}@cluster0-shard-00-00-i5u9w.mongodb.net:27017,cluster0-shard-00-01-i5u9w.mongodb.net:27017,cluster0-shard-00-02-i5u9w.mongodb.net:27017/kayak_dev?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin`,
   test: 'mongodb://127.0.0.1/kayak_test',
 };
 
@@ -49,6 +57,8 @@ mongoose.Promise = global.Promise;
 mongoose.connect(dbConfig[appEnv], { useMongoClient: true }, (err, res) => {
   console.log(`Connected to DB: ${dbConfig[appEnv]}`);
 });
+
+
 // mongoose setup end ####
 
 
