@@ -59,7 +59,7 @@ class Search extends Component{
             <div className="bg-front full-center" >
                 <div className="container">
                     <div className="search-tabs search-tabs-bg">
-                        <h1>Search hundreds of travel site at once</h1>
+                        <h1>Search hundreds of travel sites at once</h1>
                         <div className="tabbable">
                             <ul className="nav nav-tabs" id="myTab" role="tablist">
                                 <li className={this.isActive('hotels')}>

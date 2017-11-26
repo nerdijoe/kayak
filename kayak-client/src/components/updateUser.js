@@ -5,7 +5,7 @@ import React, {Component} from 'react';
 import * as API from '../api/userLogin';
 import {loginData} from '../actions/index';
 import {connect} from 'react-redux';
-import {Button} from 'react-bootstrap';
+import {Button, Modal} from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 import * as Validate from '../validation/signupValidation';
 class UpdateUser extends Component{
@@ -28,15 +28,29 @@ class UpdateUser extends Component{
             state : (loginData)? loginData.state : '',
             zipcode : (loginData)? loginData.zipcode : '',
             phone : (loginData)? loginData.phone : '',
-            creditCardNumber : (loginData)? loginData.creditCardNumber : '',
-            creditCardName : (loginData)? loginData.creditCardName : '',
-            messagediv : ''
+            profileImage : (loginData)? loginData.profileImage : '',
+            creditCardNum : (loginData)? loginData.creditCardNum : '',
+            creditCardFullName : (loginData)? loginData.creditCardFullName : '',
+            messagediv : '',
+            showUpdateModal : false
         }
+        this.openUpdateModel = this.openUpdateModel.bind(this);
+        this.closeUpdateModel = this.closeUpdateModel.bind(this);
+    }
+
+    closeUpdateModel() {
+        this.setState({
+            ...this.state,
+            showUpdateModal: false
+        });
+    }
+    openUpdateModel() {
+        this.setState({ showUpdateModal: true });
     }
     componentWillMount(){
 
-            document.body.style.backgroundImage = "none";
-        document.body.style.backgroundColor = "lightgrey";
+        //     document.body.style.backgroundImage = "none";
+        // document.body.style.backgroundColor = "lightgrey";
         // $("#devicelayout").css("property", "value")
         // $("#main-header").css("backgroundColor", "black");
     }
@@ -53,13 +67,28 @@ class UpdateUser extends Component{
     handleUpadateUser=(event) => {
         let valid = Validate.update(this.state);
         if (valid === '') {
-            let loginData = this.props.loginDataProp;
-            this.setState({
-                // ...this.state,
-                // "_id": loginData._id,
-                // "id": loginData.id,
-                // "uuid": loginData.uuid
-            }, this.callAPI);
+            let userLoginData = localStorage.getItem('user_login_data');
+            let loginData = null;
+            if(userLoginData !== null)
+            {
+                loginData = JSON.parse(userLoginData);
+            }
+            let payload = {
+                id : loginData.id,
+                firstName: this.state.firstName,
+                lastName: this.state.lastName,
+                email: this.state.email,
+                password: this.state.password,
+                address : this.state.address,
+                city : this.state.city,
+                state : this.state.state,
+                zipcode : this.state.zipcode,
+                phone : this.state.phone,
+                profileImage :  this.state.profileImage,
+                creditCardNum : this.state.creditCardNum,
+                creditCardFullName : this.state.creditCardFullName
+            }
+            this.callAPI(payload);
         } else {
             this.setState({
                 ...this.state,
@@ -69,46 +98,32 @@ class UpdateUser extends Component{
         }
     }
 
-    callAPI = () => {
-        // API.saveAbout(this.state)
-        //     .then((res) => {
-        //         if (res.data.statusCode === 201) {
-        //             this.setState({
-        //                 isLoggedIn: true,
-        //                 message: res.data.message
-        //             });
-        //             let overview ={
-        //                 "work": this.state.work,
-        //                 "education":this.state.education,
-        //                 "phone":this.state.phone,
-        //                 "events": this.state.events
-        //             }
-        //             this.props.aboutUpdate(JSON.stringify(overview));
-        //         } else if (res.data.statusCode === 500) {
-        //             this.setState({
-        //                 isLoggedIn: false,
-        //                 message: res.data.message
-        //             });
-        //         } else if(res.data.statusCode === 400) {
-        //             this.setState({
-        //                 isLoggedIn: false,
-        //                 message: res.data.message
-        //             });
-        //         } else if (res.data.statusCode === 601  || res.data.statusCode === 600) {
-        //             alert("Token expired or invalid. Please login again");
-        //             this.setState({
-        //                 isLoggedIn: false,
-        //                 message: res.data.message
-        //             });
-        //             sessionStorage.removeItem("jwtToken");
-        //             this.props.loginState(false);
-        //         }
-        //     });
+    callAPI = (payload) => {
+        API.update(payload)
+            .then((res) => {
+                if(res.data === true){
+                    localStorage.setItem('user_login_data', JSON.stringify(payload));
+                    this.props.loginData(true, payload);
+                    this.setState({
+                        ...this.state,
+                        messagediv: ''
+                    });
+                    this.openUpdateModel()
+                } else {
+                    this.setState({
+                        ...this.state,
+                        messagediv: "Update Error Occured, Please try again"
+                    });
+                }
+            }).catch( (error) => {
+            this.setState({
+                ...this.state,
+                messagediv: "Update Error Occured, Please try again"
+            });
+        })
     };
 
     render() {
-        // let loginData = this.props.loginDataProp;
-        // let name = loginData.firstname  + " " + loginData.lastname;
         let message =null;
         if(this.state.messagediv !== ''){
             message = <div className="clearfix">
@@ -118,6 +133,24 @@ class UpdateUser extends Component{
             message = <div></div>;
         }
         return(
+            <div>
+                <Modal show={this.state.showUpdateModal} onHide={() => this.closeUpdateModel()}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>SignUp Success</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <div className="row justify-content-md-center">
+                            <div className="form-group row">
+                                <div className="col-sm-offset-1 col-sm-10 col-sm-offset-1">
+                                    <div className="alert alert-success text-center" role="alert">Profile updated Successfully</div>
+                                </div>
+                            </div>
+                        </div>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button onClick={() => this.closeUpdateModel()}>Close</Button>
+                    </Modal.Footer>
+                </Modal>
             <div className="bg-front full-center" >
                 <div className="container">
 
@@ -126,12 +159,12 @@ class UpdateUser extends Component{
                         {message}
                     </div>
                     <div className="form-group row">
-                        <div className="col-sm-offset-5 col-form-label">
+                        <div className="col-sm-offset-5 col-form-label labelColor">
                             Update your Data
                         </div>
                     </div>
                     <div className="form-group row">
-                        <label className="col-sm-offset-2 col-sm-2 col-form-label">First Name</label>
+                        <label className="col-sm-offset-2 col-sm-2 col-form-label labelColor">First Name</label>
                         <div className="col-sm-5">
                             <input type="text" className="form-control"
                                    value={this.state.firstName}
@@ -141,7 +174,7 @@ class UpdateUser extends Component{
                         </div>
                     </div>
                     <div className="form-group row">
-                        <label className="col-sm-offset-2 col-sm-2 col-form-label">Last Name</label>
+                        <label className="col-sm-offset-2 col-sm-2 col-form-label labelColor">Last Name</label>
                         <div className="col-sm-5">
                             <input type="text" className="form-control"
                                    value={this.state.lastName}
@@ -151,15 +184,15 @@ class UpdateUser extends Component{
                         </div>
                     </div>
                     <div className="form-group row">
-                        <label className="col-sm-offset-2 col-sm-2 col-form-label">Email</label>
+                        <label className="col-sm-offset-2 col-sm-2 col-form-label labelColor">Email</label>
                         <div className=" col-sm-5">
                             <input type="text"  className="form-control"
-                                   value={this.state.email} readonly
+                                   value={this.state.email} readOnly
                                    />
                         </div>
                     </div>
                     <div className="form-group row">
-                        <label className="col-sm-offset-2 col-sm-2 col-form-label">Password</label>
+                        <label className="col-sm-offset-2 col-sm-2 col-form-label labelColor">Password</label>
                         <div className="col-sm-5">
                             <input type="password" className="form-control" placeholder="Update Your Password"
                                    value={this.state.password}
@@ -169,7 +202,7 @@ class UpdateUser extends Component{
                         </div>
                     </div>
                     <div className="form-group row">
-                        <label className="col-sm-offset-2 col-sm-2 col-form-label">Address</label>
+                        <label className="col-sm-offset-2 col-sm-2 col-form-label labelColor">Address</label>
                         <div className="col-sm-5">
                             <input type="text" className="form-control"
                                    value={this.state.address}
@@ -179,7 +212,7 @@ class UpdateUser extends Component{
                         </div>
                     </div>
                     <div className="form-group row">
-                        <label className="col-sm-offset-2 col-sm-2 col-form-label">City</label>
+                        <label className="col-sm-offset-2 col-sm-2 col-form-label labelColor">City</label>
                         <div className="col-sm-5">
                             <input type="text" className="form-control" id="inputPassword"
                                    value={this.state.city}
@@ -189,7 +222,7 @@ class UpdateUser extends Component{
                         </div>
                     </div>
                     <div className="form-group row">
-                        <label className="col-sm-offset-2 col-sm-2 col-form-label">State</label>
+                        <label className="col-sm-offset-2 col-sm-2 col-form-label labelColor">State</label>
                         <div className="col-sm-5">
                             <input type="text" className="form-control" id="inputPassword"
                                    value={this.state.state}
@@ -199,7 +232,7 @@ class UpdateUser extends Component{
                         </div>
                     </div>
                     <div className="form-group row">
-                        <label className="col-sm-offset-2 col-sm-2 col-form-label">Zip Code</label>
+                        <label className="col-sm-offset-2 col-sm-2 col-form-label labelColor">Zip Code</label>
                         <div className="col-sm-5">
                             <input type="text" className="form-control"
                                    value={this.state.zipcode}
@@ -209,7 +242,7 @@ class UpdateUser extends Component{
                         </div>
                     </div>
                     <div className="form-group row">
-                        <label className="col-sm-offset-2 col-sm-2 col-form-label">Phone</label>
+                        <label className="col-sm-offset-2 col-sm-2 col-form-label labelColor">Phone</label>
                         <div className="col-sm-5">
                             <input type="text" className="form-control" id="inputPassword"
                                    value={this.state.phone}
@@ -219,22 +252,32 @@ class UpdateUser extends Component{
                         </div>
                     </div>
                     <div className="form-group row">
-                        <label className="col-sm-offset-2 col-sm-2 col-form-label">Credit card Number</label>
+                        <label className="col-sm-offset-2 col-sm-2 col-form-label labelColor">Profile Image URL</label>
                         <div className="col-sm-5">
-                            <input type="number" className="form-control"
-                                   value={this.state.creditCardNumber}
+                            <input type="text" className="form-control"  placeholder="Paste your URL"
+                                   value={this.state.profileImage}
                                    onChange={(event) => {
-                                       this.setState({...this.state,creditCardNumber: event.target.value});
+                                       this.setState({...this.state,profileImage: event.target.value});
                                    }}required/>
                         </div>
                     </div>
                     <div className="form-group row">
-                        <label className="col-sm-offset-2 col-sm-2 col-form-label">Credit Card Name</label>
+                        <label className="col-sm-offset-2 col-sm-2 col-form-label labelColor">Credit card Number</label>
+                        <div className="col-sm-5">
+                            <input type="number" className="form-control"
+                                   value={this.state.creditCardNum}
+                                   onChange={(event) => {
+                                       this.setState({...this.state,creditCardNum: event.target.value});
+                                   }}required/>
+                        </div>
+                    </div>
+                    <div className="form-group row">
+                        <label className="col-sm-offset-2 col-sm-2 col-form-label labelColor">Credit Card Name</label>
                         <div className="col-sm-5">
                             <input type="text" className="form-control"
-                                   value={this.state.creditCardName}
+                                   value={this.state.creditCardFullName}
                                    onChange={(event) => {
-                                       this.setState({...this.state,creditCardName: event.target.value});
+                                       this.setState({...this.state,creditCardFullName: event.target.value});
                                    }}required/>
                         </div>
                     </div>
@@ -244,7 +287,10 @@ class UpdateUser extends Component{
                             <Button  type="button" className = "btn-btn-primary" onClick={this.handleUpadateUser}>Update</Button>
                         </div>
                     </div>
+
                 </div>
+            </div>
+
             </div>
             </div>
         );
@@ -261,8 +307,6 @@ function mapStateToProps(state) {
         loginDataProp : state.loginData
     };
 }
-
-// export default connect(mapStateToProps, mapDispatchToProps)(UpdateUser);
 
 const UpdateUserPage = withRouter(connect(mapStateToProps, mapDispatchToProps)(UpdateUser));
 export default UpdateUserPage;

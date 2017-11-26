@@ -22,8 +22,8 @@ class MyBookings extends Component{
         }
     }
     componentWillMount(){
-        document.body.style.backgroundImage = "none";
-        document.body.style.backgroundColor = "lightgrey";
+        // document.body.style.backgroundImage = "none";
+        // document.body.style.backgroundColor = "lightgrey";
     }
 
     componentDidMount() {
