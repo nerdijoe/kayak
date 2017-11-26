@@ -42,7 +42,7 @@ exports.search = (req, res) => {
         for (var i = 0; i < flights.length; i++){
 
           var flight = flights[i];
-          if(flight.departureAirport.iata === departure && flight.arrivalAirport.iata === arrivalAt){
+          if(flight.departureAirport.city === departure && flight.arrivalAirport.city === arrivalAt){
 
             console.log(flight);
             result_json = {};
@@ -52,8 +52,8 @@ exports.search = (req, res) => {
             result_json.arrivalTime = flight.arrivalTime;
             result_json.departureDate = departureDate;
             result_json.arrivalDate = TimeTool.getDepartureDate(departureDate, flight.departureTime, flight.arrivalTime);
-            result_json.origin = flight.departureAirport.name;
-            result_json.destination = flight.arrivalAirport.name;
+            result_json.origin = getAirportLocation(flight.departureAirport);
+            result_json.destination = getAirportLocation(flight.arrivalAirport);
             result_json.imageURL = "http://localhost:3010/image/delta.jpg";
             result_json.flightDuration = TimeTool.getDuration(flight.departureTime, flight.arrivalTime);
             result_json.class = flightClass;
@@ -86,6 +86,10 @@ exports.search = (req, res) => {
 
 
 };
+
+function getAirportLocation(airport){
+  return airport.code + ', ' + airport.city + ', ' + airport.state + ', ' + airport.country;
+}
 
 exports.create = (req, res) => {
   console.log('createNewFlight');
