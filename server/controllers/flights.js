@@ -3,8 +3,14 @@ const Flight = require('../models/mongooseFlight');
 const FlightAirline = require('../models/mongooseFlightAirline');
 const FlightAirport = require('../models/mongooseFlightAirport');
 const moment = require('moment');
+const TimeTool = require('../helpers/TimeTool');
 // const HotelReview = require('../models/mongooseHotelReview');
 // const HotelRoom = require('../models/mongooseHotelRoom');
+
+const priceMap = new Map();
+priceMap.set("Business", 0);
+priceMap.set("Economy", 1);
+priceMap.set("First", 2);
 
 
 //- Search Flight
@@ -18,27 +24,63 @@ exports.search = (req, res) => {
   var departure = data.departure;
   var arrivalAt = data.arrivalAt;
   var flightClass = data.class;
+  var departureDate = data.departureDate;
 
-  var result = [];
+  var results = [];
+  var result_json;
 
   Flight.find({})
-    .populate('departureAirport')
-    .populate('arrivalAirport')
-    .populate('airline')
+    .populate('departureAirport arrivalAirport airline')
+    // .populate('departureAirport')
+    // .populate('arrivalAirport')
+    // .populate('airline')
     .exec(function(err, flights){
       if (err){
         console.error(err);
       } else{
-        console.log(flights);
-
+        // console.log(flights);
         for (var i = 0; i < flights.length; i++){
+
           var flight = flights[i];
           if(flight.departureAirport.iata === departure && flight.arrivalAirport.iata === arrivalAt){
-            result.push(flight);
+
+            console.log(flight);
+            result_json = {};
+            result_json.airlines = flight.airline.name;
+            result_json.flightNumber = flight.flightNumber;
+            result_json.departTime = flight.departureTime;
+            result_json.arrivalTime = flight.arrivalTime;
+            result_json.departureDate = departureDate;
+            result_json.arrivalDate = departureDate;
+            result_json.origin = flight.departureAirport.name;
+            result_json.destination = flight.arrivalAirport.name;
+            result_json.imageURL = "http://localhost:3010/image/delta.jpg";
+            result_json.flightDuration = TimeTool.getDuration(flight.departureTime, flight.arrivalTime);
+            result_json.class = flightClass;
+            result_json.price = flight.prices[priceMap.get(flightClass)].price;
+
+            results.push(result_json);
           }
         }
+        /*
+{
+  airlines: "delta",
+    flightNumber: 1234,
+  departTime: "12h 30m ",
+  arrivalTime: "22h 10m",
+  departureDate: "Wed, Mar 23 2017",
+  arrivalDate: "Wed, Mar 23 2017",
+  origin: "Delhi, India",
+  destination: "Mumbai, India",
+  // imageURL: "../img/delta.jpg",
+  imageURL: "http://localhost:3000/image/delta.jpg",
+  flightDuration: "9h 40m",
+  class: "Economy",
+  price:120
+}
+*/
 
-        res.json(result);
+        res.json(results);
       }
     });
 
