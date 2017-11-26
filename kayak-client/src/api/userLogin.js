@@ -7,7 +7,7 @@ const axios = require("axios")
 
 export const signup = (payload) => {
     console.log("payload", payload)
-    return axios.post('http://localhost:3003/users/signup', payload)
+    return axios.post('http://localhost:3000/auth/signup', payload)
         .then(function (response) {
             console.log(response);
             return response

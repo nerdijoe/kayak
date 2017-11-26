@@ -23,6 +23,7 @@ class HomePage extends Component {
             activePage: '',
             showModal : false,
             showModalLogin : false,
+            showModalSuccess : false,
             message : '',
             messageDivLogin : '',
             firstName: '',
@@ -34,24 +35,18 @@ class HomePage extends Component {
             state : '',
             zipcode : '',
             phone : '',
+            profileImage : '',
             creditCardNumber : '',
             creditCardName : ''
         };
         this.openModal = this.openModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
-        // this.openModalDir = this.openModalDir.bind(this);
-        // this.closeModalDir = this.closeModalDir.bind(this);
+        this.openModalLogin = this.openModalLogin.bind(this);
+        this.closeModalLogin = this.closeModalLogin.bind(this);
+        this.openModalSuccess = this.openModalSuccess.bind(this);
+        this.closeModalSuccess = this.closeModalSuccess.bind(this);
     }
 
-    // issActive = (value) => {
-    //     return ((value === this.state.activePage) ? 'active' : '');
-    // }
-    // setActive = (value) => {
-    //     this.setState({
-    //         ...this.state,
-    //         activePage: value
-    //     });
-    // }
 
     closeModal() {
         this.setState({
@@ -59,9 +54,7 @@ class HomePage extends Component {
             showModal: false
         });
     }
-
     openModal() {
-        console.log('open');
         this.setState({ showModal: true });
     }
     closeModalLogin() {
@@ -69,8 +62,13 @@ class HomePage extends Component {
     }
 
     openModalLogin() {
-        console.log('open');
         this.setState({ showModalLogin: true });
+    }
+    closeModalSuccess() {
+        this.setState({ showModalSuccess: false });
+    }
+    openModalSuccess() {
+        this.setState({ showModalSuccess: true });
     }
 
     componentDidMount() {
@@ -94,61 +92,26 @@ class HomePage extends Component {
                 state: this.state.state,
                 zipcode: this.state.zipcode,
                 phone: this.state.phone,
+                profileImage : this.state.profileImage,
                 creditCardNum: this.state.creditCardNumber,
                 creditCardFullName: this.state.creditCardName,
             }
-            let user = {
-                "firstName" : "Manali",
-                "lastName": 'Jain',
-                "email": 'manali.jain@gmail.com',
-                "password": 'kjfkkfs',
-                "address" : 'jfdjff',
-                "city" : 'sdsd',
-                "state" : 'dsds',
-                "zipcode" : '12435',
-                "phone" : '333 3333 3333',
-                "creditCardNumber" : '23345454534',
-                "creditCardName" : 'mnlai dif'
-            }
-            this.closeModal();
-            localStorage.setItem('user_token', "123456678990");
-            localStorage.setItem('user_login_data', JSON.stringify(user));
-            localStorage.setItem('is_user_logged', true);
-            this.props.loginData(true, user);
-            // API.signup(payload)
-            //     .then((res) => {
-            //         if (res.data.statusCode === 201) {
-            //             let user = {
-            //                 "firstName" : "Manali"
-            //             }
-            //             this.closeModal();
-            //             this.props.loginData(true, user);
-            //             this.setState({
-            //                 // isLoggedIn: true,
-            //                 // message: res.data.message
-            //
-            //             });
-            //         } else if (res.data.statusCode === 401) {
-            //             this.setState({
-            //                 isLoggedIn: false,
-            //                 message: res.data.message
-            //             });
-            //         } else if (res.data.statusCode === 500) {
-            //             this.setState({
-            //                 isLoggedIn: false,
-            //                 message: res.data.message
-            //             });
-            //         } else if(res.data.statusCode === 400) {
-            //             this.setState({
-            //                 isLoggedIn: false,
-            //                 message: res.data.message
-            //             });
-            //         }
-            //     });
-            // this.setState({
-            //     ...this.state,
-            //     message: ''
-            // });
+            // let user = {
+            //     "firstName" : "Manali",
+            //     "lastName": 'Jain',
+            //     "email": 'manali.jain@gmail.com',
+            //     "password": 'kjfkkfs',
+            //     "address" : 'jfdjff',
+            //     "city" : 'sdsd',
+            //     "state" : 'dsds',
+            //     "zipcode" : '12435',
+            //     "phone" : '333 3333 3333',
+            //     "creditCardNumber" : '23345454534',
+            //     "creditCardName" : 'mnlai dif'
+            // }
+            this.UserSignInAPICall(payload);
+
+
         }else{
             this.setState({
                 ...this.state,
@@ -156,6 +119,32 @@ class HomePage extends Component {
             });
             event.preventDefault();
         }
+    }
+
+    UserSignInAPICall = (payload) => {
+        console.log("payload is ",payload);
+        API.signup(payload)
+            .then((res) => {
+                if (res.data.message) {
+                    this.setState({
+                        ...this.state,
+                        message: res.data.message
+                    });
+                }
+                else {
+                    console.log('axiosSignUp', res);
+                    this.closeModal();
+                    this.setState({
+                        ...this.state,
+                        message: ''
+                    });
+                    this.openModalSuccess();
+                    // localStorage.setItem('user_token', "123456678990");
+                    // localStorage.setItem('user_login_data', JSON.stringify(user));
+                    // localStorage.setItem('is_user_logged', true);
+                    // this.props.loginData(true, user);
+                }
+            });
     }
     handleUserLogIn = (event) => {
         var valid = Validate.login(this.state);
@@ -423,6 +412,16 @@ class HomePage extends Component {
                                 </div>
                             </div>
                             <div className="form-group row">
+                                <label className="col-sm-offset-1 col-sm-2 col-form-label">Profile Image URL</label>
+                                <div className="col-sm-8">
+                                    <input type="text" className="form-control"  placeholder="Paste your URL"
+                                           value={this.state.profileImage}
+                                           onChange={(event) => {
+                                               this.setState({...this.state,profileImage: event.target.value});
+                                           }}required/>
+                                </div>
+                            </div>
+                            <div className="form-group row">
                                 <label className="col-sm-offset-1 col-sm-2 col-form-label">Credit card Number</label>
                                 <div className="col-sm-8">
                                     <input type="number" className="form-control"  placeholder="4067123445389032"
@@ -490,6 +489,25 @@ class HomePage extends Component {
                     <Modal.Footer>
                         <Button  type="button" onClick={this.handleUserLogIn}>SignIn</Button>
                         <Button onClick={() => this.closeModalLogin()}>Close</Button>
+                    </Modal.Footer>
+                </Modal>
+
+                <Modal show={this.state.showModalSuccess} onHide={() => this.closeModalSuccess()}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>SignUp Success</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <div className="row justify-content-md-center">
+                            <div className="form-group row">
+                                <div className="col-sm-offset-1 col-sm-10 col-sm-offset-1">
+                                    <div className="alert alert-success text-center" role="alert">You have successfully Signup. Please Login to continue</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button onClick={() => this.closeModalSuccess()}>Close</Button>
                     </Modal.Footer>
                 </Modal>
 
