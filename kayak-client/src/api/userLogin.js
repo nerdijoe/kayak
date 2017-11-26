@@ -7,7 +7,7 @@ const axios = require("axios")
 
 export const signup = (payload) => {
     console.log("payload", payload)
-    return axios.post('http://localhost:3003/users/signup', payload)
+    return axios.post('http://localhost:3000/auth/signup', payload)
         .then(function (response) {
             console.log(response);
             return response
@@ -20,7 +20,7 @@ export const signup = (payload) => {
 
 export const login = (payload) => {
     console.log("payload", payload)
-    return axios.post('http://localhost:3003/users/signin', payload)
+    return axios.post('http://localhost:3000/auth/signin', payload)
         .then(function (response) {
             console.log(response);
             return response
@@ -43,3 +43,19 @@ export const signout = () => {
             return error
         });
 };
+
+export const update = (payload) => {
+    let id = payload.id;
+    return axios.put(`http://localhost:3000/users/${id}`, payload
+    )
+        .then(function (response) {
+            console.log(response);
+            return response
+        })
+        .catch(function (error) {
+            console.log(error);
+            return error
+        });
+};
+
+        // axios.put(`http://localhost:3000/users/${id}`, user)
