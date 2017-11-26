@@ -14,7 +14,7 @@ priceMap.set("First", 2);
 
 
 //- Search Flight
-//Get /flights/search?departure=SJC&arrivalAt=SFO&class=Economy
+//Get /flights/search?departure=SJC&arrivalAt=SFO&class=Economy&departureDate=11/25/2017
 
 exports.search = (req, res) => {
   console.log('search flight');
@@ -51,7 +51,7 @@ exports.search = (req, res) => {
             result_json.departTime = flight.departureTime;
             result_json.arrivalTime = flight.arrivalTime;
             result_json.departureDate = departureDate;
-            result_json.arrivalDate = departureDate;
+            result_json.arrivalDate = TimeTool.getDepartureDate(departureDate, flight.departureTime, flight.arrivalTime);
             result_json.origin = flight.departureAirport.name;
             result_json.destination = flight.arrivalAirport.name;
             result_json.imageURL = "http://localhost:3010/image/delta.jpg";
