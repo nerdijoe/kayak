@@ -92,6 +92,12 @@ export const fetchCarBillingTotal = (data) => {
   };
 };
 
+export const fetchCarBillingSearch = (data) => {
+  return {
+    type: actionType.FETCH_CAR_BILLING_SEARCH,
+    data,
+  };
+};
 // add by NaYue 11/21/2017
 export const fetchUser = (data) => {
     return {

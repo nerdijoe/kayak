@@ -16,14 +16,19 @@ import {
   MenuItem,
 } from 'react-bootstrap';
 
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+
 import {
   axiosAddNewCar,
   axiosDeleteCar,
+  fetchCarBillingSearch,
 } from '../../actions';
 
 import CarNewForm from './NewForm';
 import CarEditForm from './EditForm';
 import Detail from './Detail';
+
 
 class CarBillingList extends Component {
   constructor(props) {
@@ -54,15 +59,26 @@ class CarBillingList extends Component {
         capacity: '',
       },
       _notificationSystem: null,
+      startDate: Moment(),
+      billingData: [],
     };
+
+    this.handleChange = this.handleChange.bind(this);
   }
 
   getInitialState() {
-    return { showModal: false };
+    return {
+      showModal: false,
+      // billingData: this.props.carBillingAll,
+    };
   }
+
 
   componentDidMount() {
     this._notificationSystem = this.refs.notificationSystem;
+    // this.setState({ billingData: this.props.carBillingAll });
+    this.billingData = this.props.carBillingAll;
+    console.log('componentDidMount this.props.carBillingAll=', this.props.carBillingAll);
   }
 
   closeModal() {
@@ -121,6 +137,27 @@ class CarBillingList extends Component {
     this._addNotification(e);
   }
 
+  handleChange(date) {
+    this.setState({
+      startDate: date
+    });
+
+    // if(date) {
+    //   console.log('   date = ', Moment(date).format('L'));
+    //   let arr = this.props.carBillingAll.filter((item) => {
+    //     console.log(`${item.createdAt}-->`, Moment(item.createdAt).format('L'));
+    //     return Moment(item.createdAt).format('L') === Moment(date).format('L');
+    //   })
+  
+    //   console.log('------------ arr=', arr);
+    //   this.setState({ billingData: arr });
+    // }
+    // else {
+    //   this.setState({ billingData: this.props.carBillingAll});
+    // }
+    this.props.fetchCarBillingSearch(date);
+  }
+
   render() {
     const popover = (
       <Popover id="modal-popover" title="popover">
@@ -137,7 +174,16 @@ class CarBillingList extends Component {
       <div className="Content">
         <Row>
           <Col md={8} >
-            <Button bsStyle="success" bsSize="large" onClick={() => this.openModal() }>Add New Car</Button>
+            {/* <DatePicker
+                selected={this.state.startDate}
+                onChange={this.handleChange}
+            /> */}
+            <DatePicker
+              selected={this.state.startDate}
+              onChange={this.handleChange}
+              isClearable={true}
+              todayButton={"Today"}
+            />
           </Col>
         </Row>
 
@@ -157,7 +203,7 @@ class CarBillingList extends Component {
           </thead>
           <tbody>
             {
-              this.props.carBillingAll.map((item) => {
+              this.props.carBillingSearch.map((item) => {
                 return (
                   <tr key={item._id}>
                     <td>{item._id}</td>
@@ -168,10 +214,10 @@ class CarBillingList extends Component {
                     <td>{Moment(item.createdAt).format('L LT')}</td>
                     <td>
                       <Button bsStyle="info" onClick={() => this.openDetailModal(item)}>Detail</Button>
-                      <DropdownButton title="..." id="bg-nested-dropdown">
+                      {/* <DropdownButton title="..." id="bg-nested-dropdown">
                         <MenuItem eventKey="1" onClick={() => this.openEditModal(item)}>Edit</MenuItem>
                         <MenuItem eventKey="2" onClick={() => this.openDeleteModal(item)}>Delete</MenuItem>
-                      </DropdownButton>
+                      </DropdownButton> */}
                     </td>
                   </tr>
                 );
@@ -269,6 +315,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     axiosAddNewCar: (data) => { dispatch(axiosAddNewCar(data)); },
     axiosDeleteCar: (data) => { dispatch(axiosDeleteCar(data)); },
+    fetchCarBillingSearch: (data) =>  {dispatch(fetchCarBillingSearch(data)); },
   };
 };
 
@@ -276,6 +323,7 @@ const mapStateToProps = (state) => {
   return {
     cars: state.CarReducer.cars,
     carBillingAll: state.AdminReducer.carBillingAll,
+    carBillingSearch: state.AdminReducer.carBillingSearch,
   };
 };
 

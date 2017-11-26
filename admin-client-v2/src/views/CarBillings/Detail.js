@@ -53,7 +53,7 @@ class Detail extends Component {
         <Card
           id="carBilling"
           title="Car Billing Detail"
-          category="some text here"
+          category=""
           stats="Data information certified"
           statsIcon="fa fa-check"
           content={
