@@ -4,9 +4,11 @@
 /*jshint esversion: 6 */
 import {combineReducers} from 'redux';
 import loginReducer from './loginReducer';
+import flightData from './flight-data';
 
 const allReducers = combineReducers({
-    loginData: loginReducer
+    loginData: loginReducer,
+    flightData:flightData
     // userMenu: userMenuReducer,
     // loginData: loginDataReducer,
     // interestUpdate: loginDataReducer,

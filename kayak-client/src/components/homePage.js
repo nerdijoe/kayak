@@ -16,6 +16,7 @@ import {loginData} from '../actions/index';
 import * as Validate from '../validation/signupValidation';
 import MyBookings from'./myBookings';
 import {Button, Modal, OverlayTrigger, Popover, Tooltip} from 'react-bootstrap';
+import FlightSearch from './flight-search';
 class HomePage extends Component {
     constructor(props) {
         super(props)
@@ -528,6 +529,11 @@ class HomePage extends Component {
                 <Route exact path="/cars" render={() => (
                     <div>
                         <Search selection="cars"/>
+                    </div>
+                )}/>
+                <Route exact path="/flights/search" render={() => (
+                    <div>
+                        <FlightSearch/>
                     </div>
                 )}/>
                 <Route exact path="/updateUser" render={() => (

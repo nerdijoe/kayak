@@ -19,6 +19,13 @@ export const loginData = (flag, user) => {
         user
     }
 }
+export const filterData = (data) => {
+    console.log("filteredData", data);
+    return {
+        type: "FilteredData",
+        data
+    }
+}
 
 // export const userMenu = (flag) => {
 //     return {

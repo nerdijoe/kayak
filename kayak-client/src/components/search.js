@@ -56,7 +56,7 @@ class Search extends Component{
         }
 
         return(
-            <div className="bg-front full-center" >
+            <div className="bg-front" >
                 <div className="container">
                     <div className="search-tabs search-tabs-bg">
                         <h1>Search hundreds of travel sites at once</h1>
