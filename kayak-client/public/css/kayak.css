@@ -6,6 +6,9 @@ header#main-header {
     margin: 0 auto;
     padding: 0 2em;
 }
+.bg-front{
+    margin-top:3%;
+}
 .logo {
     background-image: url("../image/kayak-logo.png");
     background-repeat: no-repeat;
