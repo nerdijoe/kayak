@@ -23,6 +23,7 @@ import {
 
 import CarNewForm from './NewForm';
 import CarEditForm from './EditForm';
+import Detail from './Detail';
 
 class CarBillingList extends Component {
   constructor(props) {
@@ -32,8 +33,18 @@ class CarBillingList extends Component {
       showModal: false,
       editModal: false,
       deleteModal: false,
+      detailModal: false,
       editCarData: {},
       deleteCarData: {
+        dealer: { name: ''},
+        type: '',
+        make: '',
+        model: '',
+        price: '',
+        doorNumber: '',
+        capacity: '',
+      },
+      detailBilling: {
         dealer: { name: ''},
         type: '',
         make: '',
@@ -82,6 +93,17 @@ class CarBillingList extends Component {
     this.setState({ deleteModal: true });
     this.setState({ deleteCarData: car });
   }
+
+  closeDetailModal() {
+    this.setState({ detailModal: false });
+  }
+
+  openDetailModal(car) {
+    console.log('open');
+    this.setState({ detailModal: true });
+    this.setState({ detailBilling: car });
+  }
+
 
   _addNotification(event) {
     event.preventDefault();
@@ -145,7 +167,7 @@ class CarBillingList extends Component {
                     <td>{item.totalAmount}</td>
                     <td>{Moment(item.createdAt).format('L LT')}</td>
                     <td>
-                      <Button bsStyle="info" onClick={() => this.openEditModal(item) }>edit</Button>
+                      <Button bsStyle="info" onClick={() => this.openDetailModal(item)}>Detail</Button>
                       <DropdownButton title="..." id="bg-nested-dropdown">
                         <MenuItem eventKey="1" onClick={() => this.openEditModal(item)}>Edit</MenuItem>
                         <MenuItem eventKey="2" onClick={() => this.openDeleteModal(item)}>Delete</MenuItem>
@@ -179,7 +201,7 @@ class CarBillingList extends Component {
           </Modal.Header>
           <Modal.Body>
             <h4>Form</h4>
-            <CarEditForm editCarData={this.state.editCarData} />
+            <Detail editCarData={this.state.editCarData} />
 
           </Modal.Body>
           <Modal.Footer>
@@ -225,6 +247,18 @@ class CarBillingList extends Component {
           </Modal.Footer>
         </Modal>
 
+        <Modal show={this.state.detailModal} onHide={() => this.closeDetailModal()}>
+          <Modal.Header closeButton>
+            <Modal.Title>Detail</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Detail detailBilling={this.state.detailBilling} />
+
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={() => this.closeDetailModal()}>Close</Button>
+          </Modal.Footer>
+        </Modal>
 
       </div>
     );
