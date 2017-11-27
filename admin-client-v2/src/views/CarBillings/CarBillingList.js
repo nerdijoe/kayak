@@ -14,6 +14,7 @@ import {
   Col,
   DropdownButton,
   MenuItem,
+  FormControl,
 } from 'react-bootstrap';
 
 import DatePicker from 'react-datepicker';
@@ -22,7 +23,9 @@ import 'react-datepicker/dist/react-datepicker.css';
 import {
   axiosAddNewCar,
   axiosDeleteCar,
-  fetchCarBillingSearch,
+  fetchCarBillingSearchDate,
+  fetchCarBillingSearchMonth,
+  fetchCarBillingSearchYear,
 } from '../../actions';
 
 import CarNewForm from './NewForm';
@@ -61,6 +64,7 @@ class CarBillingList extends Component {
       _notificationSystem: null,
       startDate: Moment(),
       billingData: [],
+      searchType: 'date',
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -155,7 +159,23 @@ class CarBillingList extends Component {
     // else {
     //   this.setState({ billingData: this.props.carBillingAll});
     // }
-    this.props.fetchCarBillingSearch(date);
+    if (this.state.searchType === 'date') {
+      this.props.fetchCarBillingSearch(date);
+    } else if (this.state.searchType === 'month') {
+      this.props.fetchCarBillingSearchMonth(date);
+    } else {
+      this.props.fetchCarBillingSearchYear(date);
+    }
+
+  }
+
+  handleSearchType(e) {
+    const target = e.target;
+    console.log(`handleChange ${target.name}=[${target.value}]`);
+    
+    this.setState({
+      [target.name]: target.value,
+    });
   }
 
   render() {
@@ -173,7 +193,16 @@ class CarBillingList extends Component {
     return (
       <div className="Content">
         <Row>
-          <Col md={8} >
+          <Col sm={2}>Filter billing </Col>
+          <Col sm={2}>
+            <FormControl componentClass="select" value={this.state.searchType} name="searchType" onChange={(e) => { this.handleSearchType(e); }}>
+              <option value="date">Date</option>
+              <option value="month">Month</option>
+              <option value="year">Year</option>
+            </FormControl>
+          </Col>
+
+          <Col md={4} >
             {/* <DatePicker
                 selected={this.state.startDate}
                 onChange={this.handleChange}
@@ -182,6 +211,8 @@ class CarBillingList extends Component {
               selected={this.state.startDate}
               onChange={this.handleChange}
               isClearable={true}
+              showMonthDropdown
+              showYearDropdown
               todayButton={"Today"}
             />
           </Col>
@@ -315,7 +346,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     axiosAddNewCar: (data) => { dispatch(axiosAddNewCar(data)); },
     axiosDeleteCar: (data) => { dispatch(axiosDeleteCar(data)); },
-    fetchCarBillingSearch: (data) =>  {dispatch(fetchCarBillingSearch(data)); },
+    fetchCarBillingSearchDate: (data) =>  { dispatch(fetchCarBillingSearchDate(data)); },
+    fetchCarBillingSearchMonth: (data) =>  { dispatch(fetchCarBillingSearchMonth(data)); },
+    fetchCarBillingSearchYear: (data) =>  { dispatch(fetchCarBillingSearchYear(data)); },
   };
 };
 

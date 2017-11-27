@@ -92,9 +92,21 @@ export const fetchCarBillingTotal = (data) => {
   };
 };
 
-export const fetchCarBillingSearch = (data) => {
+export const fetchCarBillingSearchDate = (data) => {
   return {
-    type: actionType.FETCH_CAR_BILLING_SEARCH,
+    type: actionType.FETCH_CAR_BILLING_SEARCH_DATE,
+    data,
+  };
+};
+export const fetchCarBillingSearchMonth = (data) => {
+  return {
+    type: actionType.FETCH_CAR_BILLING_SEARCH_MONTH,
+    data,
+  };
+};
+export const fetchCarBillingSearchYear = (data) => {
+  return {
+    type: actionType.FETCH_CAR_BILLING_SEARCH_YEAR,
     data,
   };
 };
