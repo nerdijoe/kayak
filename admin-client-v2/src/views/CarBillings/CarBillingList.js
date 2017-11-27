@@ -14,15 +14,24 @@ import {
   Col,
   DropdownButton,
   MenuItem,
+  FormControl,
 } from 'react-bootstrap';
+
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 import {
   axiosAddNewCar,
   axiosDeleteCar,
+  fetchCarBillingSearchDate,
+  fetchCarBillingSearchMonth,
+  fetchCarBillingSearchYear,
 } from '../../actions';
 
 import CarNewForm from './NewForm';
 import CarEditForm from './EditForm';
+import Detail from './Detail';
+
 
 class CarBillingList extends Component {
   constructor(props) {
@@ -32,6 +41,7 @@ class CarBillingList extends Component {
       showModal: false,
       editModal: false,
       deleteModal: false,
+      detailModal: false,
       editCarData: {},
       deleteCarData: {
         dealer: { name: ''},
@@ -42,16 +52,37 @@ class CarBillingList extends Component {
         doorNumber: '',
         capacity: '',
       },
+      detailBilling: {
+        dealer: { name: ''},
+        type: '',
+        make: '',
+        model: '',
+        price: '',
+        doorNumber: '',
+        capacity: '',
+      },
       _notificationSystem: null,
+      startDate: Moment(),
+      billingData: [],
+      searchType: 'date',
     };
+
+    this.handleChange = this.handleChange.bind(this);
   }
 
   getInitialState() {
-    return { showModal: false };
+    return {
+      showModal: false,
+      // billingData: this.props.carBillingAll,
+    };
   }
+
 
   componentDidMount() {
     this._notificationSystem = this.refs.notificationSystem;
+    // this.setState({ billingData: this.props.carBillingAll });
+    this.billingData = this.props.carBillingAll;
+    console.log('componentDidMount this.props.carBillingAll=', this.props.carBillingAll);
   }
 
   closeModal() {
@@ -83,6 +114,17 @@ class CarBillingList extends Component {
     this.setState({ deleteCarData: car });
   }
 
+  closeDetailModal() {
+    this.setState({ detailModal: false });
+  }
+
+  openDetailModal(car) {
+    console.log('open');
+    this.setState({ detailModal: true });
+    this.setState({ detailBilling: car });
+  }
+
+
   _addNotification(event) {
     event.preventDefault();
     this._notificationSystem.addNotification({
@@ -97,6 +139,43 @@ class CarBillingList extends Component {
     this.setState({ deleteModal: false });
     
     this._addNotification(e);
+  }
+
+  handleChange(date) {
+    this.setState({
+      startDate: date
+    });
+
+    // if(date) {
+    //   console.log('   date = ', Moment(date).format('L'));
+    //   let arr = this.props.carBillingAll.filter((item) => {
+    //     console.log(`${item.createdAt}-->`, Moment(item.createdAt).format('L'));
+    //     return Moment(item.createdAt).format('L') === Moment(date).format('L');
+    //   })
+  
+    //   console.log('------------ arr=', arr);
+    //   this.setState({ billingData: arr });
+    // }
+    // else {
+    //   this.setState({ billingData: this.props.carBillingAll});
+    // }
+    if (this.state.searchType === 'date') {
+      this.props.fetchCarBillingSearch(date);
+    } else if (this.state.searchType === 'month') {
+      this.props.fetchCarBillingSearchMonth(date);
+    } else {
+      this.props.fetchCarBillingSearchYear(date);
+    }
+
+  }
+
+  handleSearchType(e) {
+    const target = e.target;
+    console.log(`handleChange ${target.name}=[${target.value}]`);
+    
+    this.setState({
+      [target.name]: target.value,
+    });
   }
 
   render() {
@@ -114,8 +193,28 @@ class CarBillingList extends Component {
     return (
       <div className="Content">
         <Row>
-          <Col md={8} >
-            <Button bsStyle="success" bsSize="large" onClick={() => this.openModal() }>Add New Car</Button>
+          <Col sm={2}>Filter billing </Col>
+          <Col sm={2}>
+            <FormControl componentClass="select" value={this.state.searchType} name="searchType" onChange={(e) => { this.handleSearchType(e); }}>
+              <option value="date">Date</option>
+              <option value="month">Month</option>
+              <option value="year">Year</option>
+            </FormControl>
+          </Col>
+
+          <Col md={4} >
+            {/* <DatePicker
+                selected={this.state.startDate}
+                onChange={this.handleChange}
+            /> */}
+            <DatePicker
+              selected={this.state.startDate}
+              onChange={this.handleChange}
+              isClearable={true}
+              showMonthDropdown
+              showYearDropdown
+              todayButton={"Today"}
+            />
           </Col>
         </Row>
 
@@ -135,7 +234,7 @@ class CarBillingList extends Component {
           </thead>
           <tbody>
             {
-              this.props.carBillingAll.map((item) => {
+              this.props.carBillingSearch.map((item) => {
                 return (
                   <tr key={item._id}>
                     <td>{item._id}</td>
@@ -145,11 +244,11 @@ class CarBillingList extends Component {
                     <td>{item.totalAmount}</td>
                     <td>{Moment(item.createdAt).format('L LT')}</td>
                     <td>
-                      <Button bsStyle="info" onClick={() => this.openEditModal(item) }>edit</Button>
-                      <DropdownButton title="..." id="bg-nested-dropdown">
+                      <Button bsStyle="info" onClick={() => this.openDetailModal(item)}>Detail</Button>
+                      {/* <DropdownButton title="..." id="bg-nested-dropdown">
                         <MenuItem eventKey="1" onClick={() => this.openEditModal(item)}>Edit</MenuItem>
                         <MenuItem eventKey="2" onClick={() => this.openDeleteModal(item)}>Delete</MenuItem>
-                      </DropdownButton>
+                      </DropdownButton> */}
                     </td>
                   </tr>
                 );
@@ -179,7 +278,7 @@ class CarBillingList extends Component {
           </Modal.Header>
           <Modal.Body>
             <h4>Form</h4>
-            <CarEditForm editCarData={this.state.editCarData} />
+            <Detail editCarData={this.state.editCarData} />
 
           </Modal.Body>
           <Modal.Footer>
@@ -225,6 +324,18 @@ class CarBillingList extends Component {
           </Modal.Footer>
         </Modal>
 
+        <Modal show={this.state.detailModal} onHide={() => this.closeDetailModal()}>
+          <Modal.Header closeButton>
+            <Modal.Title>Detail</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Detail detailBilling={this.state.detailBilling} />
+
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={() => this.closeDetailModal()}>Close</Button>
+          </Modal.Footer>
+        </Modal>
 
       </div>
     );
@@ -235,6 +346,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     axiosAddNewCar: (data) => { dispatch(axiosAddNewCar(data)); },
     axiosDeleteCar: (data) => { dispatch(axiosDeleteCar(data)); },
+    fetchCarBillingSearchDate: (data) =>  { dispatch(fetchCarBillingSearchDate(data)); },
+    fetchCarBillingSearchMonth: (data) =>  { dispatch(fetchCarBillingSearchMonth(data)); },
+    fetchCarBillingSearchYear: (data) =>  { dispatch(fetchCarBillingSearchYear(data)); },
   };
 };
 
@@ -242,6 +356,7 @@ const mapStateToProps = (state) => {
   return {
     cars: state.CarReducer.cars,
     carBillingAll: state.AdminReducer.carBillingAll,
+    carBillingSearch: state.AdminReducer.carBillingSearch,
   };
 };
 

@@ -1,3 +1,5 @@
+import Moment from 'moment';
+
 import * as actionType from '../actions/constants';
 
 const initialState = {
@@ -6,6 +8,7 @@ const initialState = {
   carBillingAll: [],
   carBillingCount: [],
   carBillingTotal: [],
+  carBillingSearch: [],
 };
 
 const AdminReducer = (state = initialState, action) => {
@@ -27,6 +30,7 @@ const AdminReducer = (state = initialState, action) => {
       return {
         ...state,
         carBillingAll: [...action.data],
+        carBillingSearch: [...action.data],
       };
     }
     case actionType.FETCH_CAR_BILLING_COUNT: {
@@ -40,6 +44,63 @@ const AdminReducer = (state = initialState, action) => {
         ...state,
         carBillingTotal: [...action.data],
       };
+    }
+    case actionType.FETCH_CAR_BILLING_SEARCH_DATE: {
+      let updated = [];
+      let date = action.data;
+      if(date) {
+        console.log('   date = ', Moment(date).format('L'));
+        updated = state.carBillingAll.filter((item) => {
+          console.log(`${item.createdAt}-->`, Moment(item.createdAt).format('L'));
+          return Moment(item.createdAt).format('L') === Moment(date).format('L');
+        });
+        console.log('------------ updated=', updated);
+      } else {
+        updated = [...state.carBillingAll];
+      }
+  
+      return {
+        ...state,
+        carBillingSearch: updated,
+      }
+    }
+    case actionType.FETCH_CAR_BILLING_SEARCH_MONTH: {
+      let updated = [];
+      let date = action.data;
+      if(date) {
+        console.log('   date = ', Moment(date).format('MMM YY'));
+        updated = state.carBillingAll.filter((item) => {
+          console.log(`${item.createdAt}-->`, Moment(item.createdAt).format('MMM YY'));
+          return Moment(item.createdAt).format('MMM YY') === Moment(date).format('MMM YY');
+        });
+        console.log('------------ updated=', updated);
+      } else {
+        updated = [...state.carBillingAll];
+      }
+  
+      return {
+        ...state,
+        carBillingSearch: updated,
+      }
+    }
+    case actionType.FETCH_CAR_BILLING_SEARCH_YEAR: {
+      let updated = [];
+      let date = action.data;
+      if(date) {
+        console.log('   date = ', Moment(date).format('YY'));
+        updated = state.carBillingAll.filter((item) => {
+          console.log(`${item.createdAt}-->`, Moment(item.createdAt).format('YY'));
+          return Moment(item.createdAt).format('YY') === Moment(date).format('YY');
+        });
+        console.log('------------ updated=', updated);
+      } else {
+        updated = [...state.carBillingAll];
+      }
+  
+      return {
+        ...state,
+        carBillingSearch: updated,
+      }
     }
     default:
       return state;
