@@ -92,7 +92,7 @@ export const fetchCarBillingTotal = (data) => {
   };
 };
 
-// add by NaYue 11/21/2017
+
 export const fetchUser = (data) => {
     return {
         type: actionType.FETCH_USER,
@@ -100,13 +100,57 @@ export const fetchUser = (data) => {
     };
 };
 
-// add by NaYue 11/22/2017
 export const editUser = (data) => {
     return {
         type: actionType.EDIT_USER,
         data,
     };
 };
+
+
+
+export const addNewFlight = (data) => {
+    return {
+        type: actionType.FLIGHT_ADD,
+        data,
+    };
+};
+
+export const editFlight = (data) => {
+    return {
+        type: actionType.FLIGHT_EDIT,
+        data,
+    };
+};
+
+export const deleteFlight = (data) => {
+    return {
+        type: actionType.FLIGHT_DELETE,
+        data,
+    };
+};
+
+export const fetchFlight = (data) => {
+    return {
+        type: actionType.FETCH_FLIGHT,
+        data,
+    };
+};
+
+export const fetchAirport = (data) => {
+    return {
+        type: actionType.FETCH_AIRPORT,
+        data,
+    };
+};
+
+export const fetchAirline = (data) => {
+    return {
+        type: actionType.FETCH_AIRLINE,
+        data,
+    };
+};
+
 
 
 export const axiosSignIn = (data, router) => (dispatch) => {
@@ -298,6 +342,8 @@ export const axiosFetchCarBillingTotal = () => (dispatch) => {
     });
 };
 
+
+
 export const axiosFetchUser = () => (dispatch) => {
     //get admin token
 
@@ -311,7 +357,6 @@ export const axiosFetchUser = () => (dispatch) => {
         console.log(err);
     });
 };
-
 
 export const axiosEditUser = user => (dispatch) => {
   //get admin token
@@ -329,4 +374,120 @@ export const axiosEditUser = user => (dispatch) => {
       console.log(err);
     });
 
+};
+
+
+export const axiosAddNewFlight = data => (dispatch) => {
+    const admin_token = localStorage.getItem('admin_token');
+    console.log('axiosAddNewFlight data=', data);
+    axios.post('http://localhost:3010/flights', {
+        flightNumber: data.flightNumber,
+        departureTime: data.departureTime,
+        arrivalTime: data.arrivalTime,
+        departureAirport: data.departureAirport,
+        arrivalAirport:data.arrivalAirport,
+        airline: data.airline,
+        prices: data.prices,
+    }, {
+        headers: {
+            admin_token,
+        },
+    })
+        .then((res) => {
+        console.log('-------------------after axiosAddNewFlight');
+    console.log(res);
+    console.log("after add new flight, the res.data is: ", res.data);
+    dispatch(addNewFlight(res.data));
+}).catch((err) => {
+        console.log(err);
+});
+};
+
+export const axiosEditFlight = data => (dispatch) => {
+    const admin_token = localStorage.getItem('admin_token');
+    console.log('axiosAddNewCar data=', data);
+
+    axios.put(`http://localhost:3010/flights/${data._id}`, {
+        flightNumber: data.flightNumber,
+        departureTime: data.departureTime,
+        arrivalTime: data.arrivalTime,
+        departureAirport: data.departureAirport,
+        arrivalAirport:data.arrivalAirport,
+        airline: data.airline,
+        prices: data.airline,
+    }, {
+        headers: {
+            admin_token,
+        },
+    })
+        .then((res) => {
+        console.log('-------------------after axiosEditFlight');
+    console.log(res);
+    console.log(res.data);
+
+    dispatch(editFlight(res.data));
+}).catch((err) => {
+        console.log(err);
+});
+};
+
+export const axiosDeleteFlight = data => (dispatch) => {
+    const admin_token = localStorage.getItem('admin_token');
+    console.log('axiosAddNewCar data=', data);
+
+    axios.delete(`http://localhost:3010/cars/${data._id}`, {
+        headers: {
+            admin_token,
+        },
+    })
+        .then((res) => {
+        console.log('-------------------after axiosDeleteCar');
+    console.log(res);
+
+    dispatch(deleteCar(data));
+}).catch((err) => {
+        console.log(err);
+});
+};
+
+export const axiosFetchFlight = () => (dispatch) => {
+    //get admin token
+
+    axios.get('http://localhost:3010/flights')
+        .then((res) => {
+        console.log('--- after axiosFetchfligt');
+    console.log(res.data);
+
+    dispatch(fetchFlight(res.data));
+}).catch((err) => {
+        console.log(err);
+});
+};
+
+export const axiosFetchAirport = () => (dispatch) => {
+    //get admin token
+
+    axios.get('http://localhost:3010/flights/airports')
+        .then((res) => {
+        console.log('--- after axiosFetchAirport');
+    console.log(res.data);
+
+    dispatch(fetchAirport(res.data));
+}).catch((err) => {
+        console.log(err);
+});
+};
+
+export const axiosFetchAirline = () => (dispatch) => {
+    //get admin token
+
+    axios.get('http://localhost:3010/flights/airlines')
+        .then((res) => {
+        console.log('--- after axiosFetchAirline');
+    console.log(res.data);
+
+    dispatch(fetchAirline(res.data));
+}).catch((err) => {
+        console.log(err);
+});
 };

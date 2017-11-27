@@ -14,3 +14,10 @@ export const FETCH_CAR_BILLING_TOTAL = 'FETCH_CAR_BILLING_TOTAL';
 
 export const FETCH_USER = 'FETCH_USER';
 export const EDIT_USER = 'EDIT_USER';
+
+export const FLIGHT_ADD = 'FLIGHT_ADD';
+export const FLIGHT_EDIT = 'FLIGHT_EDIT';
+export const FLIGHT_DELETE = 'FLIGHT_DELETE';
+export const FETCH_FLIGHT = 'FETCH_FLIGHT';
+export const FETCH_AIRPORT = 'FETCH_AIRPORT';
+export const FETCH_AIRLINE = 'FETCH_AIRLINE';
