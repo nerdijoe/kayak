@@ -4,6 +4,7 @@ const carController = require('../controllers/cars');
 
 router.post('/', carController.create);
 router.get('/', carController.getAll);
+router.get('/search', carController.searchByQuery);
 router.post('/search', carController.search);
 router.get('/:id', carController.getOne);
 router.put('/:id', carController.edit);
