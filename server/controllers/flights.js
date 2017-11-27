@@ -48,7 +48,7 @@ exports.search = (req, res) => {
 exports.create = (req, res) => {
   console.log('createNewFlight');
   const data = req.body;
-  // console.log(data);
+   console.log(data);
 
   Flight.create({
     flightNumber: data.flightNumber,
