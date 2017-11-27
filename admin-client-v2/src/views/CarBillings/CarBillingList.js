@@ -160,7 +160,7 @@ class CarBillingList extends Component {
     //   this.setState({ billingData: this.props.carBillingAll});
     // }
     if (this.state.searchType === 'date') {
-      this.props.fetchCarBillingSearch(date);
+      this.props.fetchCarBillingSearchDate(date);
     } else if (this.state.searchType === 'month') {
       this.props.fetchCarBillingSearchMonth(date);
     } else {
