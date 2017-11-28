@@ -7,7 +7,7 @@ const hotelRoomSchema = new Schema({
   description: { type: String, required: true },
   price: { type: Number, required: true },
   capacity: { type: Number, required: true },
-  imageUrl: { type: String, required: true },
+  // imageUrl: { type: String, required: true },
 });
 
 const HotelRoom = mongoose.model('HotelRoom', hotelRoomSchema);

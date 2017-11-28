@@ -1,9 +1,91 @@
 const mongoose = require('mongoose');
 const Hotel = require('../models/mongooseHotel');
+const HotelRoom = require('../models/mongooseHotelRoom');
+const HotelReview = require('../models/mongooseHotelReview');
 // const HotelReview = require('../models/mongooseHotelReview');
 // const HotelRoom = require('../models/mongooseHotelRoom');
 const DBTool = require('../helpers/DBTool');
 
+
+
+exports.addRoom = (req, res) => {
+  console.log('hotel add room');
+  const id = req.params.id;
+  const data = req.body;
+
+  // HotelRoom.create(data);
+
+  Hotel.findByIdAndUpdate(
+    id,
+    {
+      $push: {
+        rooms: data.rooms,
+      },
+    },
+    (err, result) => {
+      if (err) res.json(err);
+        Hotel
+          .findById(id)
+          .exec((err, result) => {
+          console.log('add review result=', result);
+        if (err) res.json(err);
+        res.json(result);
+      });
+    });
+};
+exports.addReview = (req, res) => {
+  console.log('hotel add review');
+  const id = req.params.id;
+  const data = req.body;
+
+  console.log(id);
+  console.log(data);
+  Hotel.findByIdAndUpdate(
+    id,
+    {
+      $push: {reviews: data},
+    },
+    (err, result) => {
+    if (err) res.json(err);
+else{
+    Hotel
+      .findById(id)
+      // .populate('reviews')
+      .exec((err, result) => {
+      console.log('add review result=', result);
+    if (err) res.json(err);
+    else res.json(result);
+  });
+  }
+}
+);
+
+  // HotelReview.create(data, function(err, review){
+  //   if (err) res.json(err);
+  //   else {
+  //     Hotel.findByIdAndUpdate(
+  //       id,
+  //       {
+  //         $push: {reviews: review,},
+  //       },
+  //       (err, result) => {
+  //         if (err) res.json(err);
+  //         else{
+  //             Hotel
+  //               .findById(id)
+  //               // .populate('reviews')
+  //               .exec((err, result) => {
+  //               console.log('add review result=', result);
+  //             if (err) res.json(err);
+  //             else res.json(result);
+  //           });
+  //         }
+  //       }
+  //     );
+  //   }
+  // });
+
+}
 exports.edit = (req, res) => {
   console.log('edit hotel');
   const id = req.params.id;
@@ -20,9 +102,7 @@ exports.edit = (req, res) => {
         state: data.state,
         country: data.country,
         zipcode: data.zipcode,
-        reviews: data.reviews,
-        rooms: data.rooms,
-        imageUrl: data.imageUrl,
+        // imageUrl: data.imageUrl,
       },
     },
     (err, result) => {
@@ -93,9 +173,9 @@ exports.create = (req, res) => {
     state: data.state,
     country: data.country,
     zipcode: data.zipcode,
-    reviews: data.reviews,
-    rooms: data.rooms,
-    imageUrl: data.imageUrl,
+    reviews: [],
+    rooms: [],
+    // imageUrl: data.imageUrl,
   }, function(err, newHotel){
     if(err){
       console.error(err);

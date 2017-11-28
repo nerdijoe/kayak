@@ -13,9 +13,9 @@ const hotelSchema = new Schema({
   state: { type: String, required: true },
   country: { type: String, required: true },
   zipcode: { type: String, required: true },
-  reviews: [HotelReview],
-  rooms: [HotelRoom],
-  imageUrl: { type: String, required: true },
+  reviews: [{type: HotelReview, default: []}],
+  rooms: [{type: HotelRoom, default: []}],
+  // imageUrl: { type: String, required: true },
   isDeleted: { type: Boolean, default: false },
 }, {
   timestamps: true,
