@@ -5,8 +5,8 @@ const FlightPrice = require('./mongooseFlightPrice').schema;
 
 const flightSchema = new Schema({
   flightNumber: { type: String, required: true, unique: true },
-  departureTime: { type: String, required: true },
-  arrivalTime: { type: String, required: true },
+  departureTime: { type: Date, required: true },
+  arrivalTime: { type: Date, required: true },
   departureAirport: { type: Schema.Types.ObjectId, ref: 'FlightAirport' },
   arrivalAirport: { type: Schema.Types.ObjectId, ref: 'FlightAirport' },
   airline: { type: Schema.Types.ObjectId, ref: 'FlightAirline' },
