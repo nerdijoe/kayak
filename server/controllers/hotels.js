@@ -8,7 +8,33 @@ const DBTool = require('../helpers/DBTool');
 
 
 
-exports.addRoom = (req, res) => {
+exports.editRooms = (req, res) => {
+  console.log('hotel add room');
+  const id = req.params.id;
+  const data = req.body;
+
+  // HotelRoom.create(data);
+
+  Hotel.findByIdAndUpdate(
+    id,
+    {
+      $set: {
+        rooms: data.rooms,
+      },
+    },
+    (err, result) => {
+    if (err) res.json(err);
+  Hotel
+    .findById(id)
+    .exec((err, result) => {
+    console.log('add review result=', result);
+  if (err) res.json(err);
+  res.json(result);
+});
+});
+};
+
+exports.addRooms = (req, res) => {
   console.log('hotel add room');
   const id = req.params.id;
   const data = req.body;
@@ -33,7 +59,7 @@ exports.addRoom = (req, res) => {
       });
     });
 };
-exports.addReview = (req, res) => {
+exports.addReviews = (req, res) => {
   console.log('hotel add review');
   const id = req.params.id;
   const data = req.body;
