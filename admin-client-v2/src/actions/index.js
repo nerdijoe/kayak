@@ -93,6 +93,26 @@ export const fetchCarBillingTotal = (data) => {
 };
 
 
+export const fetchCarBillingSearchDate = (data) => {
+  return {
+    type: actionType.FETCH_CAR_BILLING_SEARCH_DATE,
+    data,
+  };
+};
+export const fetchCarBillingSearchMonth = (data) => {
+  return {
+    type: actionType.FETCH_CAR_BILLING_SEARCH_MONTH,
+    data,
+  };
+};
+export const fetchCarBillingSearchYear = (data) => {
+  return {
+    type: actionType.FETCH_CAR_BILLING_SEARCH_YEAR,
+    data,
+  };
+};
+// add by NaYue 11/21/2017
+
 export const fetchUser = (data) => {
     return {
         type: actionType.FETCH_USER,
@@ -405,7 +425,7 @@ export const axiosAddNewFlight = data => (dispatch) => {
 
 export const axiosEditFlight = data => (dispatch) => {
     const admin_token = localStorage.getItem('admin_token');
-    console.log('axiosAddNewCar data=', data);
+    console.log('axiosEditCar data=', data);
 
     axios.put(`http://localhost:3010/flights/${data._id}`, {
         flightNumber: data.flightNumber,

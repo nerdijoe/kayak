@@ -147,9 +147,9 @@ class FlightList extends Component {
                     <td>{flight.flightNumber}</td>
                     <td>{flight.departureTime}</td>
                     <td>{flight.arrivalTime}</td>
-                    <td>{this.props.airports.find(airport => airport._id === flight.departureAirport).name}</td>
-                    <td>{this.props.airports.find(airport => airport._id === flight.arrivalAirport).name}</td>
-                    <td>{this.props.airlines.find(airline => airline._id === flight.airline).name}</td>
+                    <td>{this.props.airports && this.props.airports.find(airport => airport._id === flight.departureAirport).name}</td>
+                    <td>{this.props.airports && this.props.airports.find(airport => airport._id === flight.arrivalAirport).name}</td>
+                    <td>{this.props.airlines && this.props.airlines.find(airline => airline._id === flight.airline).name}</td>
                     <td>{flight.prices[0].price}</td>
                     <td>{flight.prices[1].price}</td>
                     <td>{flight.prices[2].price}</td>

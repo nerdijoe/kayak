@@ -16,6 +16,7 @@ import {loginData} from '../actions/index';
 import * as Validate from '../validation/signupValidation';
 import MyBookings from'./myBookings';
 import {Button, Modal, OverlayTrigger, Popover, Tooltip} from 'react-bootstrap';
+import FlightSearch from './flight-search';
 class HomePage extends Component {
     constructor(props) {
         super(props)
@@ -23,6 +24,7 @@ class HomePage extends Component {
             activePage: '',
             showModal : false,
             showModalLogin : false,
+            showModalSuccess : false,
             message : '',
             messageDivLogin : '',
             firstName: '',
@@ -34,24 +36,18 @@ class HomePage extends Component {
             state : '',
             zipcode : '',
             phone : '',
-            creditCardNumber : '',
-            creditCardName : ''
+            profileImage : '',
+            creditCardNum : '',
+            creditCardFullName : ''
         };
         this.openModal = this.openModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
-        // this.openModalDir = this.openModalDir.bind(this);
-        // this.closeModalDir = this.closeModalDir.bind(this);
+        this.openModalLogin = this.openModalLogin.bind(this);
+        this.closeModalLogin = this.closeModalLogin.bind(this);
+        this.openModalSuccess = this.openModalSuccess.bind(this);
+        this.closeModalSuccess = this.closeModalSuccess.bind(this);
     }
 
-    // issActive = (value) => {
-    //     return ((value === this.state.activePage) ? 'active' : '');
-    // }
-    // setActive = (value) => {
-    //     this.setState({
-    //         ...this.state,
-    //         activePage: value
-    //     });
-    // }
 
     closeModal() {
         this.setState({
@@ -59,27 +55,24 @@ class HomePage extends Component {
             showModal: false
         });
     }
-
     openModal() {
-        console.log('open');
         this.setState({ showModal: true });
     }
     closeModalLogin() {
         this.setState({ showModalLogin: false });
     }
-
     openModalLogin() {
-        console.log('open');
         this.setState({ showModalLogin: true });
     }
+    closeModalSuccess() {
+        this.setState({ showModalSuccess: false });
+    }
+    openModalSuccess() {
+        this.setState({ showModalSuccess: true });
+    }
 
-    componentDidMount() {
-        // if (localStorage.getItem('user_token') !== null) {
-        //     this.props.history.push('/dashboard');
-        // }
-
-        // this.props.signInErrorClear();
-        // this.props.signUpSuccessClear();
+    componentWillMount() {
+        document.body.style.backgroundImage = "url(../image/phoenix-hotels-bg.jpg)";
     }
     handleUserSignIn = (event) => {
         var valid = Validate.signup(this.state);
@@ -94,61 +87,11 @@ class HomePage extends Component {
                 state: this.state.state,
                 zipcode: this.state.zipcode,
                 phone: this.state.phone,
-                creditCardNum: this.state.creditCardNumber,
-                creditCardFullName: this.state.creditCardName,
+                profileImage : this.state.profileImage,
+                creditCardNum: this.state.creditCardNum,
+                creditCardFullName: this.state.creditCardFullName,
             }
-            let user = {
-                "firstName" : "Manali",
-                "lastName": 'Jain',
-                "email": 'manali.jain@gmail.com',
-                "password": 'kjfkkfs',
-                "address" : 'jfdjff',
-                "city" : 'sdsd',
-                "state" : 'dsds',
-                "zipcode" : '12435',
-                "phone" : '333 3333 3333',
-                "creditCardNumber" : '23345454534',
-                "creditCardName" : 'mnlai dif'
-            }
-            this.closeModal();
-            localStorage.setItem('user_token', "123456678990");
-            localStorage.setItem('user_login_data', JSON.stringify(user));
-            localStorage.setItem('is_user_logged', true);
-            this.props.loginData(true, user);
-            // API.signup(payload)
-            //     .then((res) => {
-            //         if (res.data.statusCode === 201) {
-            //             let user = {
-            //                 "firstName" : "Manali"
-            //             }
-            //             this.closeModal();
-            //             this.props.loginData(true, user);
-            //             this.setState({
-            //                 // isLoggedIn: true,
-            //                 // message: res.data.message
-            //
-            //             });
-            //         } else if (res.data.statusCode === 401) {
-            //             this.setState({
-            //                 isLoggedIn: false,
-            //                 message: res.data.message
-            //             });
-            //         } else if (res.data.statusCode === 500) {
-            //             this.setState({
-            //                 isLoggedIn: false,
-            //                 message: res.data.message
-            //             });
-            //         } else if(res.data.statusCode === 400) {
-            //             this.setState({
-            //                 isLoggedIn: false,
-            //                 message: res.data.message
-            //             });
-            //         }
-            //     });
-            // this.setState({
-            //     ...this.state,
-            //     message: ''
-            // });
+            this.UserSignUpAPICall(payload);
         }else{
             this.setState({
                 ...this.state,
@@ -157,6 +100,33 @@ class HomePage extends Component {
             event.preventDefault();
         }
     }
+
+    UserSignUpAPICall = (payload) => {
+        console.log("payload is ",payload);
+        API.signup(payload)
+            .then((res) => {
+                if (res.data.message) {
+                    this.setState({
+                        ...this.state,
+                        message: res.data.message
+                    });
+                }
+                else {
+                    console.log('axiosSignUp', res);
+                    this.closeModal();
+                    this.setState({
+                        ...this.state,
+                        message: ''
+                    });
+                    this.openModalSuccess();
+                    // localStorage.setItem('user_token', "123456678990");
+                    // localStorage.setItem('user_login_data', JSON.stringify(user));
+                    // localStorage.setItem('is_user_logged', true);
+                    // this.props.loginData(true, user);
+                }
+            });
+    }
+
     handleUserLogIn = (event) => {
         var valid = Validate.login(this.state);
         if(valid === ''){
@@ -164,39 +134,8 @@ class HomePage extends Component {
                 email: this.state.email,
                 password: this.state.password,
             }
-            let user = {
-                "firstName" : "Manali"
-            }
-            this.closeModalLogin();
-            this.props.loginData(true, user);
-            // API.login(payload)
-            //     .then((res) => {
-            //         if (res.data.statusCode === 201) {
-            //             this.setState({
-            //                 isLoggedIn: true,
-            //                 message: res.data.message
-            //             });
-            //         } else if (res.data.statusCode === 401) {
-            //             this.setState({
-            //                 isLoggedIn: false,
-            //                 message: res.data.message
-            //             });
-            //         } else if (res.data.statusCode === 500) {
-            //             this.setState({
-            //                 isLoggedIn: false,
-            //                 message: res.data.message
-            //             });
-            //         } else if(res.data.statusCode === 400) {
-            //             this.setState({
-            //                 isLoggedIn: false,
-            //                 message: res.data.message
-            //             });
-            //         }
-            //     });
-            // this.setState({
-            //     ...this.state,
-            //     messageDivLogin: ''
-            // });
+            this.UserSignInAPICall(payload);
+
         }else{
             this.setState({
                 ...this.state,
@@ -204,6 +143,28 @@ class HomePage extends Component {
             });
             event.preventDefault();
         }
+    }
+
+    UserSignInAPICall = (payload) => {
+        console.log("payload is ",payload);
+        API.login(payload)
+            .then((res) => {
+                    console.log('axiosSignIn', res);
+                    localStorage.setItem('user_token', res.data.token);
+                    localStorage.setItem('user_login_data', JSON.stringify(res.data));
+                    localStorage.setItem('is_user_logged', true);
+                    this.props.loginData(true, res.data);
+                    this.closeModalLogin();
+                    this.setState({
+                        ...this.state,
+                        messageDivLogin: ''
+                    });
+            }).catch((err) => {
+            this.setState({
+                ...this.state,
+                messageDivLogin: "Username and Password doesn't match"
+            });
+        })
     }
 
     handleLogout = () => {
@@ -219,9 +180,10 @@ class HomePage extends Component {
         localStorage.removeItem('user_token');
         localStorage.removeItem('user_login_data');
         localStorage.removeItem('is_user_logged');
+        this.props.history.push('/');
     }
-    render() {
 
+    render() {
         let messagediv =null;
         if(this.state.message !== ''){
             messagediv = <div className="clearfix">
@@ -246,36 +208,63 @@ class HomePage extends Component {
         let loggedFlag = localStorage.getItem('is_user_logged');
 
         if(loggedFlag === null){
-            isLoggedIn = <li><a href="#" onClick={() => {
-                            //this.props.history.push("/signup");
-                            this.openModal();
-                            }}>SignUp</a>
+            isLoggedIn = <li>
+                {/*<a href="#" onClick={() => {*/}
+                            {/*//this.props.history.push("/signup");*/}
+                            {/*this.openModal();*/}
+                            {/*}}>SignUp</a>*/}
+                <div className = "headerSign" onClick={() => {
+                    this.openModal();}}>
+                    SignUp
+                </div>
                         </li>
         } else{
             let loginData = localStorage.getItem('user_login_data');
             let name = JSON.parse(loginData);
-            isLoggedIn = <li><a href="/updateUser" onClick={() => {
-                        this.props.history.push("/updateUser");
-                        }}>Hello {name.firstName}</a>
+            isLoggedIn = <li>
+                {/*<a href="/updateUser" onClick={() => {*/}
+                        {/*this.props.history.push("/updateUser");*/}
+                        {/*}}>Hello {name.firstName}</a>*/}
+                <div className = "headerSign" onClick={() => {
+                    this.props.history.push("/updateUser");}}>
+                    Hello {name.firstName}
+                </div>
                          </li>
         }
 
         let signout =null;
         if(loggedFlag === null){
-            signout = <li><a href="/#" onClick={() => {
-                        // this.props.history.push("/signin");
-                        this.openModalLogin();
-                    }}>SignIn</a>
+            signout = <li>
+                {/*<a href="/#" onClick={() => {*/}
+                        {/*// this.props.history.push("/signin");*/}
+                        {/*this.openModalLogin();*/}
+                    {/*}}>SignIn</a>*/}
+                <div className = "headerSign" onClick={() => {
+                    this.openModalLogin();}}>
+                    SignIn
+                </div>
                     </li>
         } else{
-            signout = <li><a href="/#" onClick={() => {
-                            this.handleLogout();
-                        }}>Logout</a>
+            signout = <li>
+                {/*<a href="/#" onClick={() => {*/}
+                            {/*this.handleLogout();*/}
+                        {/*}}>Logout</a>*/}
+                <div className = "headerSign" onClick={() => {
+                    this.handleLogout();
+                }}>
+                    Logout
+                </div>
                       </li>
 
-            bookings = <li><a href="/myBookings" onClick={() => {
-                            this.props.history.push("/myBookings");
-                        }}>My Bookings</a>
+            bookings = <li>
+                {/*<a href="/myBookings" onClick={() => {*/}
+                            {/*this.props.history.push("/myBookings");*/}
+                        {/*}}>My Bookings</a>*/}
+                <div className = "headerSign"  onClick={() => {
+                    this.props.history.push("/myBookings");
+                }}>
+                    My Bookings
+                </div>
                         </li>
         }
 
@@ -310,8 +299,8 @@ class HomePage extends Component {
                                 <div className="col-sm-4 col-sm-offset-2">
                                     <ul className="slimmenu">
                                         {isLoggedIn}
-                                        {signout}
                                         {bookings}
+                                        {signout}
                                     </ul>
                                 </div>
                             </div>
@@ -423,12 +412,22 @@ class HomePage extends Component {
                                 </div>
                             </div>
                             <div className="form-group row">
+                                <label className="col-sm-offset-1 col-sm-2 col-form-label">Profile Image URL</label>
+                                <div className="col-sm-8">
+                                    <input type="text" className="form-control"  placeholder="Paste your URL"
+                                           value={this.state.profileImage}
+                                           onChange={(event) => {
+                                               this.setState({...this.state,profileImage: event.target.value});
+                                           }}required/>
+                                </div>
+                            </div>
+                            <div className="form-group row">
                                 <label className="col-sm-offset-1 col-sm-2 col-form-label">Credit card Number</label>
                                 <div className="col-sm-8">
                                     <input type="number" className="form-control"  placeholder="4067123445389032"
-                                           value={this.state.creditCardNumber}
+                                           value={this.state.creditCardNum}
                                            onChange={(event) => {
-                                               this.setState({...this.state,creditCardNumber: event.target.value});
+                                               this.setState({...this.state,creditCardNum: event.target.value});
                                            }}required/>
                                 </div>
                             </div>
@@ -436,9 +435,9 @@ class HomePage extends Component {
                                 <label className="col-sm-offset-1 col-sm-2 col-form-label">Credit Card Name</label>
                                 <div className="col-sm-8">
                                     <input type="text" className="form-control" placeholder="JON SMITH"
-                                           value={this.state.creditCardName}
+                                           value={this.state.creditCardFullName}
                                            onChange={(event) => {
-                                               this.setState({...this.state,creditCardName: event.target.value});
+                                               this.setState({...this.state,creditCardFullName: event.target.value});
                                            }}required/>
                                 </div>
                             </div>
@@ -493,6 +492,25 @@ class HomePage extends Component {
                     </Modal.Footer>
                 </Modal>
 
+                <Modal show={this.state.showModalSuccess} onHide={() => this.closeModalSuccess()}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>SignUp Success</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <div className="row justify-content-md-center">
+                            <div className="form-group row">
+                                <div className="col-sm-offset-1 col-sm-10 col-sm-offset-1">
+                                    <div className="alert alert-success text-center" role="alert">You have successfully Signup. Please Login to continue</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button onClick={() => this.closeModalSuccess()}>Close</Button>
+                    </Modal.Footer>
+                </Modal>
+
                 <Route exact path="/" component={() => (
                     <div>
                         <Search selection="hotels"/>
@@ -511,6 +529,11 @@ class HomePage extends Component {
                 <Route exact path="/cars" render={() => (
                     <div>
                         <Search selection="cars"/>
+                    </div>
+                )}/>
+                <Route exact path="/flights/search" render={() => (
+                    <div>
+                        <FlightSearch/>
                     </div>
                 )}/>
                 <Route exact path="/updateUser" render={() => (

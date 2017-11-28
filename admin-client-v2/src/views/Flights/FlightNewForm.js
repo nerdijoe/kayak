@@ -110,7 +110,7 @@ class FlightNewForm extends Component {
       </Col>
       <Col sm={10}>
           <FormControl componentClass="select" value={this.state.departureAirport} name="departureAirport" onChange={(e) => { this.handleChange(e); }}>
-      {this.props.airports.map((airport) => {
+      {this.props.airports && this.props.airports.map((airport) => {
           return (
       <option key={airport._id} value={airport._id}>{airport.name}</option>
       )
@@ -126,7 +126,7 @@ class FlightNewForm extends Component {
       </Col>
       <Col sm={10}>
           <FormControl componentClass="select" value={this.state.arrivalAirport} name="arrivalAirport" onChange={(e) => { this.handleChange(e); }}>
-      {this.props.airports.map((airport) => {
+      {this.props.airports && this.props.airports.map((airport) => {
           return (
       <option key={airport._id} value={airport._id}>{airport.name}</option>
       )
@@ -142,7 +142,7 @@ class FlightNewForm extends Component {
           </Col>
           <Col sm={10}>
           <FormControl componentClass="select" value={this.state.airline} name="airline" onChange={(e) => { this.handleChange(e); }}>
-      {this.props.airlines.map((airline) => {
+      {this.props.airlines && this.props.airlines.map((airline) => {
           return (
       <option key={airline._id} value={airline._id}>{airline.name}</option>
       )

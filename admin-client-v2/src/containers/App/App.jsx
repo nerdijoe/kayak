@@ -76,10 +76,11 @@ class App extends Component {
       this.props.axiosFetchCarBillingCount();
       this.props.axiosFetchCarBillingTotal();
 
-      this.props.axiosFetchUser();
-      this.props.axiosFetchFlight();
+
       this.props.axiosFetchAirport();
       this.props.axiosFetchAirline();
+      this.props.axiosFetchUser();
+      this.props.axiosFetchFlight();
       
       if(localStorage.getItem('admin_token') == null) {
         this.props.history.push('/signin');
