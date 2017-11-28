@@ -8,7 +8,7 @@ router.get('/airlines', flightController.getAllAirlines);
 
 router.get('/search', flightController.search);
 router.get('/:id', flightController.getOne);
-// router.put('/:id', userController.edit);
-// router.delete('/:id', userController.delete);
+router.put('/:id', flightController.edit);
+router.delete('/:id', flightController.delete);
 
 module.exports = router;

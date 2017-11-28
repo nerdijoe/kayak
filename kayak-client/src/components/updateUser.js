@@ -132,6 +132,7 @@ class UpdateUser extends Component{
         } else{
             message = <div></div>;
         }
+        const image = this.state.profileImage;
         return(
             <div>
                 <Modal show={this.state.showUpdateModal} onHide={() => this.closeUpdateModel()}>
@@ -153,138 +154,145 @@ class UpdateUser extends Component{
                 </Modal>
             <div className="bg-front full-center" >
                 <div className="container">
-
                 <div className="row justify-content-md-center">
                     <div className="row">
-                        {message}
-                    </div>
-                    <div className="form-group row">
-                        <div className="col-sm-offset-5 col-form-label labelColor">
-                            Update your Data
+                        <div className="form-group row">
+                            <div className=" text-center col-form-label labelColor">
+                                Update your Information
+                            </div>
                         </div>
-                    </div>
-                    <div className="form-group row">
-                        <label className="col-sm-offset-2 col-sm-2 col-form-label labelColor">First Name</label>
-                        <div className="col-sm-5">
-                            <input type="text" className="form-control"
-                                   value={this.state.firstName}
-                                   onChange={(event) => {
-                                       this.setState({...this.state,firstName: event.target.value});
-                                   }}required/>
+                        <div className = "col-sm-4">
+                            <img src={image} alt="Failed to load Image" title="Image Title" height="300" width="400"/>
                         </div>
-                    </div>
-                    <div className="form-group row">
-                        <label className="col-sm-offset-2 col-sm-2 col-form-label labelColor">Last Name</label>
-                        <div className="col-sm-5">
-                            <input type="text" className="form-control"
-                                   value={this.state.lastName}
-                                   onChange={(event) => {
-                                       this.setState({...this.state,lastName: event.target.value});
-                                   }}required/>
-                        </div>
-                    </div>
-                    <div className="form-group row">
-                        <label className="col-sm-offset-2 col-sm-2 col-form-label labelColor">Email</label>
-                        <div className=" col-sm-5">
-                            <input type="text"  className="form-control"
-                                   value={this.state.email} readOnly
-                                   />
-                        </div>
-                    </div>
-                    <div className="form-group row">
-                        <label className="col-sm-offset-2 col-sm-2 col-form-label labelColor">Password</label>
-                        <div className="col-sm-5">
-                            <input type="password" className="form-control" placeholder="Update Your Password"
-                                   value={this.state.password}
-                                   onChange={(event) => {
-                                       this.setState({...this.state,password: event.target.value});
-                                   }}required/>
-                        </div>
-                    </div>
-                    <div className="form-group row">
-                        <label className="col-sm-offset-2 col-sm-2 col-form-label labelColor">Address</label>
-                        <div className="col-sm-5">
-                            <input type="text" className="form-control"
-                                   value={this.state.address}
-                                   onChange={(event) => {
-                                       this.setState({...this.state,address: event.target.value});
-                                   }}required/>
-                        </div>
-                    </div>
-                    <div className="form-group row">
-                        <label className="col-sm-offset-2 col-sm-2 col-form-label labelColor">City</label>
-                        <div className="col-sm-5">
-                            <input type="text" className="form-control" id="inputPassword"
-                                   value={this.state.city}
-                                   onChange={(event) => {
-                                       this.setState({...this.state,city: event.target.value});
-                                   }}required/>
-                        </div>
-                    </div>
-                    <div className="form-group row">
-                        <label className="col-sm-offset-2 col-sm-2 col-form-label labelColor">State</label>
-                        <div className="col-sm-5">
-                            <input type="text" className="form-control" id="inputPassword"
-                                   value={this.state.state}
-                                   onChange={(event) => {
-                                       this.setState({...this.state,state: event.target.value});
-                                   }}required/>
-                        </div>
-                    </div>
-                    <div className="form-group row">
-                        <label className="col-sm-offset-2 col-sm-2 col-form-label labelColor">Zip Code</label>
-                        <div className="col-sm-5">
-                            <input type="text" className="form-control"
-                                   value={this.state.zipcode}
-                                   onChange={(event) => {
-                                       this.setState({...this.state,zipcode: event.target.value});
-                                   }}required/>
-                        </div>
-                    </div>
-                    <div className="form-group row">
-                        <label className="col-sm-offset-2 col-sm-2 col-form-label labelColor">Phone</label>
-                        <div className="col-sm-5">
-                            <input type="text" className="form-control" id="inputPassword"
-                                   value={this.state.phone}
-                                   onChange={(event) => {
-                                       this.setState({...this.state,phone: event.target.value});
-                                   }}required/>
-                        </div>
-                    </div>
-                    <div className="form-group row">
-                        <label className="col-sm-offset-2 col-sm-2 col-form-label labelColor">Profile Image URL</label>
-                        <div className="col-sm-5">
-                            <input type="text" className="form-control"  placeholder="Paste your URL"
-                                   value={this.state.profileImage}
-                                   onChange={(event) => {
-                                       this.setState({...this.state,profileImage: event.target.value});
-                                   }}required/>
-                        </div>
-                    </div>
-                    <div className="form-group row">
-                        <label className="col-sm-offset-2 col-sm-2 col-form-label labelColor">Credit card Number</label>
-                        <div className="col-sm-5">
-                            <input type="number" className="form-control"
-                                   value={this.state.creditCardNum}
-                                   onChange={(event) => {
-                                       this.setState({...this.state,creditCardNum: event.target.value});
-                                   }}required/>
-                        </div>
-                    </div>
-                    <div className="form-group row">
-                        <label className="col-sm-offset-2 col-sm-2 col-form-label labelColor">Credit Card Name</label>
-                        <div className="col-sm-5">
-                            <input type="text" className="form-control"
-                                   value={this.state.creditCardFullName}
-                                   onChange={(event) => {
-                                       this.setState({...this.state,creditCardFullName: event.target.value});
-                                   }}required/>
-                        </div>
-                    </div>
-                    <div className="form-group row">
-                        <div className="col-sm-offset-2 col-sm-2"> </div>
-                        <div className="col-sm-5">
-                            <Button  type="button" className = "btn-btn-primary" onClick={this.handleUpadateUser}>Update</Button>
+                        <div className = "col-sm-8">
+                            <div className="row">
+                                {message}
+                            </div>
+
+                            <div className="form-group row">
+                                <label className="col-sm-offset-2 col-sm-2 col-form-label labelColor">First Name</label>
+                                <div className="col-sm-6">
+                                    <input type="text" className="form-control"
+                                           value={this.state.firstName}
+                                           onChange={(event) => {
+                                               this.setState({...this.state,firstName: event.target.value});
+                                           }}required/>
+                                </div>
+                            </div>
+                            <div className="form-group row">
+                                <label className="col-sm-offset-2 col-sm-2 col-form-label labelColor">Last Name</label>
+                                <div className="col-sm-6">
+                                    <input type="text" className="form-control"
+                                           value={this.state.lastName}
+                                           onChange={(event) => {
+                                               this.setState({...this.state,lastName: event.target.value});
+                                           }}required/>
+                                </div>
+                            </div>
+                            <div className="form-group row">
+                                <label className="col-sm-offset-2 col-sm-2 col-form-label labelColor">Email</label>
+                                <div className=" col-sm-6">
+                                    <input type="text"  className="form-control"
+                                           value={this.state.email} readOnly
+                                    />
+                                </div>
+                            </div>
+                            <div className="form-group row">
+                                <label className="col-sm-offset-2 col-sm-2 col-form-label labelColor">Password</label>
+                                <div className="col-sm-6">
+                                    <input type="password" className="form-control" placeholder="Update Your Password"
+                                           value={this.state.password}
+                                           onChange={(event) => {
+                                               this.setState({...this.state,password: event.target.value});
+                                           }}required/>
+                                </div>
+                            </div>
+                            <div className="form-group row">
+                                <label className="col-sm-offset-2 col-sm-2 col-form-label labelColor">Address</label>
+                                <div className="col-sm-6">
+                                    <input type="text" className="form-control"
+                                           value={this.state.address}
+                                           onChange={(event) => {
+                                               this.setState({...this.state,address: event.target.value});
+                                           }}required/>
+                                </div>
+                            </div>
+                            <div className="form-group row">
+                                <label className="col-sm-offset-2 col-sm-2 col-form-label labelColor">City</label>
+                                <div className="col-sm-6">
+                                    <input type="text" className="form-control" id="inputPassword"
+                                           value={this.state.city}
+                                           onChange={(event) => {
+                                               this.setState({...this.state,city: event.target.value});
+                                           }}required/>
+                                </div>
+                            </div>
+                            <div className="form-group row">
+                                <label className="col-sm-offset-2 col-sm-2 col-form-label labelColor">State</label>
+                                <div className="col-sm-6">
+                                    <input type="text" className="form-control" id="inputPassword"
+                                           value={this.state.state}
+                                           onChange={(event) => {
+                                               this.setState({...this.state,state: event.target.value});
+                                           }}required/>
+                                </div>
+                            </div>
+                            <div className="form-group row">
+                                <label className="col-sm-offset-2 col-sm-2 col-form-label labelColor">Zip Code</label>
+                                <div className="col-sm-6">
+                                    <input type="text" className="form-control"
+                                           value={this.state.zipcode}
+                                           onChange={(event) => {
+                                               this.setState({...this.state,zipcode: event.target.value});
+                                           }}required/>
+                                </div>
+                            </div>
+                            <div className="form-group row">
+                                <label className="col-sm-offset-2 col-sm-2 col-form-label labelColor">Phone</label>
+                                <div className="col-sm-6">
+                                    <input type="text" className="form-control" id="inputPassword"
+                                           value={this.state.phone}
+                                           onChange={(event) => {
+                                               this.setState({...this.state,phone: event.target.value});
+                                           }}required/>
+                                </div>
+                            </div>
+                            <div className="form-group row">
+                                <label className="col-sm-offset-2 col-sm-2 col-form-label labelColor">Profile Image URL</label>
+                                <div className="col-sm-6">
+                                    <input type="text" className="form-control"  placeholder="Paste your URL"
+                                           value={this.state.profileImage}
+                                           onChange={(event) => {
+                                               this.setState({...this.state,profileImage: event.target.value});
+                                           }}required/>
+                                </div>
+                            </div>
+                            <div className="form-group row">
+                                <label className="col-sm-offset-2 col-sm-2 col-form-label labelColor">Credit card Number</label>
+                                <div className="col-sm-6">
+                                    <input type="number" className="form-control"
+                                           value={this.state.creditCardNum}
+                                           onChange={(event) => {
+                                               this.setState({...this.state,creditCardNum: event.target.value});
+                                           }}required/>
+                                </div>
+                            </div>
+                            <div className="form-group row">
+                                <label className="col-sm-offset-2 col-sm-2 col-form-label labelColor">Credit Card Name</label>
+                                <div className="col-sm-6">
+                                    <input type="text" className="form-control"
+                                           value={this.state.creditCardFullName}
+                                           onChange={(event) => {
+                                               this.setState({...this.state,creditCardFullName: event.target.value});
+                                           }}required/>
+                                </div>
+                            </div>
+                            <div className="form-group row">
+                                <div className="col-sm-offset-2 col-sm-2"> </div>
+                                <div className="col-sm-6">
+                                    <Button  type="button" className = "btn-btn-primary" onClick={this.handleUpadateUser}>Update</Button>
+                                </div>
+                            </div>
                         </div>
                     </div>
 

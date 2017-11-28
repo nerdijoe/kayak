@@ -148,3 +148,25 @@ exports.search = (req, res) => {
         });
     });
 };
+
+exports.searchByQuery = (req, res) => {
+  console.log('car search');
+  const searchString = req.query;
+
+  console.log('    searchString=', searchString);
+
+  CarDealer
+    .find({ $text: { $search: searchString.city } })
+    .exec((err, results) => {
+      console.log('CarDealer.find results=', results);
+
+      Car
+        .find({ dealer: { $in: results } })
+        .populate('dealer')
+        .exec((err, cars) => {
+          console.log('Car.find cars=', cars);
+          if (err) res.json(err);
+          res.json(cars);
+        });
+    });
+};

@@ -7,7 +7,7 @@ const axios = require("axios")
 
 export const signup = (payload) => {
     console.log("payload", payload)
-    return axios.post('http://localhost:3000/auth/signup', payload)
+    return axios.post('http://localhost:3010/auth/signup', payload)
         .then(function (response) {
             console.log(response);
             return response
@@ -20,7 +20,7 @@ export const signup = (payload) => {
 
 export const login = (payload) => {
     console.log("payload", payload)
-    return axios.post('http://localhost:3000/auth/signin', payload)
+    return axios.post('http://localhost:3010/auth/signin', payload)
         .then(function (response) {
             console.log(response);
             return response
@@ -32,7 +32,7 @@ export const login = (payload) => {
 };
 
 export const signout = () => {
-    return axios.post('http://localhost:3003/signout', {}
+    return axios.post('http://localhost:3010/signout', {}
     )
         .then(function (response) {
             console.log(response);

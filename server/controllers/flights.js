@@ -13,6 +13,74 @@ priceMap.set("Economy", 1);
 priceMap.set("First", 2);
 
 
+// Edit flight
+// /flights/:id
+// 5a1cb1f0b2e35b2b6c4e9ff9
+// {
+//   flightNumber: "United 1449",
+//     departureTime: "01:11 AM",
+//   arrivalTime: "04:45 AM",
+//   departureAirport: "5a1a0c7ab8522edae93c9cf0",
+//   arrivalAirport: "5a1a0c7ab8522edae93c971a",
+//   airline: "5a19e168b8522edae904a705",
+//   prices: [{price:"160", type:"business"},
+//   {price:"160", type:"economic"},
+//   {price:"160", type:"first"}]
+// }
+exports.edit = (req, res) => {
+  console.log('edit flight');
+  const id = req.params.id;
+  const data = req.body;
+
+  Flight.findByIdAndUpdate(
+    id,
+    {
+      $set: {
+        flightNumber: data.flightNumber,
+        departureTime: data.departureTime,
+        arrivalTime: data.arrivalTime,
+        departureAirport: data.departureAirport,
+        arrivalAirport: data.arrivalAirport,
+        airline: data.airline,
+        prices: data.prices,
+      },
+    },
+    (err, result) => {
+        if (err) res.json(err);
+        Flight.findById(id)
+          .populate('departureAirport')
+          .populate('arrivalAirport')
+          .populate('airline')
+          .exec(function(err, flights){
+            if (err){
+              console.error(err);
+            } else{
+              console.log(flights);
+              res.json(flights);
+            }
+          });
+      }
+    );
+
+};
+
+exports.delete = (req, res) => {
+  const id = req.params.id;
+
+  Flight.findByIdAndUpdate(
+    id,
+    {
+      $set: {
+        isDeleted: true,
+      },
+    },
+    (err, result) => {
+    if (err) res.json(false);
+      res.json(true);
+    }
+  );
+};
+
 //- Search Flight
 //Get /flights/search?departure=SJC&arrivalAt=SFO&class=Economy&departureDate=11/25/2017
 
@@ -42,7 +110,7 @@ exports.search = (req, res) => {
         for (var i = 0; i < flights.length; i++){
 
           var flight = flights[i];
-          if(flight.departureAirport.city === departure && flight.arrivalAirport.city === arrivalAt){
+          if(flight.departureAirport.city.toUpperCase() === departure.toUpperCase() && flight.arrivalAirport.city.toUpperCase() === arrivalAt.toUpperCase()){
 
             console.log(flight);
             result_json = {};
