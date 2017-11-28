@@ -1278,3 +1278,7 @@ h5 {
     margin-left: 10px;
     margin-top: 0px;
 }
+.no-data-found{
+    color:#FFFFFF;
+    text-align: center;
+}

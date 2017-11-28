@@ -40,7 +40,10 @@ class FlightFilter extends Component {
         var low = this.state.priceSliderLow, high = this.state.priceSliderHigh;
         var filteredFlightData = flightData.filter(flight=>flight.price>=low & flight.price<=high);
         let classFilter = this.state.classFilter;
-        filteredFlightData = filteredFlightData.filter(flight => classFilter.indexOf(flight.class)>-1);
+        if (classFilter.length > 0) {
+            filteredFlightData = filteredFlightData.filter(flight => classFilter.indexOf(flight.class) > -1);
+        }
+        console.log(filteredFlightData);
         this.props.filterData(filteredFlightData);
     }
     classModified = (event,className)=>{
@@ -74,19 +77,19 @@ class FlightFilter extends Component {
                         </h5>
                         <div className="checkbox">
                             <label>
-                                <input className="i-check filter-checkbox" type="checkbox"/>Non-stop
+                                <input className="i-check filter-checkbox" type="checkbox"/>Departure 12:00 AM to 8:00AM
                                 {/*<span className="pull-right">$215</span>*/}
                             </label>
                         </div>
                         <div className="checkbox">
                             <label>
-                                <input className="i-check" type="checkbox"/>1 Stop
+                                <input className="i-check" type="checkbox"/>Departure 8:00 AM to 4:00PM
                                 {/*<span className="pull-right">$154</span>*/}
                             </label>
                         </div>
                         <div className="checkbox">
                             <label>
-                                <input className="i-check" type="checkbox"/>2+ Stops
+                                <input className="i-check" type="checkbox"/>Departure 4:00 PM to 12:00AM
                                 {/*<span className="pull-right">$197</span>*/}
                             </label>
                         </div>
@@ -105,8 +108,8 @@ class FlightFilter extends Component {
                                    this.setState({
                                        priceSliderLow: event.target.value
                                    });
-                                   this.applyFilter();
                                }}
+                               onMouseUp={()=>{this.applyFilter()}}
                                step={1} />
                         Value = {this.state.priceSliderLow}
                         <h6 className="booking-filters-title">range high </h6>
@@ -121,10 +124,9 @@ class FlightFilter extends Component {
                                    this.setState({
                                        priceSliderHigh: event.target.value
                                    });
-                                   this.applyFilter();
                                }}
                                step={1}
-                               onmouseup = {this.applyFilter}
+                               onMouseUp={()=>{this.applyFilter()}}
                         />
                         Value = {this.state.priceSliderHigh}
                     </li>

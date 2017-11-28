@@ -5,10 +5,12 @@
 import {combineReducers} from 'redux';
 import loginReducer from './loginReducer';
 import flightData from './flight-data';
+import filterFlightData from './filter-flight-data';
 
 const allReducers = combineReducers({
     loginData: loginReducer,
-    flightData:flightData
+    flightData:flightData,
+    filteredData:filterFlightData
     // userMenu: userMenuReducer,
     // loginData: loginDataReducer,
     // interestUpdate: loginDataReducer,
