@@ -32,7 +32,7 @@ exports.book = (req, res) => {
 
       const booking = CarBilling({
         userId: req.decoded.id,
-        car: car._id,
+        car,
         dealer: car.dealer,
         daysBooked,
         priceBooked: car.price,
@@ -45,6 +45,17 @@ exports.book = (req, res) => {
         if (err) res.json(err);
         console.log('After booking, booked=', booked);
         res.json(booked);
+
+        // CarBilling
+        //   .findById(booked._id)
+        //   .populate('car')
+        //   .populate('dealer')
+        //   .exec((err, result) => {
+        //     console.log('after booking populated result=', result);
+        //     if (err) res.json(err);
+        //     res.json(result);
+        //   });
+        
       });
     }); // eof Car.findById
 };
