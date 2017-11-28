@@ -9,6 +9,20 @@ export const adminSignIn = (data) => {
   };
 };
 
+export const adminSignInError = (data) => {
+  return {
+    type: actionType.ADMIN_SIGNIN_ERROR,
+    data,
+  };
+};
+
+export const adminSignInErrorClear = () => {
+  return {
+    type: actionType.ADMIN_SIGNIN_ERROR_CLEAR,
+  };
+};
+
+
 export const adminSignOutReducer = () => {
   return {
     type: actionType.ADMIN_SIGNOUT,
@@ -153,7 +167,7 @@ export const axiosSignIn = (data, router) => (dispatch) => {
     console.log('Error when signin', err);
     console.log('---err.response.status', err.response.status);
     // display the error message
-    // dispatch(signInError({ message: 'Sign in failed. Please check your username and password.' }));
+    dispatch(adminSignInError({ message: 'Sign in failed. Please check your username and password.' }));
   });
 };
 
