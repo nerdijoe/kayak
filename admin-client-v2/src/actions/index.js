@@ -9,6 +9,20 @@ export const adminSignIn = (data) => {
   };
 };
 
+export const adminSignInError = (data) => {
+  return {
+    type: actionType.ADMIN_SIGNIN_ERROR,
+    data,
+  };
+};
+
+export const adminSignInErrorClear = () => {
+  return {
+    type: actionType.ADMIN_SIGNIN_ERROR_CLEAR,
+  };
+};
+
+
 export const adminSignOutReducer = () => {
   return {
     type: actionType.ADMIN_SIGNOUT,
@@ -92,6 +106,24 @@ export const fetchCarBillingTotal = (data) => {
   };
 };
 
+export const fetchCarBillingSearchDate = (data) => {
+  return {
+    type: actionType.FETCH_CAR_BILLING_SEARCH_DATE,
+    data,
+  };
+};
+export const fetchCarBillingSearchMonth = (data) => {
+  return {
+    type: actionType.FETCH_CAR_BILLING_SEARCH_MONTH,
+    data,
+  };
+};
+export const fetchCarBillingSearchYear = (data) => {
+  return {
+    type: actionType.FETCH_CAR_BILLING_SEARCH_YEAR,
+    data,
+  };
+};
 // add by NaYue 11/21/2017
 export const fetchUser = (data) => {
     return {
@@ -135,7 +167,7 @@ export const axiosSignIn = (data, router) => (dispatch) => {
     console.log('Error when signin', err);
     console.log('---err.response.status', err.response.status);
     // display the error message
-    // dispatch(signInError({ message: 'Sign in failed. Please check your username and password.' }));
+    dispatch(adminSignInError({ message: 'Sign in failed. Please check your username and password.' }));
   });
 };
 

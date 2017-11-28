@@ -6,17 +6,15 @@ import {combineReducers} from 'redux';
 import loginReducer from './loginReducer';
 import flightData from './flight-data';
 import filterFlightData from './filter-flight-data';
+import carsReducer from './carsReducer';
+import hotelsReducer from './hotelsReducer';
 
 const allReducers = combineReducers({
     loginData: loginReducer,
     flightData:flightData,
-    filteredData:filterFlightData
-    // userMenu: userMenuReducer,
-    // loginData: loginDataReducer,
-    // interestUpdate: loginDataReducer,
-    // aboutUpdate: loginDataReducer,
-    // userFiles: userFilesReducer
-
+    filteredData:filterFlightData,
+    carsData : carsReducer,
+    hotelsReducer : hotelsReducer
 });
 
 export default allReducers;

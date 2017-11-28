@@ -140,3 +140,34 @@ export const update = (data) => {
     }
     return msg;
 };
+
+export const carSearch = (data) => {
+    let msg = "";
+    const namePattern = /^[a-zA-Z\s]+$/;
+
+    if( data.location ==='' || data.startDate ==='' || data.endDate ===''){
+        msg = "All fields are mandatory. Please fill all details";
+        return msg;
+    }
+    if (!(namePattern.test(data.location))) {
+        msg = "Enter correct location";
+        return msg;
+    }
+    return msg;
+};
+
+export const hotelSearch = (data) => {
+    let msg = "";
+    const namePattern = /^[a-zA-Z\s]+$/;
+
+    if( data.place ==='' || data.startDate ==='' || data.endDate ===''){
+        msg = "All fields are mandatory. Please fill all details";
+        return msg;
+    }
+    if (!(namePattern.test(data.location))) {
+        msg = "Enter correct Place";
+        return msg;
+    }
+    return msg;
+};
+

@@ -11,6 +11,7 @@ const flightSchema = new Schema({
   arrivalAirport: { type: Schema.Types.ObjectId, ref: 'FlightAirport' },
   airline: { type: Schema.Types.ObjectId, ref: 'FlightAirline' },
   prices: [FlightPrice],
+  isDeleted: { type: Boolean, default: false },
 }, {
   timestamps: true,
 });
