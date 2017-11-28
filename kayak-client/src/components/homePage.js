@@ -3,10 +3,6 @@
  */
 
 import React, {Component} from 'react';
-// import Flight from './flights';
-// import Hotel from './hotels';
-// import Car from './cars';
-// import Header from './header';
 import Search from './search';
 import UpdateUser from './updateUser';
 import * as API from '../api/userLogin';
@@ -17,6 +13,7 @@ import * as Validate from '../validation/signupValidation';
 import MyBookings from'./myBookings';
 import {Button, Modal, OverlayTrigger, Popover, Tooltip} from 'react-bootstrap';
 import FlightSearch from './flight-search';
+
 class HomePage extends Component {
     constructor(props) {
         super(props)

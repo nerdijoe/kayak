@@ -2,6 +2,9 @@
  * Created by ManaliJain on 11/17/17.
  */
 import React,{Component} from 'react';
+import { withRouter } from 'react-router-dom';
+import {connect} from 'react-redux';
+import {carsData} from '../actions/index';
 import * as Validate from '../validation/signupValidation';
 import * as API from '../api/searchListings';
 
@@ -25,7 +28,7 @@ class Cars extends Component{
                 startDate: this.state.startDate,
                 endDate: this.state.endDate,
             }
-            this.callforCarSearch(payload);
+            this.callForCarSearch(payload);
         }else{
             this.setState({
                 ...this.state,
@@ -35,35 +38,36 @@ class Cars extends Component{
         }
     }
 
-    callforCarSearch = (payload) => {
+    callForCarSearch = (payload) => {
         API.getCarList(payload)
             .then((res) => {
-                if (res.data.message) {
-                    this.setState({
-                        ...this.state,
-                        message: res.data.message
-                    });
-                }
-                else {
-                    console.log('axiosSignUp', res);
-                    this.closeModal();
+                if(res.data.length>0){
+                    console.log('axiosSignIn', res);
+                    this.props.carsData(res.data, payload);
                     this.setState({
                         ...this.state,
                         message: ''
                     });
-                    this.openModalSuccess();
-                    // localStorage.setItem('user_token', "123456678990");
-                    // localStorage.setItem('user_login_data', JSON.stringify(user));
-                    // localStorage.setItem('is_user_logged', true);
-                    // this.props.loginData(true, user);
+                    var cars = this.props.carsDataProp;
+                    console.log("cars response in teh redux is ", cars);
+                } else {
+                    this.setState({
+                        ...this.state,
+                        message: 'No Car listings available for the selected search criteria. Try again with another location'
+                    });
                 }
+            }).catch((err) => {
+            this.setState({
+                ...this.state,
+                message: "No Car listings available for the selected search criteria. Try again with another location"
             });
+        })
     }
     render(){
         let messagediv =null;
         if(this.state.message !== ''){
             messagediv = <div className="clearfix">
-                <div className="alert alert-danger text-center" role="alert">{this.state.message}</div>
+                <div className="alert alert-info text-center" role="alert">{this.state.message}</div>
             </div>;
         } else{
             messagediv = <div></div>;
@@ -128,4 +132,19 @@ class Cars extends Component{
         )
     }
 }
-export default Cars;
+
+function mapDispatchToProps(dispatch) {
+    return {
+        carsData: (flag, user) => dispatch(carsData(flag,user))
+    };
+}
+
+function mapStateToProps(state) {
+    console.log("state App", state);
+    return{
+        carsDataProp : state.carsData
+    };
+}
+
+const cars = withRouter(connect(mapStateToProps, mapDispatchToProps)(Cars));
+export default cars;
