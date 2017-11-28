@@ -4,6 +4,9 @@
 import React,{Component} from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import {filterData} from '../actions/index';
+import {getFlightList} from '../api/flights'
 
 class Flights extends Component{
 
@@ -36,7 +39,16 @@ class Flights extends Component{
     }
 
     handleSearchFlights=() => {
-    this.props.history.push('/flights/search');
+
+        /*let response = getFlightList(this.state);
+        if (response.status === 'error'){
+            console.log("error",response);
+        }
+        else {
+            this.props.filterData(response.flightData);*/
+            this.props.filterData(this.props.flightData);
+            this.props.history.push('/flights/search');
+        // }
 
     }
     render(){
@@ -63,7 +75,6 @@ class Flights extends Component{
                                                           this.setState({...this.state,
                                                           source: event.target.value
                                                       });
-                                                          this.applyFilter();
                                                       }}
                                                />
                                            </div>
@@ -174,7 +185,7 @@ class Flights extends Component{
                                                           this.setState({...this.state,
                                                               source: event.target.value
                                                           });
-                                                          this.applyFilter();
+
                                                       }}
                                                />
                                            </div>
@@ -188,7 +199,6 @@ class Flights extends Component{
                                                           this.setState({...this.state,
                                                               destination: event.target.value
                                                           });
-                                                          this.applyFilter();
                                                       }}
                                                />
                                            </div>
@@ -207,7 +217,6 @@ class Flights extends Component{
                                                               this.setState({...this.state,
                                                                   departureDate: event.target.value
                                                               });
-                                                              this.applyFilter();
                                                           }}/>
                                                </div>
                                            </div>
@@ -263,19 +272,18 @@ class Flights extends Component{
     }
 }
 // export default Flights;
-/*function matchDispatchToProps(dispatch){
+function matchDispatchToProps(dispatch){
     return bindActionCreators({
         filterData:filterData
     },dispatch);
-}*/
+}
 
 function mapStateToProps(state) {
     console.log("state App", state);
     return{
         flightData : state.flightData,
-        filteredData : state.filteredData
     };
 }
 
-const FlightsSearch = withRouter(connect(mapStateToProps)(Flights));
+const FlightsSearch = withRouter(connect(mapStateToProps,matchDispatchToProps)(Flights));
 export default FlightsSearch;

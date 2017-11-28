@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import {filterData} from '../actions/index';
 import {bindActionCreators} from 'redux';
 
-class FlightSearch extends Component {
+class CarSearch extends Component {
     constructor(props) {
         super(props);
         this.props.filterData(this.props.flightData);
