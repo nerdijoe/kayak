@@ -37,6 +37,9 @@ class FlightNewForm extends Component {
   handleChange(e) {
     const target = e.target;
     console.log(`handleChange ${target.name}=[${target.value}]`);
+
+    const empty = this.props.airports.filter((airport) => airport._id === target.value);
+    console.log(empty);
     
     this.setState({
       [target.name]: target.value,
