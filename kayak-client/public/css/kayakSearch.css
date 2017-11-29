@@ -1278,3 +1278,12 @@ h5 {
     margin-left: 10px;
     margin-top: 0px;
 }
+.btn-book {
+    color: #FFFFFF;
+    background: #ed8323;
+    border-color: #e27513;
+}
+.no-data-found{
+    color:#FFFFFF;
+    text-align: center;
+}

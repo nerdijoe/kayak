@@ -18,7 +18,9 @@ export const getFlightList = (payload) => {
 };
 
 export const getCarList = (payload) => {
-    return axios.get(`http://localhost:3010/cars/search?city=${payload.location}`)
+    // let apiCall = departure=San Jose&arrivalAt=New York&class=Economy&departureDate=11/25/2017
+    // return axios.get(`http://localhost:3010/cars/search?city=${payload.location}`)
+     return axios.get(`http://localhost:3010/cars`)
         .then(function (response) {
             console.log(response);
             return response
