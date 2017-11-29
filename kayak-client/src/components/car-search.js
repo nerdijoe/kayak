@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
-import FlightSearchList from './flight-search-list';
-import FlightFilter from './flight-search-filter';
+import CarList from './car-list';
+import CarFilter from './car-filter';
 import {connect} from 'react-redux';
-import {flightFilterData} from '../actions/index';
+import {carFilterData} from '../actions/index';
 import {bindActionCreators} from 'redux';
 
-class FlightSearch extends Component {
+class CarSearch extends Component {
     constructor(props) {
         super(props);
-        this.props.filterData(this.props.flightData);
+        // this.props.filterData(this.props.flightData);
         console.log("filter data was called");
     }
 
@@ -25,23 +25,23 @@ class FlightSearch extends Component {
         }*/
 
     render() {
-        if (this.props.filteredData.filteredData.length > 0) {
+        if (this.props.carFilteredData.carFilteredData.length > 0) {
             return (
                 <div className="bg-front">
                     <div className="container">
                         <div className="row col-md-12">
                             <div className="col-md-3">
-                                <FlightFilter/>
+                                <CarFilter/>
                             </div>
-                            <div className="row justify-content-md col-md-offset-1 col-md-8">
+                            <div className="col-md-offset-1 col-md-8">
                                 <ul className="booking-list">
                                     {   //this.state.flightDetails.map
 
-                                        this.props.flightFilteredData.flightFilteredData.map((flight, index) => {
+                                        this.props.carFilteredData.carFilteredData.map((car, index) => {
                                             return (
-                                                <FlightSearchList
+                                                <CarList
                                                     key={index}
-                                                    flight={flight}
+                                                    car={car}
                                                 />
                                             );
                                         })
@@ -59,10 +59,10 @@ class FlightSearch extends Component {
                     <div className="container">
                         <div className="row col-md-12">
                             <div className="col-md-3">
-                                <FlightFilter/>
+                                <CarFilter/>
                             </div>
                             <div className="row justify-content-md col-md-offset-1 col-md-8">
-                                <h2 className="no-data-found">No Flights found</h2>
+                                <h2 className="no-data-found">No Car found</h2>
                             </div>
                         </div>
                     </div>
@@ -74,16 +74,16 @@ class FlightSearch extends Component {
 
 function matchDispatchToProps(dispatch) {
     return bindActionCreators({
-        flightFilterData: flightFilterData
+        carFilterData: carFilterData
     }, dispatch);
 }
 
 function mapStateToProps(state) {
     console.log("state App", state);
     return {
-        flightData: state.flightData,
-        flightFilteredData: state.flightFilteredData
+        carsData: state.carsData,
+        carFilteredData: state.carFilteredData
     };
 }
 
-export default connect(mapStateToProps, matchDispatchToProps)(FlightSearch);
+export default connect(mapStateToProps, matchDispatchToProps)(CarSearch);
