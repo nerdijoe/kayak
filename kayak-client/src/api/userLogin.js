@@ -46,7 +46,7 @@ export const signout = () => {
 
 export const update = (payload) => {
     let id = payload.id;
-    return axios.put(`http://localhost:3000/users/${id}`, payload
+    return axios.put(`http://localhost:3010/users/${id}`, payload
     )
         .then(function (response) {
             console.log(response);
