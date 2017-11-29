@@ -9,6 +9,9 @@ const carBillingSchema = new Schema({
   daysBooked: { type: Number, required: true },
   priceBooked: { type: Number, required: true },
   totalAmount: { type: Number, required: true },
+  isPaid: { type: Boolean, default: false },
+  isDeleted: { type: Boolean, default: false },
+  isCanceled: { type: Boolean, default: false },
   startDate: { type: Date, required: true, default: Date.now },
   endDate: { type: Date, required: true, default: Date.now },
 }, {

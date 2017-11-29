@@ -5,6 +5,7 @@ import React,{Component} from 'react';
 import { withRouter } from 'react-router-dom';
 import {connect} from 'react-redux';
 import {carsData} from '../actions/index';
+import {carFilterData} from '../actions/index';
 import * as Validate from '../validation/signupValidation';
 import * as API from '../api/searchListings';
 
@@ -44,12 +45,14 @@ class Cars extends Component{
                 if(res.data.length>0){
                     console.log('axiosSignIn', res);
                     this.props.carsData(res.data, payload);
+                    this.props.carFilterData(res.data);
                     this.setState({
                         ...this.state,
                         message: ''
                     });
                     var cars = this.props.carsDataProp;
                     console.log("cars response in teh redux is ", cars);
+                    this.props.history.push("/cars/search")
                 } else {
                     this.setState({
                         ...this.state,
@@ -135,7 +138,8 @@ class Cars extends Component{
 
 function mapDispatchToProps(dispatch) {
     return {
-        carsData: (flag, user) => dispatch(carsData(flag,user))
+        carsData: (data, payload) => dispatch(carsData(data, payload)),
+        carFilterData:(data) => dispatch(carFilterData(data))
     };
 }
 

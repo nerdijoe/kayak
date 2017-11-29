@@ -4,7 +4,8 @@
 
 const carState = {
     'carSearch' : '',
-    'searchParams' : ''
+    'searchParams' : '',
+    'carFilteredList':'',
 }
 
 export default function (state=carState,action){
@@ -16,7 +17,6 @@ export default function (state=carState,action){
             const newState  = Object.assign({}, state, { carSearch: action.data, searchParams: action.search });
             console.log("new sate",newState);
             return newState;
-
         default :
             return state;
     }

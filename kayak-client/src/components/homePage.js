@@ -14,6 +14,7 @@ import MyBookings from './myBookings';
 import BookingPage from './bookingPage';
 import {Button, Modal, OverlayTrigger, Popover, Tooltip} from 'react-bootstrap';
 import FlightSearch from './flight-search';
+import CarSearch from './car-search';
 
 class HomePage extends Component {
     constructor(props) {
@@ -534,6 +535,11 @@ class HomePage extends Component {
                 <Route exact path="/flights/search" render={() => (
                     <div>
                         <FlightSearch/>
+                    </div>
+                )}/>
+                <Route exact path="/cars/search" render={() => (
+                    <div>
+                        <CarSearch/>
                     </div>
                 )}/>
                 <Route exact path="/updateUser" render={() => (

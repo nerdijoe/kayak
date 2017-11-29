@@ -12,10 +12,10 @@ export const loginData = (flag, user) => {
     }
 }
 
-export const filterData = (data) => {
+export const flightFilterData = (data) => {
     console.log("filteredData", data);
     return {
-        type: "FilteredData",
+        type: "FLIGHT_FILTERED_LIST",
         data
     }
 }
@@ -26,6 +26,13 @@ export const carsData = (data, search) => {
         type: "CAR_LIST",
         data,
         search
+    }
+}
+export const carFilterData = (data) => {
+    console.log("filteredData", data);
+    return {
+        type: "CAR_FILTERED_DATA",
+        data
     }
 }
 
