@@ -44,3 +44,19 @@ export const hotelsData = (data, search) => {
         search
     }
 }
+
+export const carSelected = (data)=> {
+    console.log("hotelList ssssssss", data);
+    return {
+        type: "CAR_SELECTED",
+        data
+    }
+}
+
+export const bookingFlag = (data)=> {
+    console.log("hotelList ssssssss", data);
+    return {
+        type: "BOOKING_FLAG",
+        data
+    }
+}

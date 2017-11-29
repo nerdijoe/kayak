@@ -7,15 +7,18 @@ import flightData from './flight-data';
 import carsReducer from './carsReducer';
 import hotelsReducer from './hotelsReducer';
 import flightFilteredData from './filter-flight-data';
-import carFilteredData from './filter-car-data'
+import carFilteredData from './filter-car-data';
+import carSelectedReducer from './carSelectedReducer';
 
 const allReducers = combineReducers({
     loginData: loginReducer,
     flightData:flightData,
     carsData : carsReducer,
-    hotelsData : hotelsReducer
+    hotelsData : hotelsReducer,
     flightFilteredData:flightFilteredData,
-    carFilteredData:carFilteredData
+    carFilteredData:carFilteredData,
+    carSelected: carSelectedReducer
+
 });
 
 export default allReducers;
