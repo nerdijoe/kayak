@@ -88,10 +88,14 @@ app.use('/cardealers', carDealers);
 app.use('/carbillings', carBillings);
 
 const hotels = require('./routes/hotels');
+const hotelBillings = require('./routes/flightBillings');
 app.use('/hotels', hotels);
+app.use('/hotelBillings', hotelBillings);
 
 const flights = require('./routes/flights');
+const flightBillings = require('./routes/hotelBillings');
 app.use('/flights', flights);
+app.use('/flightbillings', flightBillings);
 
 app.use(passport.initialize());
 
