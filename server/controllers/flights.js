@@ -4,13 +4,11 @@ const FlightAirline = require('../models/mongooseFlightAirline');
 const FlightAirport = require('../models/mongooseFlightAirport');
 const moment = require('moment');
 const TimeTool = require('../helpers/TimeTool');
+const DBTool = require('../helpers/DBTool');
 // const HotelReview = require('../models/mongooseHotelReview');
 // const HotelRoom = require('../models/mongooseHotelRoom');
 
-const priceMap = new Map();
-priceMap.set("Business", 0);
-priceMap.set("Economy", 1);
-priceMap.set("First", 2);
+
 
 
 // Edit flight
@@ -122,10 +120,10 @@ exports.search = (req, res) => {
             result_json.arrivalDate = TimeTool.getDepartureDate(departureDate, flight.departureTime, flight.arrivalTime);
             result_json.origin = getAirportLocation(flight.departureAirport);
             result_json.destination = getAirportLocation(flight.arrivalAirport);
-            result_json.imageURL = "http://localhost:3010/image/delta.jpg";
+            // result_json.imageURL = "http://localhost:3010/image/delta.jpg";
             result_json.flightDuration = TimeTool.getDuration(flight.departureTime, flight.arrivalTime);
             result_json.class = flightClass;
-            result_json.price = flight.prices[priceMap.get(flightClass)].price;
+            result_json.price = flight.prices[DBTool.priceMap.get(flightClass)].price;
 
             results.push(result_json);
           }
@@ -166,8 +164,8 @@ exports.create = (req, res) => {
 
   Flight.create({
     flightNumber: data.flightNumber,
-    departureTime: moment(data.departureTime, "HH:mm:ss a").format(),
-    arrivalTime: moment(data.arrivalTime, "HH:mm:ss a").format(),
+    departureTime: data.departureTime,
+    arrivalTime: data.departureTime,
     departureAirport: mongoose.Types.ObjectId(data.departureAirport),
     arrivalAirport: mongoose.Types.ObjectId(data.arrivalAirport),
     airline: mongoose.Types.ObjectId(data.airline),
@@ -215,12 +213,12 @@ exports.getAllAirlines = (req, res) => {
 
 exports.getAllAirports = (req, res) => {
   FlightAirport
-    .find({})
+    .find({name: { $ne: "" }})
     .exec((err, results) => {
     console.log('getAll results=', results);
-  if (err) res.json(err);
-  res.json(results);
-});
+      if (err) res.json(err);
+      res.json(results);
+    });
 };
 
 exports.getOne = (req, res) => {
@@ -228,6 +226,9 @@ exports.getOne = (req, res) => {
 
   Flight
     .findById(id)
+    .populate('departureAirport')
+    .populate('arrivalAirport')
+    .populate('airline')
     .exec((err, result) => {
       console.log('getOne result=', result);
       if (err) res.json(err);

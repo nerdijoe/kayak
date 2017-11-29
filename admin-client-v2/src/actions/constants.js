@@ -1,5 +1,7 @@
 export const ADMIN_SIGNIN = 'ADMIN_SIGNIN';
 export const ADMIN_SIGNOUT = 'ADMIN_SIGNOUT';
+export const ADMIN_SIGNIN_ERROR = 'ADMIN_SIGNIN_ERROR';
+export const ADMIN_SIGNIN_ERROR_CLEAR = 'ADMIN_SIGNIN_ERROR_CLEAR';
 
 export const CAR_ADD = 'CAR_ADD';
 export const CAR_EDIT = 'CAR_EDIT';

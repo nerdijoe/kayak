@@ -16,11 +16,6 @@ export default function (state=loginState,action){
             const newState  = Object.assign({}, state, { isLogged: action.flag , loginData: action.user});
             console.log("new sate",newState);
             return newState;
-        case "FilteredData":
-            console.log("flight data ",action.data);
-            const newState2  = Object.assign({}, state, { filteredData:action.data });
-            // return {...state,filteredData:action.data};
-            return newState2;
         default :
             return state
     }

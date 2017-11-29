@@ -5,6 +5,7 @@ import * as actionType from '../actions/constants';
 const initialState = {
   admin: {},
   is_authenticated: false,
+  signInErrorMsg: '',
   carBillingAll: [],
   carBillingCount: [],
   carBillingTotal: [],
@@ -18,6 +19,20 @@ const AdminReducer = (state = initialState, action) => {
       return {
         ...state,
         is_authenticated: true,
+      };
+    }
+    case actionType.ADMIN_SIGNIN_ERROR: {
+      // not sure what to do here
+      return {
+        ...state,
+        signInErrorMsg: action.data.message,
+      };
+    }
+    case actionType.ADMIN_SIGNIN_ERROR_CLEAR: {
+      // not sure what to do here
+      return {
+        ...state,
+        signInErrorMsg: '',
       };
     }
     case actionType.ADMIN_SIGNOUT: {
