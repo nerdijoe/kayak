@@ -3,18 +3,18 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const billingFlightSchema = new Schema({
-  details: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Flight',
-    required: true,
-    default: [],
-  }],
-  totalAmount: { type: Number, required: true },
   userId: { type: Number, required: true },
-  createdAt: { type: Date, required: false, default: Date.now },
-  updatedAt: { type: Date, required: false, default: Date.now },
+  flight: { type: Schema.Types.ObjectId, ref: 'Flight', required: true },
+  priceBooked: { type: Number, required: true },
+  qtyBooked: { type: Number, required: true },
+  totalAmount: { type: Number, required: true },
+  isPaid: { type: Boolean, default: false },
+  isDeleted: { type: Boolean, default: false },
+  isCanceled: { type: Boolean, default: false },
+}, {
+  timestamps: true,
 });
 
-const BillingFlight = mongoose.model('BillingFlight', billingFlightSchema);
+const BillingFlight = mongoose.model('FlightBilling', billingFlightSchema);
 
 module.exports = BillingFlight;

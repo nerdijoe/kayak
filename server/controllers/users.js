@@ -1,4 +1,5 @@
 const db = require('../models');
+const passwordHash = require('password-hash');
 
 exports.getAll = (req, res) => {
   db.User.findAll()
@@ -29,6 +30,10 @@ exports.getOne = (req, res) => {
 
 exports.edit = (req, res) => {
   const id = req.params.id;
+
+  const newPassword = passwordHash.generate(req.body.password);
+  console.log(`User edit, new password=[${newPassword}]`);
+  req.body.password = newPassword;
   db.User.update(req.body, {
     where: {
       id,

@@ -1,6 +1,12 @@
 import React , {Component} from 'react';
+import { withRouter } from 'react-router-dom';
+import {connect} from 'react-redux';
 
 class FlightSearchList extends Component{
+    handleFlightBooking=()=>{
+        this.props.history.push('/booking');
+        console.log('insdde booking flight');
+    }
     render(){
         const flight = this.props.flight;
         console.log(flight);
@@ -22,13 +28,14 @@ class FlightSearchList extends Component{
                             </div>
                             <div className="col-md-5">
                                 <div className="booking-item-flight-details">
-                                    <div className="booking-item-departure"><i className="fa fa-plane"></i>
+                                    <div className="booking-item-departure">
+                                        <i className="fa fa-plane"></i>
                                         <h5>{flight.departTime}</h5>
                                         <p className="booking-item-date">{flight.departureDate}</p>
                                         <p className="booking-item-destination">{flight.origin}</p>
                                     </div>
-                                    <div className="booking-item-arrival"><i
-                                        className="fa fa-plane fa-flip-vertical"></i>
+                                    <div className="booking-item-arrival">
+                                        <i className="fa fa-plane fa-flip-vertical"></i>
                                         <h5>{flight.arrivalTime}</h5>
                                         <p className="booking-item-date">{flight.arrivalDate}</p>
                                         <p className="booking-item-destination">{flight.destination}</p>
@@ -41,8 +48,8 @@ class FlightSearchList extends Component{
                                 <h5>{flight.flightDuration}</h5>
                             </div>
                             <div className="col-md-3"><span className="booking-item-price">${flight.price}</span><span>/person</span>
-                                <p className="booking-item-flight-class">Class: {flight.class}</p><a
-                                    className="btn btn-primary" href="#">Select</a>
+                                <p className="booking-item-flight-class">Class: {flight.class}</p>
+                                <button className="btn btn-primary"  onClick={this.handleFlightBooking}>Select</button>
                             </div>
                         </div>
                     </div>
@@ -74,5 +81,17 @@ class FlightSearchList extends Component{
         )
     }
 }
+function mapDispatchToProps(dispatch) {
+    return {
+        // loginData: (data) => dispatch(loginData(data)),
+    };
+}
 
-export default FlightSearchList;
+function mapStateToProps(state) {
+    return{
+        // loginDataProp : state.loginData
+    };
+}
+
+const flightSearchList = withRouter(connect(mapStateToProps, mapDispatchToProps)(FlightSearchList));
+export default flightSearchList;
