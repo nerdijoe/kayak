@@ -3,7 +3,8 @@ export const signup = (data) => {
     const namePattern = /^[a-zA-Z\s]+$/;
     const cardNamePattern = /^[a-zA-Z\s]+$/;
     const emailPattern = /^[\w.]*@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
-    const passwordPattern = /^([a-zA-Z0-9@*#]{8,14})$/;
+    // const passwordPattern = /^([a-zA-Z0-9@*#]{8,14})$/;
+    const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z@]{8,}$/;
     const phonePattern = /^\+[1][\s-(]?\d{3}\)?[\s-]?\d{3}[\s-]?\d{4}/;
     const creditCardPattern = /[0-9]{4}[0-9]{4}[0-9]{4}[0-9]{4}/;
     const zipcodePattern  = /^\d{5}(?:[-]\d{4})?$/;
@@ -31,7 +32,7 @@ export const signup = (data) => {
         return msg;
     }
     if (!(passwordPattern.test(data.password))) {
-        msg = "Password should contain one small letter, \n one capital letter, one digit \nand one special character (@,#) ";
+        msg = "Password should contain one small letter, \n one capital letter, one digit \nand one special character @ ";
         return msg;
     }
     if(!(namePattern.test(data.city))){
@@ -47,7 +48,7 @@ export const signup = (data) => {
         return msg;
     }
     if(data.creditCardNum.length>16 || !(creditCardPattern.test(data.creditCardNum))){
-        msg="Enter correct Credit Card Number followed by space";
+        msg="Credit card number should be 16 characters long with no spaces or '-' in between";
         return msg;
     }
     if(!(phonePattern.test(data.phone))){
@@ -171,3 +172,30 @@ export const hotelSearch = (data) => {
     return msg;
 };
 
+export const makePayment = (data) => {
+    let msg = "";
+    const cardNamePattern = /^[a-zA-Z\s]+$/;
+    const creditCardPattern = /[0-9]{4}[0-9]{4}[0-9]{4}[0-9]{4}/;
+    if( data.creditCardNum ==='' || data.creditCardFullName ==='' || data.cvv ===''){
+        msg = "All fields are mandatory. Please fill all details";
+        return msg;
+    }
+    if(data.creditCardNum.length>16 || !(creditCardPattern.test(data.creditCardNum))){
+        msg="Credit card number should be 16 characters long with no spaces or '-' in between";
+        return msg;
+    }
+    if(!(creditCardPattern.test(data.creditCardNum))){
+        msg="Enter correct Credit card number";
+        return msg;
+    }
+    if(!(cardNamePattern.test(data.creditCardFullName))){
+        msg="Enter correct Credit card name";
+        return msg;
+    }
+    if(data.cvv.length>3 || data.cvv.length<3){
+        msg="Enter your 3 digit cvv number";
+        return msg;
+    }
+    // if()
+    return msg;
+};

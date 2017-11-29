@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import {BrowserRouter} from 'react-router-dom';
 import HomePage from './components/homePage';
-
+import BookingPage from './components/bookingPage';
 
 class App extends Component {
   render() {
@@ -10,6 +10,7 @@ class App extends Component {
         <div>
             <BrowserRouter>
                 <HomePage/>
+             {/*<BookingPage/>*/}
             </BrowserRouter>
         </div>
     );

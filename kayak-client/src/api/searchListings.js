@@ -41,5 +41,3 @@ export const getHotelList = (payload) => {
         });
 };
 
-
-// axios.put(`http://localhost:3000/users/${id}`, user)

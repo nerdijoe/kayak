@@ -88,6 +88,13 @@ class FlightSearch extends Component {
             // this.props.filterData(this.props.flightData);
         }*/
 
+    // handleFlightBooking = () => {
+    //
+    // }
+    // handleFlightBooking=()=>{
+    //     this.props.history.push('/booking');
+    //     console.log('insdde booking flight');
+    // }
     render() {
         console.log(this.props.filteredData);
         return (
