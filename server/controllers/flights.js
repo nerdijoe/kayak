@@ -194,6 +194,9 @@ exports.create = (req, res) => {
 exports.getAll = (req, res) => {
   Flight
     .find({})
+    .populate('departureAirport')
+    .populate('arrivalAirport')
+    .populate('airline')
     .exec((err, results) => {
       console.log('getAll results=', results);
       if (err) res.json(err);

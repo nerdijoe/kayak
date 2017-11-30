@@ -4,8 +4,9 @@ const CarDealer = require('../models/mongooseCarDealer');
 const CarBilling = require('../models/mongooseCarBilling');
 
 const logPage = require('../models/mongooseLogPage');
+const logSearch = require('../models/mongooseLogSearch');
 
-exports.create = (req, res) => {
+exports.createLogPage = (req, res) => {
   console.log('create logPage');
   const data = req.body;
 
@@ -18,7 +19,7 @@ exports.create = (req, res) => {
   });
 };
 
-exports.getAll = (req, res) => {
+exports.getAllLogPage = (req, res) => {
   logPage
     .find({})
     .exec((err, results) => {
@@ -27,6 +28,19 @@ exports.getAll = (req, res) => {
       res.json(results);
     });
 };
+
+
+
+exports.getAllLogSearch = (req, res) => {
+  logSearch
+    .find({})
+    .exec((err, results) => {
+      console.log('getAllLogSearch results=', results);
+      if (err) res.json(err);
+      res.json(results);
+    });
+};
+
 
 
 
