@@ -70,7 +70,7 @@ class CarList extends Component{
                             </div>
                         </div>
                         <div className="col-md-2"><span className="booking-item-price">${car.price}</span><span>/day</span>
-                            <p className="booking-item-flight-className">Crossover</p>
+                            <p className="booking-item-flight-className">{car.dealer.name}</p>
                             <button className="btn btn-book"  onClick={this.handleCarBooking}>Select</button>
                         </div>
                     </div>

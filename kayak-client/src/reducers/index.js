@@ -8,6 +8,7 @@ import carsReducer from './carsReducer';
 import hotelsReducer from './hotelsReducer';
 import flightFilteredData from './filter-flight-data';
 import carFilteredData from './filter-car-data';
+import hotelFilteredData from './filter-hotel-data';
 import bookingReducer from './bookingReducer';
 
 const allReducers = combineReducers({
@@ -17,8 +18,8 @@ const allReducers = combineReducers({
     hotelsData : hotelsReducer,
     flightFilteredData:flightFilteredData,
     carFilteredData:carFilteredData,
+    hotelFilteredData:hotelFilteredData,
     bookingSelected: bookingReducer
-
 });
 
 export default allReducers;
