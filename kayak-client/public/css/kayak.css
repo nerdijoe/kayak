@@ -393,8 +393,17 @@ ul.slimmenu-flight > li.active > a {
     border-bottom: solid 1px #ed8323;
 }
 
+.labelColorBooking {
+    color: black;
+    font-family: 'Roboto', arial, helvetica, sans-serif;
+    margin-top: 0;
+    font-weight: 500;
+    line-height: 1.3em;
+}
+
 .labelColor {
     color: white;
+    font-family: 'Roboto', arial, helvetica, sans-serif;
 }
 
 .headerSign {
@@ -408,4 +417,28 @@ ul.slimmenu-flight > li.active > a {
     transition: background-color 0.17s ease-out;
     text-decoration: none;
     cursor: pointer;
+}
+
+.form-group-cc-date{
+    width: 25%;
+}
+.labelHeadings{
+    color: #ed8323;
+    font-weight: 700;
+}
+
+.bookItem {
+    cursor: pointer;
+    display: block;
+    position: relative;
+    padding: 17px;
+    border: 2px solid #e6e6e6;
+    color: #737373;
+    -webkit-transition: 0.2s;
+    -moz-transition: 0.2s;
+    -o-transition: 0.2s;
+    -ms-transition: 0.2s;
+    transition: 0.2s;
+    background-color: rgba(255,255,255,0.7);
+    border-color: #ed8323;
 }

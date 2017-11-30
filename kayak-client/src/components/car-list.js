@@ -1,13 +1,24 @@
 import React , {Component} from 'react';
+import {bookingSelected, bookingFlag} from "../actions/index";
+import { withRouter } from 'react-router-dom';
+import {connect} from 'react-redux';
 
 class CarList extends Component{
+    handleCarBooking=()=>{
+        let carSelection = this.props.car;
+        let payload = 'C';
+        this.props.bookingSelected(carSelection);
+        this.props.bookingFlag(payload);
+        this.props.history.push('/booking');
+        console.log('insdde booking car');
+    }
     render(){
         const car = this.props.car;
         console.log(car);
         let imageURL = "http://localhost:3000/image/car"+Math.floor(Math.random()*6)+".png";
         return(
             <li>
-                <a className="booking-item" href="#">
+                <div className="booking-item">
                     <div className="row">
                         <div className="col-md-3">
                             <div className="booking-item-car-img">
@@ -59,13 +70,29 @@ class CarList extends Component{
                             </div>
                         </div>
                         <div className="col-md-2"><span className="booking-item-price">${car.price}</span><span>/day</span>
-                            <p className="booking-item-flight-className">{car.dealer.name}</p><span className="btn btn-book">Select</span>
+                            <p className="booking-item-flight-className">{car.dealer.name}</p>
+                            <button className="btn btn-book"  onClick={this.handleCarBooking}>Select</button>
                         </div>
                     </div>
-                </a>
+                </div>
             </li>
         )
     }
 }
 
-export default CarList;
+function mapDispatchToProps(dispatch) {
+    return {
+        bookingSelected: (data) => dispatch(bookingSelected(data)),
+        bookingFlag: (data) => dispatch(bookingFlag(data))
+    };
+}
+
+function mapStateToProps(state) {
+    return{
+        bookingSelectedProp : state.bookingSelected,
+        bookingFlagProp : state.bookingFlag
+    };
+}
+
+const carList = withRouter(connect(mapStateToProps, mapDispatchToProps)(CarList));
+export default carList;

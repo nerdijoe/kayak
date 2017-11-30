@@ -4,13 +4,11 @@ const FlightAirline = require('../models/mongooseFlightAirline');
 const FlightAirport = require('../models/mongooseFlightAirport');
 const moment = require('moment');
 const TimeTool = require('../helpers/TimeTool');
+const DBTool = require('../helpers/DBTool');
 // const HotelReview = require('../models/mongooseHotelReview');
 // const HotelRoom = require('../models/mongooseHotelRoom');
 
-const priceMap = new Map();
-priceMap.set("Business", 0);
-priceMap.set("Economy", 1);
-priceMap.set("First", 2);
+
 
 
 // Edit flight
@@ -125,7 +123,7 @@ exports.search = (req, res) => {
             // result_json.imageURL = "http://localhost:3010/image/delta.jpg";
             result_json.flightDuration = TimeTool.getDuration(flight.departureTime, flight.arrivalTime);
             result_json.class = flightClass;
-            result_json.price = flight.prices[priceMap.get(flightClass)].price;
+            result_json.price = flight.prices[DBTool.priceMap.get(flightClass)].price;
 
             results.push(result_json);
           }

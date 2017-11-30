@@ -72,6 +72,8 @@ const cars = require('./routes/cars');
 const carDealers = require('./routes/carDealers');
 const carBillings = require('./routes/carBillings');
 
+const log = require('./routes/logs');
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
@@ -87,11 +89,17 @@ app.use('/cars', cars);
 app.use('/cardealers', carDealers);
 app.use('/carbillings', carBillings);
 
+app.use('/logs', log);
+
 const hotels = require('./routes/hotels');
+const hotelBillings = require('./routes/flightBillings');
 app.use('/hotels', hotels);
+app.use('/hotelBillings', hotelBillings);
 
 const flights = require('./routes/flights');
+const flightBillings = require('./routes/hotelBillings');
 app.use('/flights', flights);
+app.use('/flightbillings', flightBillings);
 
 app.use(passport.initialize());
 

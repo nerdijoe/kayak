@@ -51,3 +51,19 @@ export const hotelFilterData = (data) => {
         data
     }
 }
+
+export const bookingSelected = (data)=> {
+    console.log("hotelList ssssssss", data);
+    return {
+        type: "CAR_SELECTED",
+        data
+    }
+}
+
+export const bookingFlag = (data)=> {
+    console.log("hotelList ssssssss", data);
+    return {
+        type: "BOOKING_FLAG",
+        data
+    }
+}

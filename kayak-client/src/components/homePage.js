@@ -10,7 +10,8 @@ import {Route, withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {loginData} from '../actions/index';
 import * as Validate from '../validation/signupValidation';
-import MyBookings from'./myBookings';
+import MyBookings from './myBookings';
+import BookingPage from './bookingPage';
 import {Button, Modal, OverlayTrigger, Popover, Tooltip} from 'react-bootstrap';
 import FlightSearch from './flight-search';
 import CarSearch from './car-search';
@@ -156,6 +157,8 @@ class HomePage extends Component {
                     this.closeModalLogin();
                     this.setState({
                         ...this.state,
+                        email: '',
+                        password: '',
                         messageDivLogin: ''
                     });
             }).catch((err) => {
@@ -403,7 +406,7 @@ class HomePage extends Component {
                             <div className="form-group row">
                                 <label className="col-sm-offset-1 col-sm-2 col-form-label">Phone</label>
                                 <div className="col-sm-8">
-                                    <input type="text" className="form-control" id="inputPassword" placeholder="(222) 222 2222"
+                                    <input type="text" className="form-control" id="inputPassword" placeholder="+1 222 222 2222"
                                            value={this.state.phone}
                                            onChange={(event) => {
                                                this.setState({...this.state,phone: event.target.value});
@@ -553,6 +556,11 @@ class HomePage extends Component {
                 <Route exact path="/myBookings" render={() => (
                     <div>
                         <MyBookings/>
+                    </div>
+                )}/>
+                <Route exact path="/booking" render={() => (
+                    <div>
+                        <BookingPage/>
                     </div>
                 )}/>
             </div>

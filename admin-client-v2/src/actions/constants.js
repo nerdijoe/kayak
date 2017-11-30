@@ -19,3 +19,8 @@ export const FETCH_CAR_BILLING_SEARCH_YEAR = 'FETCH_CAR_BILLING_SEARCH_YEAR';
 
 export const FETCH_USER = 'FETCH_USER';
 export const EDIT_USER = 'EDIT_USER';
+
+
+// user logging
+export const FETCH_LOG_PAGES = 'FETCH_LOG_PAGES';
+export const FETCH_LOG_PAGES_COUNT = 'FETCH_LOG_PAGES_COUNT';

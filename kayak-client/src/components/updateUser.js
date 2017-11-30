@@ -158,7 +158,7 @@ class UpdateUser extends Component{
                     <div className="row">
                         <div className="form-group row">
                             <div className=" text-center col-form-label labelColor">
-                                Update your Information
+                                <h5 className = "labelHeadings">Update your Information</h5>
                             </div>
                         </div>
                         <div className = "col-sm-4">
