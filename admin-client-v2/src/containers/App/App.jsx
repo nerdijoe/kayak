@@ -22,6 +22,8 @@ import {
   axiosFetchCarBillingCount,
   axiosFetchCarBillingTotal,
   axiosFetchUser,
+  axiosFetchLogPages,
+  axiosFetchLogPagesCount,
 } from '../../actions';
 
 
@@ -74,6 +76,8 @@ class App extends Component {
       this.props.axiosFetchCarBillingTotal();
 
       this.props.axiosFetchUser();
+      this.props.axiosFetchLogPages();
+      this.props.axiosFetchLogPagesCount();
       
       if(localStorage.getItem('admin_token') == null) {
         this.props.history.push('/signin');
@@ -169,7 +173,10 @@ const mapDispatchToProps = (dispatch) => {
     axiosFetchCarBillingTotal: () => { dispatch(axiosFetchCarBillingTotal());},
 
     axiosFetchUser: () => { dispatch(axiosFetchUser()); },
-  };
+    
+    axiosFetchLogPages: () => { dispatch(axiosFetchLogPages()); },
+    axiosFetchLogPagesCount: () => { dispatch(axiosFetchLogPagesCount()); },
+};
 };
 
 const connectedApp = connect(null, mapDispatchToProps)(App);
