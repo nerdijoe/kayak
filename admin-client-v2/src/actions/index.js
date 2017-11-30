@@ -155,6 +155,13 @@ export const fetchLogPagesCount = (data) => {
   };
 };
 
+export const fetchLogSearches = (data) => {
+  return {
+    type: actionType.FETCH_LOG_SEARCHES,
+    data,
+  };
+};
+
 export const axiosSignIn = (data, router) => (dispatch) => {
   axios.post('http://localhost:3010/authadmin/signin', {
     email: data.email,
@@ -401,6 +408,20 @@ export const axiosFetchLogPagesCount = () => (dispatch) => {
       console.log(res.data);
 
       dispatch(fetchLogPagesCount(res.data));
+    }).catch((err) => {
+      console.log(err);
+    });
+};
+
+export const axiosFetchLogSearches = () => (dispatch) => {
+  //get admin token
+
+  axios.get('http://localhost:3010/logs/searches')
+    .then((res) => {
+      console.log('--- after axiosFetchLogSearches');
+      console.log(res.data);
+
+      dispatch(fetchLogSearches(res.data));
     }).catch((err) => {
       console.log(err);
     });

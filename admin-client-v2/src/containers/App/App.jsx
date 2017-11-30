@@ -24,6 +24,7 @@ import {
   axiosFetchUser,
   axiosFetchLogPages,
   axiosFetchLogPagesCount,
+  axiosFetchLogSearches,
 } from '../../actions';
 
 
@@ -78,7 +79,8 @@ class App extends Component {
       this.props.axiosFetchUser();
       this.props.axiosFetchLogPages();
       this.props.axiosFetchLogPagesCount();
-      
+      this.props.axiosFetchLogSearches();
+
       if(localStorage.getItem('admin_token') == null) {
         this.props.history.push('/signin');
       }
@@ -176,6 +178,8 @@ const mapDispatchToProps = (dispatch) => {
     
     axiosFetchLogPages: () => { dispatch(axiosFetchLogPages()); },
     axiosFetchLogPagesCount: () => { dispatch(axiosFetchLogPagesCount()); },
+    axiosFetchLogSearches: () => { dispatch(axiosFetchLogSearches()); },
+
 };
 };
 

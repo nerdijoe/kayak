@@ -3,10 +3,10 @@ const logsController = require('../controllers/logs');
 
 router.post('/pages', logsController.createLogPage);
 router.get('/pages', logsController.getAllLogPage);
-router.get('/pages/:type', logsController.aggregate);
+router.get('/pages/:type', logsController.aggregatePages);
 
 router.get('/searches', logsController.getAllLogSearch);
-
+router.get('/searches/:type', logsController.aggregateSearches);
 // router.get('/search', carController.searchByQuery);
 // router.post('/search', carController.search);
 // router.get('/:id', carController.getOne);

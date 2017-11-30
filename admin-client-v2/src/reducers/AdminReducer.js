@@ -12,6 +12,8 @@ const initialState = {
   carBillingSearch: [],
   logPages: [],
   logPagesCount: [],
+  logSearches: [],
+  
 };
 
 const AdminReducer = (state = initialState, action) => {
@@ -128,6 +130,12 @@ const AdminReducer = (state = initialState, action) => {
       return {
         ...state,
         logPagesCount: [...action.data],
+      };
+    }
+    case actionType.FETCH_LOG_SEARCHES: {
+      return {
+        ...state,
+        logSearches: [...action.data],
       };
     }
 

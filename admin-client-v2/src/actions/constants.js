@@ -24,3 +24,5 @@ export const EDIT_USER = 'EDIT_USER';
 // user logging
 export const FETCH_LOG_PAGES = 'FETCH_LOG_PAGES';
 export const FETCH_LOG_PAGES_COUNT = 'FETCH_LOG_PAGES_COUNT';
+
+export const FETCH_LOG_SEARCHES = 'FETCH_LOG_SEARCHES';

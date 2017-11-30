@@ -228,67 +228,6 @@ class Dashboard extends Component {
 
                 </Grid>
 
-                <ReactGridLayout className="layout" layout={layout} cols={12} rowHeight={30} width={1200}>
-                  <div key="a">
-                    <StatsCard
-                      bigIcon={<i className="pe-7s-car text-warning"></i>}
-                      statsText="Total Rentals"
-                      statsValue={totalRentals}
-                      statsIcon={<i className="fa fa-refresh"></i>}
-                      statsIconText="Updated now"
-                    />
-                  </div>
-                  <div key="b">
-                    <StatsCard
-                      bigIcon={<i className="pe-7s-wallet text-success"></i>}
-                      statsText="Total Revenue"
-                      statsValue={totalRevenue}
-                      statsIcon={<i className="fa fa-calendar-o"></i>}
-                      statsIconText="Last day"
-                    />
-                  </div>
-                  <div key="c">
-                    <StatsCard
-                      bigIcon={<i className="pe-7s-date text-danger"></i>}
-                      statsText="Days Booked"
-                      statsValue={totalRentalsDays}
-                      statsIcon={<i className="fa fa-clock-o"></i>}
-                      statsIconText="In the last hour"
-                    />
-                  </div>
-                </ReactGridLayout>
-
-                <ResponsiveReactGridLayout className="layout"
-                  breakpoints={{lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0}}
-                  cols={{lg: 12, md: 10, sm: 6, xs: 4, xxs: 2}}>
-                  <div key="1">
-                    <StatsCard
-                      bigIcon={<i className="pe-7s-car text-warning"></i>}
-                      statsText="Total Rentals"
-                      statsValue={totalRentals}
-                      statsIcon={<i className="fa fa-refresh"></i>}
-                      statsIconText="Updated now"
-                    />
-                  </div>
-                  <div key="2">
-                    <StatsCard
-                      bigIcon={<i className="pe-7s-wallet text-success"></i>}
-                      statsText="Total Revenue"
-                      statsValue={totalRevenue}
-                      statsIcon={<i className="fa fa-calendar-o"></i>}
-                      statsIconText="Last day"
-                    />
-                  </div>
-                  <div key="3">
-                    <StatsCard
-                      bigIcon={<i className="pe-7s-date text-danger"></i>}
-                      statsText="Days Booked"
-                      statsValue={totalRentalsDays}
-                      statsIcon={<i className="fa fa-clock-o"></i>}
-                      statsIconText="In the last hour"
-                    />
-                  </div>
-                </ResponsiveReactGridLayout>
             </div>
         );
     }
@@ -301,7 +240,8 @@ const mapStateToProps = (state) => {
     carBillingTotal: state.AdminReducer.carBillingTotal,
     logPages: state.AdminReducer.logPages,
     logPagesCount: state.AdminReducer.logPagesCount,
-};
+    logSearches: state.AdminReducer.logSearches,
+  };
 };
 
 const connectedDashboard = connect(mapStateToProps, null)(Dashboard);
