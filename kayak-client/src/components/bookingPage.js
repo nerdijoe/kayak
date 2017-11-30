@@ -2,7 +2,7 @@
  * Created by ManaliJain on 11/23/17.
  */
 import React, {Component} from 'react';
-import {loginData,carSelected,carsData} from '../actions/index';
+import {loginData,bookingSelected,carsData} from '../actions/index';
 import {connect} from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import {Button, Modal} from 'react-bootstrap';
@@ -58,11 +58,11 @@ class BookingPage extends Component{
         } else {
             let valid = Validate.makePayment(this.state);
             if (valid === '') {
-                let carSelected = this.props.carSelectedProp;
+                let bookingSelected = this.props.bookingSelectedProp;
                 let carsData = this.props.carsDataProp;
                 let userToken = localStorage.getItem('user_token');
                 let payload = {
-                    carId : carSelected.carSelected._id,
+                    carId : bookingSelected.carSelected._id,
                     startDate : carsData.searchParams.startDate,
                     endDate : carsData.searchParams.endDate
                 }
@@ -112,18 +112,18 @@ class BookingPage extends Component{
             message = <div></div>;
         }
 
-        let carSelected = this.props.carSelectedProp;
-        // let userLoginData = localStorage.getItem('user_login_data');
-        if(carSelected.carSelected !== "" && carSelected.flightSelected !== "" && carSelected.hotelSelected !== ""){
-            var switchBookingDecision = null;
-            if(carSelected.selectedFlag === "C"){
+        let bookingSelected = this.props.bookingSelectedProp;
+        if(bookingSelected.bookingFlag !== "" ){
+            let switchBookingDecision = null;
+            if(bookingSelected.bookingFlag === "C"){
                 let carsData = this.props.carsDataProp;
-                switchBookingDecision = <CarBooking carsData = {carsData} carSelected = {carSelected} />
+                // let carSelected = null;
+                switchBookingDecision = <CarBooking carsData = {carsData} carSelected = {bookingSelected.carSelected} />
             }
-            if(carSelected.selectedFlag === "F"){ç
+            if(bookingSelected.bookingFlag === "F"){
                 // switchBookingDecision = <FlightBooking/>
             }
-            if(carSelected.selectedFlag === "H"){
+            if(bookingSelected.bookingFlag === "H"){
                 // switchBookingDecision = <HotelBooking/>
             }
             // let userLoginData = localStorage.getItem('user_login_data');
@@ -175,7 +175,7 @@ class BookingPage extends Component{
                     <div className="bg-front full-center" >
                         <div className="container">
                             <div className="col-md-12">
-                                <div className="row row-wrap">
+                                <div className="row row-wrap bookItem">
                                     <div className="form-group row">
                                         <div className="row">
                                             {message}
@@ -255,6 +255,7 @@ class BookingPage extends Component{
                                             </div>
                                             <button  type="button" className = "btn-btn-book" onClick={this.handleMakePayment}>Make Payment</button>
                                         </div>
+                                        <img src="http://localhost:3000/image/paypal.png" />
                                     </div>
                                 </div>
 
@@ -282,15 +283,15 @@ class BookingPage extends Component{
 function mapDispatchToProps(dispatch) {
     return {
         loginData: (data) => dispatch(loginData(data)),
-        carSelected: (data) => dispatch(carSelected(data)),
-        carsData: (data) => dispatch(carsData(data)),
+        bookingSelected: (data) => dispatch(bookingSelected(data)),
+        carsData: (data) => dispatch(carsData(data))
     };
 }
 
 function mapStateToProps(state) {
     return{
         loginDataProp : state.loginData,
-        carSelectedProp : state.carSelected,
+        bookingSelectedProp : state.bookingSelected,
         carsDataProp : state.carsData
     };
 }

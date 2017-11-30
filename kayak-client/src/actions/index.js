@@ -45,7 +45,7 @@ export const hotelsData = (data, search) => {
     }
 }
 
-export const carSelected = (data)=> {
+export const bookingSelected = (data)=> {
     console.log("hotelList ssssssss", data);
     return {
         type: "CAR_SELECTED",

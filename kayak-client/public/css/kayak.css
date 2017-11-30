@@ -394,10 +394,10 @@ ul.slimmenu-flight > li.active > a {
 }
 
 .labelColorBooking {
-    color: white;
+    color: black;
     font-family: 'Roboto', arial, helvetica, sans-serif;
     margin-top: 0;
-    font-weight: 300;
+    font-weight: 500;
     line-height: 1.3em;
 }
 
@@ -423,7 +423,8 @@ ul.slimmenu-flight > li.active > a {
     width: 25%;
 }
 .labelHeadings{
-    color: #FFFFFF;
+    color: #ed8323;
+    font-weight: 700;
 }
 
 .bookItem {
@@ -438,6 +439,6 @@ ul.slimmenu-flight > li.active > a {
     -o-transition: 0.2s;
     -ms-transition: 0.2s;
     transition: 0.2s;
-    /*background-color: rgba(255,255,255,0.5);*/
+    background-color: rgba(255,255,255,0.7);
     border-color: #ed8323;
 }
