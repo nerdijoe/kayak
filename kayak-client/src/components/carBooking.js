@@ -1,5 +1,5 @@
 /**
- * Created by ManaliJain on 11/17/17.
+ * Created by ManaliJain on 11/29/17.
  */
 import React,{Component} from 'react';
 
@@ -10,7 +10,7 @@ class CarBooking extends Component{
        let carSelected = this.props.carSelected;
         return(
             <div>
-                <div className = "col-sm-offset-1 col-sm-4 bookItem">
+                <div className = "col-sm-offset-1 col-sm-4">
                     <h4 className = "labelHeadings"> Your Booking Details </h4>
                     <br/>
                     <div className="form-group row">
@@ -34,43 +34,43 @@ class CarBooking extends Component{
                     <div className="form-group row">
                         <label className="col-sm-4 col-form-label labelColorBooking">Passengers :</label>
                         <div className="col-sm-6">
-                            <label className="col-form-label labelColorBooking">{carSelected.carSelected.capacity}</label>
+                            <label className="col-form-label labelColorBooking">{carSelected.capacity}</label>
                         </div>
                     </div>
                     <div className="form-group row">
                         <label className="col-sm-4 col-form-label labelColorBooking">Pick up address :</label>
                         <div className="col-sm-6">
                             <label className="col-form-label labelColorBooking">
-                                <p className="booking-item-car-title">{carSelected.carSelected.dealer.address}</p>
-                                <p className="booking-item-car-title">{carSelected.carSelected.dealer.city}</p>
-                                <p className="booking-item-car-title">{carSelected.carSelected.dealer.state}</p>
-                                <p className="booking-item-car-title">{carSelected.carSelected.dealer.country}</p>
-                                <p className="booking-item-car-title">{carSelected.carSelected.dealer.zipcode}</p>
+                                <p className="booking-item-car-title">{carSelected.dealer.address}</p>
+                                <p className="booking-item-car-title">{carSelected.dealer.city}</p>
+                                <p className="booking-item-car-title">{carSelected.dealer.state}</p>
+                                <p className="booking-item-car-title">{carSelected.dealer.country}</p>
+                                <p className="booking-item-car-title">{carSelected.dealer.zipcode}</p>
                             </label>
                         </div>
                     </div>
                     <div className="form-group row">
                         <label className="col-sm-4 col-form-label labelColorBooking">Type :</label>
                         <div className="col-sm-6">
-                            <label className="col-form-label labelColorBooking">{carSelected.carSelected.type}</label>
+                            <label className="col-form-label labelColorBooking">{carSelected.type}</label>
                         </div>
                     </div>
                     <div className="form-group row">
                         <label className="col-sm-4 col-form-label labelColorBooking">Make :</label>
                         <div className="col-sm-6">
-                            <label className="col-form-label labelColorBooking">{carSelected.carSelected.make}</label>
+                            <label className="col-form-label labelColorBooking">{carSelected.make}</label>
                         </div>
                     </div>
                     <div className="form-group row">
                         <label className="col-sm-4 col-form-label labelColorBooking">Model :</label>
                         <div className="col-sm-6">
-                            <label className="col-form-label labelColorBooking">{carSelected.carSelected.model}</label>
+                            <label className="col-form-label labelColorBooking">{carSelected.model}</label>
                         </div>
                     </div>
                     <div className="form-group row">
                         <label className="col-sm-4 col-form-label labelColorBooking">Price :</label>
                         <div className="col-sm-6">
-                            <label className="col-form-label labelColorBooking">{carSelected.carSelected.price}</label>
+                            <label className="col-form-label labelColorBooking">${carSelected.price}</label>
                         </div>
                     </div>
 

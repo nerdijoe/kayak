@@ -1,13 +1,14 @@
 import React , {Component} from 'react';
-import {carSelected} from "../actions/index";
+import {bookingSelected, bookingFlag} from "../actions/index";
 import { withRouter } from 'react-router-dom';
 import {connect} from 'react-redux';
 
 class CarList extends Component{
     handleCarBooking=()=>{
         let carSelection = this.props.car;
-        let param = 'C';
-        this.props.carSelected(carSelection, param);
+        let payload = 'C';
+        this.props.bookingSelected(carSelection);
+        this.props.bookingFlag(payload);
         this.props.history.push('/booking');
         console.log('insdde booking car');
     }
@@ -81,13 +82,15 @@ class CarList extends Component{
 
 function mapDispatchToProps(dispatch) {
     return {
-        carSelected: (data) => dispatch(carSelected(data)),
+        bookingSelected: (data) => dispatch(bookingSelected(data)),
+        bookingFlag: (data) => dispatch(bookingFlag(data))
     };
 }
 
 function mapStateToProps(state) {
     return{
-        carSelectedProp : state.carSelected
+        bookingSelectedProp : state.bookingSelected,
+        bookingFlagProp : state.bookingFlag
     };
 }
 

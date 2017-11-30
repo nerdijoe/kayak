@@ -8,7 +8,7 @@ export const signup = (data) => {
     const phonePattern = /^\+[1][\s-(]?\d{3}\)?[\s-]?\d{3}[\s-]?\d{4}/;
     const creditCardPattern = /[0-9]{4}[0-9]{4}[0-9]{4}[0-9]{4}/;
     const zipcodePattern  = /^\d{5}(?:[-]\d{4})?$/;
-    // const statePattern = /^(?-i:A[LKSZRAEP]|C[AOT]|D[EC]|F[LM]|G[AU]|HI|I[ADLN]|K[SY]|LA|M[ADEHINOPST]|N[CDEHJMVY]|O[HKR]|P[ARW]|RI|S[CD]|T[NX]|UT|V[AIT]|W[AIVY])$/;
+
     if(data.firstName ==='' || data.lastName ==='' || data.email ==='' || data.password ==='' ||
         data.address ==='' || data.city ==='' || data.state ==='' || data.zipcode ==='' ||
         data.phone ==='' || data.creditCardNum ==='' || data.creditCardFullName ==='' ){
@@ -146,12 +146,19 @@ export const carSearch = (data) => {
     let msg = "";
     const namePattern = /^[a-zA-Z\s]+$/;
 
+    let strtDate = new Date(data.startDate);
+    let endDate = new Date(data.endDate);
+
     if( data.location ==='' || data.startDate ==='' || data.endDate ===''){
         msg = "All fields are mandatory. Please fill all details";
         return msg;
     }
     if (!(namePattern.test(data.location))) {
         msg = "Enter correct location";
+        return msg;
+    }
+    if(strtDate > endDate){
+        msg = "Drop off Date should be a date after the pick up date";
         return msg;
     }
     return msg;
@@ -161,6 +168,9 @@ export const hotelSearch = (data) => {
     let msg = "";
     const namePattern = /^[a-zA-Z\s]+$/;
 
+    let strtDate = new Date(data.startDate);
+    let endDate = new Date(data.endDate);
+
     if( data.place ==='' || data.startDate ==='' || data.endDate ===''){
         msg = "All fields are mandatory. Please fill all details";
         return msg;
@@ -169,8 +179,39 @@ export const hotelSearch = (data) => {
         msg = "Enter correct Place";
         return msg;
     }
+    if(strtDate > endDate){
+        msg = "Check out date should be after the check in date";
+        return msg;
+    }
     return msg;
 };
+
+export const flightSearch = (data) => {
+    let msg = "";
+    const namePattern = /^[a-zA-Z\s]+$/;
+
+    let strtDate = new Date(data.departureDate);
+    let endDate = new Date(data.arrivalDate);
+
+    if( data.place ==='' || data.departureDate ==='' || data.arrivalDate ==='' || data.departure === '' || data.source === ''){
+        msg = "All fields are mandatory. Please fill all details";
+        return msg;
+    }
+    if (!(namePattern.test(data.source))) {
+        msg = "Enter correct Source";
+        return msg;
+    }
+    if (!(namePattern.test(data.departure))) {
+        msg = "Enter correct Departure";
+        return msg;
+    }
+    if(strtDate > endDate){
+        msg = "Arriving date should be after the departure date";
+        return msg;
+    }
+    return msg;
+};
+
 
 export const makePayment = (data) => {
     let msg = "";
