@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import {BrowserRouter} from 'react-router-dom';
 import HomePage from './components/homePage';
-import CarSearch from './components/car-search';
+import HotelSearch from './components/hotel-search';
 
 
 class App extends Component {
@@ -11,7 +11,7 @@ class App extends Component {
         <div>
             <BrowserRouter>
                 <HomePage/>
-                {/*<CarSearch/>*/}
+                {/*<HotelSearch/>*/}
             </BrowserRouter>
         </div>
     );

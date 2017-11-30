@@ -44,3 +44,10 @@ export const hotelsData = (data, search) => {
         search
     }
 }
+export const hotelFilterData = (data) => {
+    console.log("filteredData", data);
+    return {
+        type: "HOTEL_FILTERED_DATA",
+        data
+    }
+}
