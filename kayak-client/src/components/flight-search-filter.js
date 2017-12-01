@@ -8,8 +8,14 @@ class FlightFilter extends Component {
         this.state = {
             priceSliderLow:0,
             priceSliderHigh:0,
+            departureHourSliderLow:0,
+            departureHourSliderHigh:0,
+            arrivalHourSliderLow:0,
+            arrivalHourSliderHigh:0,
             priceLow:0,
             priceHigh:0,
+            hourLow:0,
+            hourHigh:0,
             classFilter:[]
         }
         // this.props.filterData(this.props.flightData);
@@ -24,21 +30,28 @@ class FlightFilter extends Component {
             if (!low || parseInt(flightData[i]['price']) < parseInt(low['price']))
                 low = flightData[i];
         }
-        this.state = {
-            priceSliderLow:low.price,
-            priceSliderHigh:max.price,
-            priceLow:low.price,
-            priceHigh:max.price,
-
-            classFilter:[]
+        if (low !== '' && max !== '') {
+            this.state = {
+                priceSliderLow: low.price,
+                priceSliderHigh: max.price,
+                priceLow: low.price,
+                priceHigh: max.price,
+                departureHourSliderLow:0,
+                departureHourSliderHigh:0,
+                arrivalHourSliderLow:0,
+                arrivalHourSliderHigh:0,
+                classFilter: []
+            }
         }
-        // document.body.style.backgroundImage = "none";
-        // this.props.filterData(this.props.flightData);
     }
     applyFilter = ()=>{
         var flightData = this.props.flightData;
-        var low = this.state.priceSliderLow, high = this.state.priceSliderHigh;
-        var filteredFlightData = flightData.filter(flight=>flight.price>=low & flight.price<=high);
+        var lowPrice = this.state.priceSliderLow, highPrice = this.state.priceSliderHigh,
+            departureHourHigh = this.state.departureHourSliderHigh,departureHourLow = this.state.departureHourSliderLow,
+        arrivalHourHigh = this.state.arrivalHourSliderHigh,arrivalHourLow = this.state.arrivalHourSliderLow;
+        var filteredFlightData = flightData.filter(flight=>flight.price>=lowPrice & flight.price<=highPrice);
+        filteredFlightData = filteredFlightData.filter(flight=>flight.departureDate.getHours()>=departureHourLow & flight.departureDate.getHours()<=departureHourHigh);
+        filteredFlightData = filteredFlightData.filter(flight=>flight.arrivalDate.getHours()>=arrivalHourHigh & flight.departureDate.getHours()<=arrivalHourLow);
         let classFilter = this.state.classFilter;
         if (classFilter.length > 0) {
             filteredFlightData = filteredFlightData.filter(flight => classFilter.indexOf(flight.class) > -1);
@@ -71,29 +84,25 @@ class FlightFilter extends Component {
             <aside className="booking-filters text-white">
                 <h3>Filter By:</h3>
                 <ul className="list booking-filters-list">
-                    <li>
-                        <h5 className="booking-filters-title">Stops
-                            {/*<small>Price from</small>*/}
+                    {/*<li>
+                        <h5 className="booking-filters-title">Departure Time
                         </h5>
                         <div className="checkbox">
                             <label>
                                 <input className="i-check filter-checkbox" type="checkbox"/>Departure 12:00 AM to 8:00AM
-                                {/*<span className="pull-right">$215</span>*/}
                             </label>
                         </div>
                         <div className="checkbox">
                             <label>
                                 <input className="i-check" type="checkbox"/>Departure 8:00 AM to 4:00PM
-                                {/*<span className="pull-right">$154</span>*/}
                             </label>
                         </div>
                         <div className="checkbox">
                             <label>
                                 <input className="i-check" type="checkbox"/>Departure 4:00 PM to 12:00AM
-                                {/*<span className="pull-right">$197</span>*/}
                             </label>
                         </div>
-                    </li>
+                    </li>*/}
                     <li>
                         <h5 className="booking-filters-title">Price </h5>
                         <h6 className="booking-filters-title">range low </h6>
@@ -132,13 +141,11 @@ class FlightFilter extends Component {
                     </li>
                     <li>
                         <h5 className="booking-filters-title">Flight class
-                            {/*<small>Price from</small>*/}
                         </h5>
                         <div className="checkbox">
                             <label>
                                 <input className="i-check" type="checkbox"
                                 onChange={(event)=>this.classModified(event,'Economy')}/>Economy
-                                {/*<span className="pull-right">$154</span>*/}
                             </label>
                         </div>
                         <div className="checkbox">
@@ -146,7 +153,6 @@ class FlightFilter extends Component {
                                 <input className="i-check" type="checkbox"
                                        onChange={(event)=>this.classModified(event,'Business')}
                                 />Business
-                                {/*<span className="pull-right">$316</span>*/}
                             </label>
                         </div>
                         <div className="checkbox">
@@ -154,9 +160,88 @@ class FlightFilter extends Component {
                                 <input className="i-check" type="checkbox"
                                 onChange={(event)=>this.classModified(event,'First')}
                                 />First
-                                {/*<span className="pull-right">$450</span>*/}
                             </label>
                         </div>
+                    </li>
+                    <li>
+                        <h5 className="booking-filters-title">Departure Time </h5>
+                        <h6 className="booking-filters-title">Start range </h6>
+                        <label>{0}</label><span className="pull-right">{24}</span>
+                        <input className="price-slider"
+                               id="mySlider"
+                               type="range"
+                               value={this.state.departureHourSliderLow}
+                               min={0}
+                               max={24}
+                               onInput={(event) => {
+                                   this.setState({
+                                       departureHourSliderLow: event.target.value
+                                   });
+                               }}
+                               onMouseUp={() => {
+                                   this.applyFilter()
+                               }}
+                               step={1}/>
+                        Value = {this.state.departureHourSliderLow}
+                        <h6 className="booking-filters-title">End range </h6>
+                        <label>{0}</label><span className="pull-right">{24}</span>
+                        <input className="price-slider"
+                               id="mySlider"
+                               type="range"
+                               value={this.state.departureHourSliderHigh}
+                               min={0}
+                               max={24}
+                               onInput={(event) => {
+                                   this.setState({
+                                       departureHourSliderHigh: event.target.value
+                                   });
+                               }}
+                               step={1}
+                               onMouseUp={() => {
+                                   this.applyFilter()
+                               }}
+                        />
+                        Value = {this.state.departureHourSliderHigh}
+                    </li>
+                    <li>
+                        <h5 className="booking-filters-title">Arrival Time </h5>
+                        <h6 className="booking-filters-title">Start range </h6>
+                        <label>{0}</label><span className="pull-right">{24}</span>
+                        <input className="price-slider"
+                               id="mySlider"
+                               type="range"
+                               value={this.state.arrivalHourSliderLow}
+                               min={0}
+                               max={24}
+                               onInput={(event) => {
+                                   this.setState({
+                                       arrivalHourSliderLow: event.target.value
+                                   });
+                               }}
+                               onMouseUp={() => {
+                                   this.applyFilter()
+                               }}
+                               step={1}/>
+                        Value = {this.state.arrivalHourSliderLow}
+                        <h6 className="booking-filters-title">End range </h6>
+                        <label>{0}</label><span className="pull-right">{24}</span>
+                        <input className="price-slider"
+                               id="mySlider"
+                               type="range"
+                               value={this.state.arrivalHourSliderHigh}
+                               min={0}
+                               max={24}
+                               onInput={(event) => {
+                                   this.setState({
+                                       arrivalHourSliderHigh: event.target.value
+                                   });
+                               }}
+                               step={1}
+                               onMouseUp={() => {
+                                   this.applyFilter()
+                               }}
+                        />
+                        Value = {this.state.arrivalHourSliderHigh}
                     </li>
                 </ul>
             </aside>
