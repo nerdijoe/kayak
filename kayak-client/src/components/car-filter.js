@@ -26,7 +26,7 @@ class CarFilter extends Component {
             if (!low || parseInt(carData[i]['price']) < parseInt(low['price']))
                 low = carData[i];
         }
-        if (low !== '' & max !== '') {
+        if (low !== '' && max !== '') {
             this.state = {
                 priceSliderLow: low.price,
                 priceSliderHigh: max.price,

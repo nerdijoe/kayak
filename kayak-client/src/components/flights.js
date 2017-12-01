@@ -4,9 +4,10 @@
 import React,{Component} from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import * as Validate from '../validation/signupValidation';
+import * as API from '../api/searchListings';
 
 class Flights extends Component{
-
     constructor(props){
         super(props);
         this.state ={
@@ -16,7 +17,7 @@ class Flights extends Component{
             departureDate:"",
             arrivalDate:"",
             classType:"",
-            seats:0
+            seats:1
         }
     }
 
@@ -35,9 +36,54 @@ class Flights extends Component{
         return ((value === this.state.flightTripSelection) ?'active':'');
     }
 
-    handleSearchFlights=() => {
-    this.props.history.push('/flights/search');
+    handleFlightSearch = (event) => {
+        var valid = Validate.carSearch(this.state);
+        console.log("flight state is", this.state);
+        if(valid === ''){
+            let payload ={
+                departure:this.state.departure,
+                source:this.state.source,
+                departureDate:this.state.departureDate,
+                arrivalDate:this.state.arrivalDate,
+                classType:this.state.classType,
+                seats:this.state.seats
+            }
+            this.callForFlightSearch(payload);
+        }else{
+            this.setState({
+                ...this.state,
+                message: valid
+            });
+            event.preventDefault();
+        }
+    }
 
+    callForFlightSearch = (payload) => {
+        API.getFlightList(payload)
+            .then((res) => {
+                if(res.data.length>0){
+                    console.log('axiosSignIn', res);
+                    this.props.flightsData(res.data, payload);
+                    // this.props.carFilterD?ata(res.data);
+                    this.setState({
+                        ...this.state,
+                        message: ''
+                    });
+                    let flights = this.props.flightsDataProp;
+                    console.log("cars response in teh redux is ", flights);
+                    this.props.history.push("/flights/search");
+                } else {
+                    this.setState({
+                        ...this.state,
+                        message: 'No Flight listings available for the selected search criteria. Try again with another location'
+                    });
+                }
+            }).catch((err) => {
+            this.setState({
+                ...this.state,
+                message: "No Flight listings available for the selected search criteria. Try again with another location"
+            });
+        })
     }
     render(){
         return(
@@ -257,7 +303,7 @@ class Flights extends Component{
                        </div>
                    </div>
                </div>
-               <button className="btn-lg btn-search" type="submit" onClick = {()=> this.handleSearchFlights()}>Search for Flights --> </button>
+               <button className="btn-lg btn-search" type="submit" onClick = {()=> this.handleFlightSearch()}>Search for Flights --> </button>
            </div>
         )
     }
