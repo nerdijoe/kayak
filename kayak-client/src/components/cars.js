@@ -52,7 +52,7 @@ class Cars extends Component{
                     });
                     var cars = this.props.carsDataProp;
                     console.log("cars response in teh redux is ", cars);
-                    this.props.history.push("/cars/search")
+                    this.props.history.push("/cars/search");
                 } else {
                     this.setState({
                         ...this.state,

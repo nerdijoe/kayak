@@ -22,9 +22,14 @@ import {
   axiosFetchCarBillingCount,
   axiosFetchCarBillingTotal,
   axiosFetchUser,
+
   axiosFetchFlight,
   axiosFetchAirport,
   axiosFetchAirline,
+
+  axiosFetchLogPages,
+  axiosFetchLogPagesCount,
+
 } from '../../actions';
 
 
@@ -80,7 +85,12 @@ class App extends Component {
       this.props.axiosFetchAirport();
       this.props.axiosFetchAirline();
       this.props.axiosFetchUser();
+
       this.props.axiosFetchFlight();
+
+      this.props.axiosFetchLogPages();
+      this.props.axiosFetchLogPagesCount();
+
       
       if(localStorage.getItem('admin_token') == null) {
         this.props.history.push('/signin');
@@ -176,10 +186,17 @@ const mapDispatchToProps = (dispatch) => {
     axiosFetchCarBillingTotal: () => { dispatch(axiosFetchCarBillingTotal());},
 
     axiosFetchUser: () => { dispatch(axiosFetchUser()); },
+
     axiosFetchFlight: () => { dispatch(axiosFetchFlight()); },
     axiosFetchAirport: () => { dispatch(axiosFetchAirport()); },
     axiosFetchAirline: () => { dispatch(axiosFetchAirline()); },
   };
+
+    
+    axiosFetchLogPages: () => { dispatch(axiosFetchLogPages()); },
+    axiosFetchLogPagesCount: () => { dispatch(axiosFetchLogPagesCount()); },
+};
+
 };
 
 const connectedApp = connect(null, mapDispatchToProps)(App);

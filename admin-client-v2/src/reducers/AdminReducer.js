@@ -10,6 +10,8 @@ const initialState = {
   carBillingCount: [],
   carBillingTotal: [],
   carBillingSearch: [],
+  logPages: [],
+  logPagesCount: [],
 };
 
 const AdminReducer = (state = initialState, action) => {
@@ -111,12 +113,24 @@ const AdminReducer = (state = initialState, action) => {
       } else {
         updated = [...state.carBillingAll];
       }
-  
       return {
         ...state,
         carBillingSearch: updated,
-      }
+      };
     }
+    case actionType.FETCH_LOG_PAGES: {
+      return {
+        ...state,
+        logPages: [...action.data],
+      };
+    }
+    case actionType.FETCH_LOG_PAGES_COUNT: {
+      return {
+        ...state,
+        logPagesCount: [...action.data],
+      };
+    }
+
     default:
       return state;
   }
