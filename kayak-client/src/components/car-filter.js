@@ -114,7 +114,10 @@ class CarFilter extends Component {
                                    this.setState({
                                        priceSliderLow: event.target.value
                                    });
-                                   this.applyFilter();
+                                   // this.applyFilter()
+                               }}
+                               onMouseUp={() => {
+                                   this.applyFilter()
                                }}
                                step={1}/>
                         Value = {this.state.priceSliderLow}
@@ -130,10 +133,11 @@ class CarFilter extends Component {
                                    this.setState({
                                        priceSliderHigh: event.target.value
                                    });
-                                   this.applyFilter();
                                }}
                                step={1}
-                               onmouseup={this.applyFilter}
+                               onMouseUp={() => {
+                                   this.applyFilter()
+                               }}
                         />
                         Value = {this.state.priceSliderHigh}
                     </li>

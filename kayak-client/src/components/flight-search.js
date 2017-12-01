@@ -8,11 +8,9 @@ import {bindActionCreators} from 'redux';
 class FlightSearch extends Component {
     constructor(props) {
         super(props);
-        this.props.filterData(this.props.flightData);
-        console.log("filter data was called");
     }
     render() {
-        if (this.props.filteredData.filteredData.length > 0) {
+        if (this.props.flightFilteredData.flightFilteredData.length > 0) {
             return (
                 <div className="bg-front">
                     <div className="container">
@@ -20,6 +18,7 @@ class FlightSearch extends Component {
                             <div className="col-md-3">
                                 <FlightFilter/>
                             </div>
+
                             <div className="row justify-content-md col-md-offset-1 col-md-8">
                                 <ul className="booking-list">
                                     {
@@ -67,7 +66,7 @@ function matchDispatchToProps(dispatch) {
 function mapStateToProps(state) {
     console.log("state App", state);
     return {
-        flightData: state.flightData,
+        flightsData: state.flightsData,
         flightFilteredData: state.flightFilteredData
     };
 }
