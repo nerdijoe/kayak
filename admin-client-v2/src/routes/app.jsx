@@ -1,5 +1,4 @@
 import Dashboard from 'views/Dashboard/Dashboard';
-import DashboardKayak from 'views/Dashboard/DashboardKayak';
 import UserProfile from 'views/UserProfile/UserProfile';
 import TableList from 'views/TableList/TableList';
 import Typography from 'views/Typography/Typography';
@@ -9,6 +8,9 @@ import Notifications from 'views/Notifications/Notifications';
 import Upgrade from 'views/Upgrade/Upgrade';
 import SignIn from 'views/Auth/SignIn';
 
+import DashboardKayak from 'views/Dashboard/DashboardKayak';
+import DashboardLog from 'views/Dashboard/DashboardLog';
+
 import CarList from 'views/Cars/CarList';
 import CarBillingList from 'views/CarBillings/CarBillingList';
 import UserList from 'views/Users/UserList';
@@ -17,6 +19,7 @@ import HotelList from 'views/Hotels/HotelList';
 
 const appRoutes = [
     { path: "/dashboardkayak", name: "Dashboard K", icon: "pe-7s-graph", component: DashboardKayak },
+    { path: "/dashboardlog", name: "User Logs", icon: "pe-7s-id", component: DashboardLog },
     { path: "/dashboard", name: "Dashboard", icon: "pe-7s-graph", component: Dashboard },
     { path: "/user", name: "User Profile", icon: "pe-7s-user", component: UserProfile },
     { path: "/table", name: "Table List", icon: "pe-7s-note2", component: TableList },

@@ -8,11 +8,16 @@ exports.getDuration = function(start, end){
 };
 
 exports.getDepartureDate = function(departureDate, departureTime, arrivalTime){
-  var depart = moment(departureTime, 'hh:mm A');
-  var arrival = moment(arrivalTime, 'hh:mm A');
+  var depart = moment(departureTime);
+  var arrival = moment(arrivalTime);
   if (depart.isBefore(arrival)){
     return departureDate;
   } else{
-    return departureDate.add('days', 1);
+    return depart.add('days', 1);
   }
 };
+
+exports.isSameDay = function(dateA, dateB){
+  return moment(dateA, "yyyy-MM-DD").isSame(moment(dateB, "yyyy-MM-DD"), "day");
+};
+

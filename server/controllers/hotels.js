@@ -173,7 +173,7 @@ exports.search = (req, res) => {
 
   var result = [];
 
-  Hotel.find({city: DBTool.getCaseInsensitiveRegex(city)})
+  Hotel.find({city: DBTool.getRegex(city)})
     .exec(function(err, hotels){
       if (err){
         console.error(err);
@@ -215,7 +215,7 @@ exports.getAll = (req, res) => {
   Hotel
     .find({})
     .exec((err, results) => {
-      console.log('getAll results=', results);
+      // console.log('getAll results=', results);
       if (err) res.json(err);
       res.json(results);
     });

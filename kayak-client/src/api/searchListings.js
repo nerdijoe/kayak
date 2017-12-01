@@ -19,8 +19,8 @@ export const getFlightList = (payload) => {
 
 export const getCarList = (payload) => {
     // let apiCall = departure=San Jose&arrivalAt=New York&class=Economy&departureDate=11/25/2017
-    // return axios.get(`http://localhost:3010/cars/search?city=${payload.location}`)
-     return axios.get(`http://localhost:3010/cars`)
+    return axios.get(`http://localhost:3010/cars/search?city=${payload.location}`)
+    //  return axios.get(`http://localhost:3010/cars`)
         .then(function (response) {
             console.log(response);
             return response
@@ -32,7 +32,7 @@ export const getCarList = (payload) => {
 };
 
 export const getHotelList = (payload) => {
-    return axios.get(`http://localhost:3010/hotels/search?where=${payload.place}`)
+    return axios.get(`http://localhost:3010/hotels/search?city=${payload.place}`)
         .then(function (response) {
             console.log(response);
             return response

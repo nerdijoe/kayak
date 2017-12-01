@@ -142,6 +142,7 @@ export const editUser = (data) => {
 };
 
 
+<<<<<<< HEAD
 
 export const addNewFlight = (data) => {
     return {
@@ -212,6 +213,22 @@ export const fetchHotel = (data) => {
         type: actionType.FETCH_HOTEL,
         data,
     };
+};
+
+
+=======
+export const fetchLogPages = (data) => {
+  return {
+    type: actionType.FETCH_LOG_PAGES,
+    data,
+  };
+};
+
+export const fetchLogPagesCount = (data) => {
+  return {
+    type: actionType.FETCH_LOG_PAGES_COUNT,
+    data,
+  };
 };
 
 
@@ -440,6 +457,7 @@ export const axiosEditUser = user => (dispatch) => {
 };
 
 
+<<<<<<< HEAD
 export const axiosAddNewFlight = data => (dispatch) => {
     const admin_token = localStorage.getItem('admin_token');
     console.log('axiosAddNewFlight data=', data);
@@ -557,6 +575,7 @@ export const axiosFetchAirline = () => (dispatch) => {
 };
 
 
+
 //--------------------------------
 
 export const axiosAddNewHotel = data => (dispatch) => {
@@ -647,3 +666,33 @@ export const axiosFetchHotel = () => (dispatch) => {
         console.log(err);
 });
 };
+
+export const axiosFetchLogPages = () => (dispatch) => {
+  //get admin token
+
+  axios.get('http://localhost:3010/logs/pages')
+    .then((res) => {
+      console.log('--- after axiosFetchLogPages');
+      console.log(res.data);
+
+      dispatch(fetchLogPages(res.data));
+    }).catch((err) => {
+      console.log(err);
+    });
+};
+
+export const axiosFetchLogPagesCount = () => (dispatch) => {
+  //get admin token
+
+  axios.get('http://localhost:3010/logs/pages/count')
+    .then((res) => {
+      console.log('--- after axiosFetchLogPagesCount');
+      console.log(res.data);
+
+      dispatch(fetchLogPagesCount(res.data));
+    }).catch((err) => {
+      console.log(err);
+    });
+};
+
+

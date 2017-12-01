@@ -7,6 +7,7 @@ import { withRouter } from 'react-router-dom';
 import {connect} from 'react-redux';
 import * as Validate from '../validation/signupValidation';
 import * as API from '../api/searchListings';
+import {hotelFilterData} from "../actions/index";
 
 class Hotels extends Component{
     constructor(props) {
@@ -49,12 +50,14 @@ class Hotels extends Component{
                 if(res.data.length>0){
                     console.log('axioshotels', res);
                     this.props.hotelsData(res.data, payload);
+                    this.props.hotelFilterData(res.data);
                     this.setState({
                         ...this.state,
                         message: ''
                     });
                     var hotels = this.props.hotelsDataProp;
                     console.log("hotels response in the redux is ", hotels.hotelSearch);
+                    this.props.history.push("/hotels/search");
                 } else {
                     this.setState({
                         ...this.state,
@@ -167,7 +170,8 @@ class Hotels extends Component{
 
 function mapDispatchToProps(dispatch) {
     return {
-        hotelsData: (flag, user) => dispatch(hotelsData(flag,user))
+        hotelsData: (data, payload) => dispatch(hotelsData(data,payload)),
+        hotelFilterData:(data) => dispatch(hotelFilterData(data))
     };
 }
 
