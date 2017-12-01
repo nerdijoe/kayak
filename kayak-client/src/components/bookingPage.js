@@ -2,7 +2,7 @@
  * Created by ManaliJain on 11/23/17.
  */
 import React, {Component} from 'react';
-import {loginData,bookingSelected,carsData,hotelsData,flightsData} from '../actions/index';
+import {loginData,cBookingSelected,carsData,hotelsData,flightsData} from '../actions/index';
 import {connect} from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import {Button, Modal} from 'react-bootstrap';
@@ -380,7 +380,7 @@ class BookingPage extends Component{
 function mapDispatchToProps(dispatch) {
     return {
         loginData: (data) => dispatch(loginData(data)),
-        bookingSelected: (data) => dispatch(bookingSelected(data)),
+        cBookingSelected: (data) => dispatch(cBookingSelected(data)),
         carsData: (data) => dispatch(carsData(data)),
         flightsData: (data) => dispatch(flightsData(data)),
         hotelsData: (data) => dispatch(hotelsData(data))
