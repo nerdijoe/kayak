@@ -29,7 +29,7 @@ exports.signup = (req, res) => {
 
 exports.signin = (req, res, next) => {
   const user = req.user;
-  console.log('authAdmin signin', user);
+  // console.log('authAdmin signin', user);
 
   const email = user.email;
 

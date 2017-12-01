@@ -37,14 +37,12 @@ exports.book = (req, res) => {
       console.log(flight);
       if (err) res.json(err);
 
-      var price = flight.prices[DBTool.priceMap.get(data.flightClass)].price;
-
       const booking = FlightBilling({
         userId: req.decoded.id,
         flight,
-        priceBooked: price,
+        priceBooked: flight.price,
         qtyBooked: data.qtyBooked,
-        totalAmount: (price * data.qtyBooked),
+        totalAmount: (flight.price * data.qtyBooked),
       });
 
       booking.save((err, booked) => {

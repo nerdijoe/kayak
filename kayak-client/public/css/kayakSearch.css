@@ -380,6 +380,7 @@
     padding: 15px 0;
     width: 263px;
     border: 1px solid #262626;
+    opacity: .9;
 }
 .booking-filters > h3 {
     padding: 0 20px;

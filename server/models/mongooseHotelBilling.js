@@ -5,7 +5,6 @@ const Schema = mongoose.Schema;
 const hotelBillingSchema = new Schema({
   userId: { type: Number, required: true },
   hotel: { type: Schema.Types.ObjectId, ref: 'Hotel', required: true },
-  room: { type: Schema.Types.ObjectId, ref: 'HotelRoom', required: true },
   startDate: { type: Date, required: true },
   endDate: { type: Date, required: true },
   daysBooked: { type: Number, required: true },

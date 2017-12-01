@@ -8,31 +8,9 @@ import {bindActionCreators} from 'redux';
 class FlightSearch extends Component {
     constructor(props) {
         super(props);
-        this.props.filterData(this.props.flightData);
-        console.log("filter data was called");
     }
-
-    /*    componentWillMount() {
-            // document.body.style.backgroundImage = "none";
-            // document.body.style.backgroundColor = "lightgrey";
-            // this.props.filterData(this.props.flightData);
-        }
-        componentDidMount(){
-            // this.props.filterData(this.props.flightData);
-        }
-        componentWillReceiveProps(){
-            // this.props.filterData(this.props.flightData);
-        }*/
-
-    // handleFlightBooking = () => {
-    //
-    // }
-    // handleFlightBooking=()=>{
-    //     this.props.history.push('/booking');
-    //     console.log('insdde booking flight');
-    // }
     render() {
-        if (this.props.filteredData.filteredData.length > 0) {
+        if (this.props.flightFilteredData.flightFilteredData.length > 0) {
             return (
                 <div className="bg-front">
                     <div className="container">
@@ -40,10 +18,10 @@ class FlightSearch extends Component {
                             <div className="col-md-3">
                                 <FlightFilter/>
                             </div>
+
                             <div className="row justify-content-md col-md-offset-1 col-md-8">
                                 <ul className="booking-list">
-                                    {   //this.state.flightDetails.map
-
+                                    {
                                         this.props.flightFilteredData.flightFilteredData.map((flight, index) => {
                                             return (
                                                 <FlightSearchList
@@ -88,7 +66,7 @@ function matchDispatchToProps(dispatch) {
 function mapStateToProps(state) {
     console.log("state App", state);
     return {
-        flightData: state.flightData,
+        flightsData: state.flightsData,
         flightFilteredData: state.flightFilteredData
     };
 }

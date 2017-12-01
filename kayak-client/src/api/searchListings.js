@@ -6,7 +6,8 @@ const axios = require("axios");
 export const getFlightList = (payload) => {
     console.log("payload", payload);
     // let apiCall = departure=San Jose&arrivalAt=New York&class=Economy&departureDate=11/25/2017
-    return axios.get(`http://localhost:3010/flight/search?departure=${payload.source}&arrivalAt=${payload.destination}&`, payload)
+    console.log("`http://localhost:3010/flights/search?departure=${payload.source}&arrivalAt=${payload.destination");
+    return axios.get(`http://localhost:3010/flights/search?departure=${payload.source}&arrivalAt=${payload.destination}&departureDate=${payload.departureDate}`, payload)
         .then(function (response) {
             console.log(response);
             return response

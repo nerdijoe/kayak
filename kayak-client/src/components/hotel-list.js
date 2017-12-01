@@ -17,7 +17,6 @@ class HotelList extends Component{
                             <div className="col-md-4">
                                 <div className="booking-item-img-wrap">
                                     <img src={imageURL}
-                                         alt="Image Alternative text"
                                          title="Hotel"/>
                                 </div>
                             </div>
@@ -62,9 +61,10 @@ class HotelList extends Component{
                                     );
                                 })
                             }*/}
-                            <span className="booking-item-price-from">{hotel.type}</span>
+                            <span className="booking-item-price-from">Size: {hotel.roomType}</span>
+                            <br/>
                             <span className="booking-item-price">${hotel.price}</span><span>/night</span>
-                            <span className="btn btn-book">Book Now</span>
+                            <span className="btn btn-book">Book</span>
                         </div>
                     </div>
                 </a>
