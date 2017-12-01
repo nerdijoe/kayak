@@ -6,8 +6,6 @@ const HotelReview = require('../models/mongooseHotelReview');
 // const HotelRoom = require('../models/mongooseHotelRoom');
 const DBTool = require('../helpers/DBTool');
 
-
-
 exports.editRooms = (req, res) => {
   console.log('hotel add room');
   const id = req.params.id;
@@ -34,31 +32,7 @@ exports.editRooms = (req, res) => {
 });
 };
 
-exports.addRooms = (req, res) => {
-  console.log('hotel add room');
-  const id = req.params.id;
-  const data = req.body;
-
-  // HotelRoom.create(data);
-
-  Hotel.findByIdAndUpdate(
-    id,
-    {
-      $push: {
-        rooms: data.rooms,
-      },
-    },
-    (err, result) => {
-      if (err) res.json(err);
-        Hotel
-          .findById(id)
-          .exec((err, result) => {
-          console.log('add review result=', result);
-        if (err) res.json(err);
-        res.json(result);
-      });
-    });
-};
+// 莉莉
 exports.addReviews = (req, res) => {
   console.log('hotel add review');
   const id = req.params.id;
@@ -85,32 +59,6 @@ else{
   }
 }
 );
-
-  // HotelReview.create(data, function(err, review){
-  //   if (err) res.json(err);
-  //   else {
-  //     Hotel.findByIdAndUpdate(
-  //       id,
-  //       {
-  //         $push: {reviews: review,},
-  //       },
-  //       (err, result) => {
-  //         if (err) res.json(err);
-  //         else{
-  //             Hotel
-  //               .findById(id)
-  //               // .populate('reviews')
-  //               .exec((err, result) => {
-  //               console.log('add review result=', result);
-  //             if (err) res.json(err);
-  //             else res.json(result);
-  //           });
-  //         }
-  //       }
-  //     );
-  //   }
-  // });
-
 }
 exports.edit = (req, res) => {
   console.log('edit hotel');
@@ -128,6 +76,8 @@ exports.edit = (req, res) => {
         state: data.state,
         country: data.country,
         zipcode: data.zipcode,
+        roomType: data.roomType,
+        price: data.price,
         // imageUrl: data.imageUrl,
       },
     },
@@ -173,7 +123,7 @@ exports.search = (req, res) => {
 
   var result = [];
 
-  Hotel.find({city: DBTool.getCaseInsensitiveRegex(city)})
+  Hotel.find({city: DBTool.getPartialRegex(city)})
     .exec(function(err, hotels){
       if (err){
         console.error(err);
@@ -182,8 +132,6 @@ exports.search = (req, res) => {
         res.json(hotels);
       }
     });
-
-
 };
 
 exports.create = (req, res) => {
@@ -199,8 +147,9 @@ exports.create = (req, res) => {
     state: data.state,
     country: data.country,
     zipcode: data.zipcode,
+    roomType: data.roomType,
+    price: data.price,
     reviews: [],
-    rooms: [],
     // imageUrl: data.imageUrl,
   }, function(err, newHotel){
     if(err){
@@ -215,7 +164,7 @@ exports.getAll = (req, res) => {
   Hotel
     .find({})
     .exec((err, results) => {
-      console.log('getAll results=', results);
+      // console.log('getAll results=', results);
       if (err) res.json(err);
       res.json(results);
     });

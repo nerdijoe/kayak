@@ -1,7 +1,21 @@
 
 
-exports.getCaseInsensitiveRegex = function(string){
-  var regex = new RegExp(["^", string, "$"].join(""), "i");
+exports.getRegex = function(string, caseInsensitive = true){
+  var regex;
+  if(caseInsensitive){
+    regex = new RegExp(["^", string, "$"].join(""), "i");
+  } else{
+    regex = new RegExp(["^", string, "$"].join(""));
+  }
+  return regex;
+};
+
+exports.getPartialRegex = function(string, caseInsensitive = true){
+  if(caseInsensitive){
+    regex = new RegExp(string, "i");
+  } else{
+    regex = new RegExp(string);
+  }
   return regex;
 };
 

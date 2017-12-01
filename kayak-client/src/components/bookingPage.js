@@ -352,11 +352,10 @@ class BookingPage extends Component{
                                                     </div>
                                                 </div>
                                             </div>
-                                            <button  type="button" className = "btn-btn-book" onClick={this.handleMakePayment}>Make Payment</button>
+                                            <button  type="button" className = "btn btn-book" onClick={this.handleMakePayment}>Make Payment</button>
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
 

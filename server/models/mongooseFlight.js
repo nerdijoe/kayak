@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
-const FlightPrice = require('./mongooseFlightPrice').schema;
+// const FlightPrice = require('./mongooseFlightPrice').schema;
 
 const flightSchema = new Schema({
   flightNumber: { type: String, required: true, unique: true },
@@ -10,7 +10,8 @@ const flightSchema = new Schema({
   departureAirport: { type: Schema.Types.ObjectId, ref: 'FlightAirport' },
   arrivalAirport: { type: Schema.Types.ObjectId, ref: 'FlightAirport' },
   airline: { type: Schema.Types.ObjectId, ref: 'FlightAirline' },
-  prices: [FlightPrice],
+  class: { type: String, required: true },
+  price: { type: Number, required: true },
   isDeleted: { type: Boolean, default: false },
 }, {
   timestamps: true,
