@@ -41,7 +41,7 @@ describe('User', () => {
             password: 'haha',
           })
           .end((err, result) => {
-            console.log('****** result.body=', result.body);
+            //console.log('****** result.body=', result.body);
             token = result.body.token;
             done();
           });
@@ -62,7 +62,7 @@ describe('User', () => {
     chai.request(server)
       .get(`/users/${user_id}`)
       .end((err, result) => {
-        console.log("*** get one user", result.body);
+        //console.log("*** get one user", result.body);
         result.should.have.status(200);
         result.should.be.an('object');
         result.body.should.be.an('object');
@@ -85,37 +85,4 @@ describe('User', () => {
       });
   });
 
-  // it('PUT - /users/interest - should return user about', (done) => {
-  //   chai.request(server)
-  //     .get('/users/interest')
-  //     .set('token', token)
-  //     .end((err, result) => {
-  //       console.log("*** get user interest", result.body);
-  //       result.should.have.status(200);
-  //       result.should.be.an('object');
-  //       result.body.should.be.an('object');
-
-  //       result.body.should.have.property('music');
-  //       result.body.should.have.property('shows');
-  //       result.body.should.have.property('sports');
-  //       result.body.should.have.property('fav_teams');
-
-  //       done();
-  //     });
-  // });
-
-  // it('GET - /users/activities - should return user activities', (done) => {
-  //   chai.request(server)
-  //     .get('/users/activities')
-  //     .set('token', token)
-  //     .end((err, result) => {
-  //       console.log("*** get user activities", result.body);
-  //       result.should.have.status(200);
-  //       result.should.be.an('object');
-  //       result.body.should.be.an('array');
-  //       result.body.length.should.equal(0);
-
-  //       done();
-  //     });
-  // });
 });

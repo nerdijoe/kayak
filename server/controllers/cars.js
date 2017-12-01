@@ -36,7 +36,7 @@ exports.getAll = (req, res) => {
     .find({})
     .populate('dealer')
     .exec((err, results) => {
-      console.log('getAll results=', results);
+      // console.log('getAll results=', results);
       if (err) res.json(err);
       res.json(results);
     });
@@ -49,7 +49,7 @@ exports.getOne = (req, res) => {
     .findById(id)
     .populate('dealer')
     .exec((err, result) => {
-      console.log('getOne result=', result);
+      // console.log('getOne result=', result);
       if (err) res.json(err);
       res.json(result);
     });

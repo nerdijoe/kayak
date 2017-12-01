@@ -3,7 +3,7 @@ const db = require('../models');
 exports.getAll = (req, res) => {
   db.Admin.findAll()
     .then((users) => {
-      console.log('getAll Admins =', users);
+      // console.log('getAll Admins =', users);
       res.json(users);
     }).catch((err) => {
       console.log(err);
