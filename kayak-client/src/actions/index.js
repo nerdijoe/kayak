@@ -12,6 +12,15 @@ export const loginData = (flag, user) => {
     }
 }
 
+export const flightsData = (data, search) => {
+    console.log("flightlist", data);
+    return {
+        type: "FLIGHT_LIST",
+        data,
+        search
+    }
+}
+
 export const flightFilterData = (data) => {
     console.log("filteredData", data);
     return {

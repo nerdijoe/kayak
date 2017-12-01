@@ -189,7 +189,24 @@ class BookingPage extends Component{
                                         <div className="row row-wrap">
                                             <h4 className = "labelHeadings">Pay via Credit/Debit Card</h4>
                                             <br/>
-                                            <div className="clearfix">
+                                            <div className="row row-wrap">
+                                                <div className = "col-sm-2">
+                                                    <img src="http://localhost:3000/image/mastercard-curved-64px.png" />
+                                                </div>
+                                                <div className = "col-sm-2">
+                                                    <img src="http://localhost:3000/image/american-express-curved-128px.png" />
+                                                </div>
+                                                <div className = "col-sm-2">
+                                                    <img src="http://localhost:3000/image/maestro-curved-128px.png" />
+                                                </div>
+                                                <div className = "col-sm-2">
+                                                    <img src="http://localhost:3000/image/discover-curved-128px.png" />
+                                                </div>
+                                                <div className = "col-sm-3">
+                                                    <img src="http://localhost:3000/image/paypal.png" />
+                                                </div>
+                                            </div>
+                                            <div className="paymentOptions">
                                                 <div className="form-group row">
                                                     <label className="col-sm-2 col-form-label labelColorBooking">Card Number</label>
                                                     <div className="col-sm-6">
@@ -255,7 +272,6 @@ class BookingPage extends Component{
                                             </div>
                                             <button  type="button" className = "btn-btn-book" onClick={this.handleMakePayment}>Make Payment</button>
                                         </div>
-                                        <img src="http://localhost:3000/image/paypal.png" />
                                     </div>
                                 </div>
 
