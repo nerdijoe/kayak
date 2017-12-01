@@ -165,7 +165,7 @@ exports.aggregateSearches = (req, res) => {
   switch (type) {
     case 'type': {
       // count how many dealers
-      logPage
+      logSearch
         .aggregate([
           {
             $group: {
@@ -180,7 +180,7 @@ exports.aggregateSearches = (req, res) => {
     }
     case 'dealercity': {
       // count how many dealers
-      logPage
+      logSearch
         .aggregate([
           {
             $group: {

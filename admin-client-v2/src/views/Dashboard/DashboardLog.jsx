@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 import ChartistGraph from 'react-chartist';
-import { Grid, Row, Col } from 'react-bootstrap';
+import {
+  Grid,
+  Row,
+  Col,
+  Table,
+  ProgressBar,
+} from 'react-bootstrap';
 import { connect } from 'react-redux';
 import Moment from 'moment';
 import ReactGridLayout from 'react-grid-layout';
@@ -128,6 +134,17 @@ class Dashboard extends Component {
       {i: 'c', x: 4, y: 0, w: 2, h: 2}
     ];
 
+    // search Type
+    const searchTypelabels = this.props.logSearchesType.map((item) => {
+      return item._id;
+    });
+    const searchTypeSeries = this.props.logSearchesType.map((item) => {
+      return item.count;
+    });
+
+    const searchTypeDataBar = { labels: searchTypelabels, series: [searchTypeSeries] };
+
+
 
         return (
             <div className="content">
@@ -226,6 +243,59 @@ class Dashboard extends Component {
                     </Row>
                     </Row>
 
+                    <Row>
+                        <Col md={6}>
+                            <Card
+                                id="chartActivity"
+                                title="Total Searches"
+                                category="Including sign-in and anynomouse users"
+                                stats="Data information certified"
+                                statsIcon="fa fa-check"
+                                content={
+                                    <div className="ct-chart">
+                                        <ChartistGraph
+                                            data={searchTypeDataBar}
+                                            type="Bar"
+                                            options={optionsBar}
+                                            responsiveOptions={responsiveBar}
+                                        />
+                                    </div>
+                                }
+                                // legend={
+                                //     <div className="legend">
+                                //         {this.createLegend(legendBar)}
+                                //     </div>
+                                // }
+                            />
+                        </Col>
+                    </Row>
+                    <Row>
+                      <h3>City Search By Keywords</h3>
+                      <Table striped bordered condensed hover>
+                        <thead>
+                          <tr>
+                            <th>#</th>
+                            <th>City Search keyword</th>
+                            <th>progressive bar</th>
+                            <th>Count</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+
+                          { this.props.logSearchesDealerCity.map((item, i) => {
+                            return (
+                              <tr key={i}>
+                                <td>{i+1}</td>
+                                <td>{item._id}</td>
+                                <td><ProgressBar bsStyle="info" now={item.count} /></td>
+                                <td>{item.count}</td>
+                              </tr>
+                            );
+                          })}
+
+                        </tbody>
+                      </Table>
+                    </Row>
                 </Grid>
 
             </div>
@@ -241,6 +311,8 @@ const mapStateToProps = (state) => {
     logPages: state.AdminReducer.logPages,
     logPagesCount: state.AdminReducer.logPagesCount,
     logSearches: state.AdminReducer.logSearches,
+    logSearchesType: state.AdminReducer.logSearchesType,
+    logSearchesDealerCity: state.AdminReducer.logSearchesDealerCity,
   };
 };
 

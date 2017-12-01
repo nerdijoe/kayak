@@ -162,6 +162,20 @@ export const fetchLogSearches = (data) => {
   };
 };
 
+export const fetchLogSearchesType = (data) => {
+  return {
+    type: actionType.FETCH_LOG_SEARCHES_TYPE,
+    data,
+  };
+};
+
+export const fetchLogSearchesDealerCity = (data) => {
+  return {
+    type: actionType.FETCH_LOG_SEARCHES_DEALERCITY,
+    data,
+  };
+};
+
 export const axiosSignIn = (data, router) => (dispatch) => {
   axios.post('http://localhost:3010/authadmin/signin', {
     email: data.email,
@@ -422,6 +436,34 @@ export const axiosFetchLogSearches = () => (dispatch) => {
       console.log(res.data);
 
       dispatch(fetchLogSearches(res.data));
+    }).catch((err) => {
+      console.log(err);
+    });
+};
+
+export const axiosFetchLogSearchesType = () => (dispatch) => {
+  //get admin token
+
+  axios.get('http://localhost:3010/logs/searches/type')
+    .then((res) => {
+      console.log('--- after axiosFetchLogSearhesType');
+      console.log(res.data);
+
+      dispatch(fetchLogSearchesType(res.data));
+    }).catch((err) => {
+      console.log(err);
+    });
+};
+
+export const axiosFetchLogSearchesDealerCity = () => (dispatch) => {
+  //get admin token
+
+  axios.get('http://localhost:3010/logs/searches/dealercity')
+    .then((res) => {
+      console.log('--- after axiosFetchLogSearchesDealerCity');
+      console.log(res.data);
+
+      dispatch(fetchLogSearchesDealerCity(res.data));
     }).catch((err) => {
       console.log(err);
     });
