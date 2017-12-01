@@ -27,9 +27,11 @@ class FlightEditForm extends Component {
       departureAirport: this.props.editFlightData.departureAirport,
       arrivalAirport:this.props.editFlightData.arrivalAirport,
       airline: this.props.editFlightData.airline,
-      business: this.props.editFlightData.prices[0].price,
-      economic: this.props.editFlightData.prices[1].price,
-      first: this.props.editFlightData.prices[2].price,
+      class: this.props.editFlightData.class,
+      price: this.props.editFlightData.price,
+      errors: {
+            flightNumberError: '',
+            priceError: '',}
 
     };
   }
@@ -48,23 +50,53 @@ class FlightEditForm extends Component {
     });
   }
 
+    handleValidation(){
+        let formIsValid = true;
+        let errorsV = {flightNumberError: '', priceError: ''};
+
+        //flight number
+        if(!this.state.flightNumber.match(/^[A-Z]{2}\d{3}$/)){
+            formIsValid = false;
+            errorsV.flightNumberError = "2 upcase letters and 3 digits";
+        }
+
+        //price
+        if(this.state.price <= 0){
+            formIsValid = false;
+            errorsV.priceError = "price error";
+        }
+        if(!this.state.price.match(/^\d+(\.\d{2})?$/)){
+            formIsValid = false;
+            errorsV.priceError = "price error";
+        }
+
+        this.setState({errors: errorsV});
+        return formIsValid;
+    }
+
+
   handleSubmit(e) {
     e.preventDefault();
     console.log('handleSubmit', this.state);
     const editedFlight = {
+        _id: this.props.editFlightData._id,
         flightNumber: this.state.flightNumber,
         departureTime: this.state.departureTime,
         arrivalTime: this.state.arrivalTime,
         departureAirport: this.state.departureAirport,
         arrivalAirport:this.state.arrivalAirport,
         airline: this.state.airline,
-        prices: [
-            {type: 'business', price: this.state.business},
-            {type: 'economic', price: this.state.economic},
-            {type: 'first', price: this.state.first},
-        ],
+        class: this.state.class,
+        price: this.state.price,
     }
-    this.props.axiosEditFlight(editedFlight);
+
+    if(this.handleValidation()){
+        this.props.handleEdit();
+        this.props.axiosEditFlight(editedFlight);
+        alert("Form submitted");
+    }else{
+          alert("Form has errors.");
+    }
 
     // this.props.history.push('/signin');
   }
@@ -77,108 +109,109 @@ class FlightEditForm extends Component {
 
         <Form horizontal onSubmit={(e) => { this.handleSubmit(e); }} >
 
-          <FormGroup controlId="formHorizontalEmail">
-              <Col componentClass={ControlLabel} sm={2}>
-              Flight Number
-              </Col>
-              <Col sm={10}>
-                  <FormControl type="text"  name="flightNumber" value={this.state.flightNumber} onChange={(e) => { this.handleChange(e); }} />
-              </Col>
+  <FormGroup controlId="formControlsSelect">
+          <Col componentClass={ControlLabel} sm={2}>
+          Flight Number
+      </Col>
+      <Col sm={10}>
+          <FormControl required type="text" value={this.state.flightNumber} name="flightNumber" onChange={(e) => { this.handleChange(e); }}>
+  </FormControl>
+      <span style={{color: "red"}}>{this.state.errors.flightNumberError}</span>
+      </Col>
+      </FormGroup>
+
+      <FormGroup controlId="formControlsSelect">
+          <Col componentClass={ControlLabel} sm={2}>
+          Departure Time
+      </Col>
+      <Col sm={10}>
+          <FormControl type="datetime-local" value={this.state.departureTime} name="departureTime"
+      onChange={(e) => { this.handleChange(e); }} required>
+      </FormControl>
+      </Col>
+      </FormGroup>
+
+      <FormGroup controlId="formControlsSelect">
+          <Col componentClass={ControlLabel} sm={2}>
+          Arrival Time
+      </Col>
+      <Col sm={10}>
+          <FormControl type="datetime-local" value={this.state.arrivalTimeTime} name="arrivalTime"
+      onChange={(e) => { this.handleChange(e); }} required>
+      </FormControl>
+      </Col>
+      </FormGroup>
+
+      <FormGroup controlId="formControlsSelect">
+          <Col componentClass={ControlLabel} sm={2}>
+          Departure Airport
+      </Col>
+      <Col sm={10}>
+          <FormControl required componentClass="select" value={this.state.departureAirport} name="departureAirport" onChange={(e) => { this.handleChange(e); }}>
+      {this.props.airports && this.props.airports.map((airport) => {
+          return (
+      <option key={airport._id} value={airport._id}>{airport.name}</option>
+      )
+      })
+      }
+  </FormControl>
+      </Col>
+      </FormGroup>
+
+      <FormGroup controlId="formControlsSelect">
+          <Col componentClass={ControlLabel} sm={2}>
+          Arrival Airport
+      </Col>
+      <Col sm={10}>
+          <FormControl required componentClass="select" value={this.state.arrivalAirport} name="arrivalAirport" onChange={(e) => { this.handleChange(e); }}>
+      {this.props.airports && this.props.airports.map((airport) => {
+          return (
+      <option key={airport._id} value={airport._id}>{airport.name}</option>
+      )
+      })
+      }
+  </FormControl>
+      </Col>
+      </FormGroup>
+
+      <FormGroup controlId="formControlsSelect">
+          <Col componentClass={ControlLabel} sm={2}>
+          AirLine
+          </Col>
+          <Col sm={10}>
+          <FormControl required componentClass="select" value={this.state.airline} name="airline" onChange={(e) => { this.handleChange(e); }}>
+      {this.props.airlines && this.props.airlines.map((airline) => {
+          return (
+      <option key={airline._id} value={airline._id}>{airline.name}</option>
+      )
+      })
+      }
+  </FormControl>
+      </Col>
+      </FormGroup>
+
+      <FormGroup controlId="formControlsSelect">
+          <Col componentClass={ControlLabel} sm={2}>
+          Class Type
+      </Col>
+      <Col sm={10}>
+          <FormControl required componentClass="select" value={this.state.class} name="class" onChange={(e) => { this.handleChange(e); }} required>
+      <option value="Business">Business</option>
+          <option value="Economic">Economic</option>
+          <option value="First">First</option>
+          </FormControl>
+          </Col>
           </FormGroup>
 
           <FormGroup controlId="formHorizontalEmail">
-              <Col componentClass={ControlLabel} sm={2}>
-              Departure Time
-              </Col>
-              <Col sm={10}>
-                  <FormControl type="time"  name="departureTime" value={this.state.departureTime} onChange={(e) => { this.handleChange(e); }} />
-              </Col>
-          </FormGroup>
-
-          <FormGroup controlId="formHorizontalEmail">
-              <Col componentClass={ControlLabel} sm={2}>
-              Arrival Time
-              </Col>
-              <Col sm={10}>
-                  <FormControl type="time"  name="arrivalTime" value={this.state.arrivalTime} onChange={(e) => { this.handleChange(e); }} />
-              </Col>
-          </FormGroup>
-
-          <FormGroup controlId="formControlsSelect">
-            <Col componentClass={ControlLabel} sm={2}>
-              Departure Airport
-            </Col>
-            <Col sm={10}>
-              <FormControl componentClass="select" value={this.state.departureAirport} name="departureAirport" onChange={(e) => { this.handleChange(e); }}>
-                {this.props.airports && this.props.airports.map((airport) => {
-                    return (
-                <option key={airport._id} value={airport._id}>{airport.name}</option>
-                )
-                })
-                  }
-              </FormControl>
-            </Col>
-          </FormGroup>
-
-          <FormGroup controlId="formControlsSelect">
-              <Col componentClass={ControlLabel} sm={2}>
-              Arrival Airport
-              </Col>
-              <Col sm={10}>
-                  <FormControl componentClass="select" value={this.state.arrivalAirport} name="arrivalAirport" onChange={(e) => { this.handleChange(e); }}>
-                      {this.props.airports && this.props.airports.map((airport) => {
-                          return (
-                      <option key={airport._id} value={airport._id}>{airport.name}</option>
-                      )
-                      })
-                      }
-                  </FormControl>
-              </Col>
-          </FormGroup>
-
-          <FormGroup controlId="formControlsSelect">
-              <Col componentClass={ControlLabel} sm={2}>
-              AirLine
-              </Col>
-              <Col sm={10}>
-                  <FormControl componentClass="select" value={this.state.airline} name="airline" onChange={(e) => { this.handleChange(e); }}>
-                      {this.props.airlines && this.props.airlines.map((airline) => {
-                          return (
-                      <option key={airline._id} value={airline._id}>{airline.name}</option>
-                      )
-                      })
-                      }
-                  </FormControl>
-              </Col>
-          </FormGroup>
-
-          <FormGroup controlId="formHorizontalEmail">
-            <Col componentClass={ControlLabel} sm={2}>
-              Business Class Price($)
-            </Col>
-            <Col sm={10}>
-              <FormControl type="number"name="business" value={this.state.business} onChange={(e) => { this.handleChange(e); }} />
-            </Col>
-          </FormGroup>
-
-          <FormGroup controlId="formHorizontalEmail">
-              <Col componentClass={ControlLabel} sm={2}>
-                  Economic Class Price($)
-              </Col>
-              <Col sm={10}>
-                  <FormControl type="number"name="economic" value={this.state.economic} onChange={(e) => { this.handleChange(e); }} />
-              </Col>
-          </FormGroup>
-
-          <FormGroup controlId="formHorizontalEmail">
-              <Col componentClass={ControlLabel} sm={2}>
-                  First Class Price($)
-              </Col>
-              <Col sm={10}>
-                  <FormControl type="number"name="first" value={this.state.first} onChange={(e) => { this.handleChange(e); }} />
-              </Col>
-          </FormGroup>
-
+          <Col componentClass={ControlLabel} sm={2}>
+          Price($)
+          </Col>
+          <Col sm={10}>
+          <FormControl required type="number" name="price" value={this.state.economic} onChange={(e) => { this.handleChange(e); }} />
+      <span style={{color: "red"}}>{this.state.errors.priceError}</span>
+      </Col>
+      </FormGroup>
           <FormGroup>
             <Col smOffset={10} sm={2}>
               <Button bsStyle="success" type="submit">

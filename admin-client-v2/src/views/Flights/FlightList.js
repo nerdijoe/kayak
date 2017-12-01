@@ -39,7 +39,8 @@ class FlightList extends Component {
       departureAirport: '',
       arrivalAirport:'',
       airline: '',
-      prices: [ {"type": "business", "price": ''},{"type": "economic", "price": ''},{"type": "first", "price": ''} ]
+      classType: '',
+      price: '',
       },
       _notificationSystem: null,
     };
@@ -89,10 +90,22 @@ class FlightList extends Component {
   _addNotification(event) {
     event.preventDefault();
     this._notificationSystem.addNotification({
-      message: `Flight Number: [${this.state.deleteFlightData.flightNumber}] Airline: [${this.state.deleteFlightData.airline}] is deleted.`,
+      message: `Flight Number: [${this.state.deleteFlightData.flightNumber}] Airline: [${this.state.deleteFlightData.airline}] 
+                Departure Date and Time: [${this.state.deleteFlightData.departureTime}]  Arrival Date and Time: [${this.state.deleteFlightData.arrivalTime}]
+                is deleted.`,
       level: 'success',
     });
   }
+
+    handleAdd(e) {
+        console.log('add button handle close modal');
+        this.setState({ showModal: false });
+    }
+
+    handleEdit(e) {
+        console.log('edit button handle close modal');
+        this.setState({ editModal: false });
+    }
 
   handleDelete(e) {
     console.log('delete');
@@ -133,9 +146,9 @@ class FlightList extends Component {
               <th>Departure Airport</th>
               <th>Arrival Airport</th>
               <th>Airline</th>
-              <th>Business Class Price($)</th>
-              <th>Economic Class Price($)</th>
-              <th>First Class Price($)</th>
+              <th>Class Type</th>
+              <th>Price($)</th>
+
               <th>Action</th>
               </tr>
           </thead>
@@ -147,19 +160,12 @@ class FlightList extends Component {
                     <td>{flight.flightNumber}</td>
                     <td>{flight.departureTime}</td>
                     <td>{flight.arrivalTime}</td>
-                    {this.props.airports.find(airport => airport._id === flight.departureAirport).name &&
-                      <td> {this.props.airports.find(airport => airport._id === flight.departureAirport).name} </td>}
+                    <td>{flight.departureAirport.name}</td>
+                    <td>{flight.arrivalAirport.name}</td>
+                    <td>{flight.airport}</td>
+                    <td>Class Type</td>
+                    <td>Price</td>
 
-                    {this.props.airports.find(airport => airport._id === flight.arrivalAirport).name &&
-                        <td> {this.props.airports.find(airport => airport._id === flight.arrivalAirport).name} </td>}
-
-                    {this.props.airlines.find(airline => airline._id === flight.airline).name &&
-                        <td> {this.props.airlines.find(airline => airline._id === flight.airline).name} </td>}
-
-                    <td>{this.props.airlines && this.props.airlines.find(airline => airline._id === flight.airline).name}</td>
-                    <td>{flight.prices[0].price}</td>
-                    <td>{flight.prices[1].price}</td>
-                    <td>{flight.prices[2].price}</td>
                     <td>
                       <Button bsStyle="info" onClick={() => this.openEditModal(flight) }>edit</Button>
                       <DropdownButton title="..." id="bg-nested-dropdown">
@@ -174,14 +180,14 @@ class FlightList extends Component {
           </tbody>
         </Table>
 
-
+{/*-------------------------------add new flight-------------------------------------*/}
         <Modal show={this.state.showModal} onHide={() => this.closeModal()}>
           <Modal.Header closeButton>
             <Modal.Title>Add New Flight</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <h4>Form</h4>
-            <FlightNewForm />
+            <FlightNewForm handleAdd = {this.handleAdd.bind(this)}/>
 
           </Modal.Body>
           <Modal.Footer>
@@ -189,13 +195,14 @@ class FlightList extends Component {
           </Modal.Footer>
         </Modal>
 
+{/*-------------------------------edit flight-------------------------------------*/}
         <Modal show={this.state.editModal} onHide={() => this.closeEditModal()}>
           <Modal.Header closeButton>
             <Modal.Title>Edit Flight</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <h4>Form</h4>
-            <FlightEditForm editFlightData={this.state.editFlightData} />
+            <FlightEditForm handleEdit = {this.handleEdit.bind(this)} editFlightData={this.state.editFlightData} />
 
           </Modal.Body>
           <Modal.Footer>
@@ -203,6 +210,7 @@ class FlightList extends Component {
           </Modal.Footer>
         </Modal>
 
+{/*-------------------------------delete flight-------------------------------------*/}
         <Modal show={this.state.deleteModal} onHide={() => this.closeDeleteModal()}>
           <Modal.Header closeButton>
             <Modal.Title>Delete Flight</Modal.Title>
@@ -212,23 +220,27 @@ class FlightList extends Component {
               <thead>
                 <tr>
                     <th>Flight Number</th>
+                    <th>Departure Date and Time</th>
+                    <th>Arrival Date and Time</th>
                     <th>Departure Airport</th>
                     <th>Arrival Airport</th>
                     <th>Airline</th>
-                    <th>Business Class Price</th>
-                    <th>Economic Class Price</th>
-                    <th>First Class Price</th>
+                    <th>Class Type</th>
+                    <th>Price</th>
+
                 </tr>
               </thead>
 
               <tr>
                   <td>{this.state.deleteFlightData.flightNumber}</td>
+                  <td>{this.state.deleteFlightData.departureTime}</td>
+                  <td>{this.state.deleteFlightData.arrivalTime}</td>
                   <td>{this.state.deleteFlightData.departureAirport}</td>
                   <td>{this.state.deleteFlightData.arrivalAirport}</td>
                   <td>{this.state.deleteFlightData.airline}</td>
-                  <td>{this.state.deleteFlightData.prices[0].price}</td>
-                  <td>{this.state.deleteFlightData.prices[1].price}</td>
-                  <td>{this.state.deleteFlightData.prices[2].price}</td>
+                  <td>Class Type</td>
+                  <td>Price</td>
+
               </tr>
             </Table>
             <p>Do you want to delete this flight?</p>

@@ -26,3 +26,8 @@ export const FLIGHT_DELETE = 'FLIGHT_DELETE';
 export const FETCH_FLIGHT = 'FETCH_FLIGHT';
 export const FETCH_AIRPORT = 'FETCH_AIRPORT';
 export const FETCH_AIRLINE = 'FETCH_AIRLINE';
+
+export const HOTEL_ADD = 'HOTEL_ADD';
+export const HOTEL_EDIT = 'HOTEL_EDIT';
+export const HOTEL_DELETE = 'HOTEL_DELETE';
+export const FETCH_HOTEL = 'FETCH_HOTEL';

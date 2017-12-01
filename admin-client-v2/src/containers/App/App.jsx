@@ -25,6 +25,7 @@ import {
   axiosFetchFlight,
   axiosFetchAirport,
   axiosFetchAirline,
+  axiosFetchHotel,
 } from '../../actions';
 
 
@@ -81,6 +82,7 @@ class App extends Component {
       this.props.axiosFetchAirline();
       this.props.axiosFetchUser();
       this.props.axiosFetchFlight();
+      this.props.axiosFetchHotel();
       
       if(localStorage.getItem('admin_token') == null) {
         this.props.history.push('/signin');
@@ -179,6 +181,7 @@ const mapDispatchToProps = (dispatch) => {
     axiosFetchFlight: () => { dispatch(axiosFetchFlight()); },
     axiosFetchAirport: () => { dispatch(axiosFetchAirport()); },
     axiosFetchAirline: () => { dispatch(axiosFetchAirline()); },
+    axiosFetchHotel: () => { dispatch(axiosFetchHotel()); },
   };
 };
 
