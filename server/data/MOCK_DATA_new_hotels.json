@@ -1,3 +1,6 @@
-[{"name":"Acqualina Resort & Spa","stars":3,"address":"1257 Bluestem Avenue","city":"Sacramento","state":"California","country":"US","zipcode":"94250","roomType":"small","price": 80},
-  {"name":"Acqualina Resort & Spa","stars":3,"address":"1257 Bluestem Avenue","city":"Sacramento","state":"California","country":"US","zipcode":"94250","roomType":"big","price": 120},
-{"name":"Pavilion Inn","stars":2,"address":"23506 Dapin Pass","city":"San Jose","state":"California","country":"US","zipcode":"95150","roomType":"big","price": 200}]
+[{"name":"Acqualina Resort & Spa","stars":3,"address":"1257 Bluestem Avenue","city":"Sacramento","state":"California","country":"US","zipcode":"94250","roomType":"small","price": 80, "reviews": [{"user": "Ruby","content": "it is too small",
+  "rating": 2},{"user": "Ruby","content": "good enough", "rating": 4}]},
+  {"name":"Acqualina Resort & Spa","stars":3,"address":"1257 Bluestem Avenue","city":"Sacramento","state":"California","country":"US","zipcode":"94250","roomType":"big","price": 120, "reviews": [{"user": "Ruby","content": "it is too small",
+    "rating": 2},{"user": "Ruby","content": "good enough", "rating": 4}]},
+{"name":"Pavilion Inn","stars":2,"address":"23506 Dapin Pass","city":"San Jose","state":"California","country":"US","zipcode":"95150","roomType":"big","price": 200, "reviews": [{"user": "Ruby","content": "it is too small",
+  "rating": 2},{"user": "Ruby","content": "good enough", "rating": 4}]}]

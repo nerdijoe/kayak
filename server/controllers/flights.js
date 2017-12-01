@@ -150,16 +150,30 @@ exports.create = (req, res) => {
 };
 
 exports.getAll = (req, res) => {
-  Flight
-    .find({})
-    .populate('departureAirport')
-    .populate('arrivalAirport')
-    .populate('airline')
-    .exec((err, results) => {
-      // console.log('getAll results=', results);
+  redisClient.get("ALL_FLIGHTS", function (err, reply) {
+    if (err) throw err;
+    console.log("all flight from redisClient");
+    if(reply){
+      console.log("get data from Redis");
+      res.json(JSON.parse(reply));
+    } else{
+      console.log("get data from database");
+      Flight
+        .find({})
+        .populate('departureAirport')
+        .populate('arrivalAirport')
+        .populate('airline')
+        .exec((err, results) => {
+        // console.log('getAll results=', results);
+        redisClient.set("ALL_FLIGHTS", JSON.stringify(results));
       if (err) res.json(err);
       res.json(results);
     });
+    }
+  });
+
+
+
 };
 
 exports.getAllAirlines = (req, res) => {
