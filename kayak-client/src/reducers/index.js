@@ -6,6 +6,7 @@ import loginReducer from './loginReducer';
 import flightData from './flight-data';
 import carsReducer from './carsReducer';
 import hotelsReducer from './hotelsReducer';
+import flightsReducer from './flightsReducer';
 import flightFilteredData from './filter-flight-data';
 import carFilteredData from './filter-car-data';
 import bookingReducer from './bookingReducer';
@@ -15,6 +16,7 @@ const allReducers = combineReducers({
     flightData:flightData,
     carsData : carsReducer,
     hotelsData : hotelsReducer,
+    flightsData : flightsReducer,
     flightFilteredData:flightFilteredData,
     carFilteredData:carFilteredData,
     bookingSelected: bookingReducer

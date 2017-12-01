@@ -442,3 +442,7 @@ ul.slimmenu-flight > li.active > a {
     background-color: rgba(255,255,255,0.7);
     border-color: #ed8323;
 }
+
+.paymentOptions{
+    padding-top: 20px;
+}
