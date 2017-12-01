@@ -335,14 +335,14 @@ ul.slimmenu-flight > li.active > a {
 /* for Bookings */
 .home-access .starred-item {
     font-smoothing: auto;
-    background-color: transparent;
+    /*background-color: transparent;*/
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    border-bottom: solid 1px #ed8323;
+    /*border-bottom: solid 1px #ed8323;*/
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     height: 64px;
@@ -443,6 +443,28 @@ ul.slimmenu-flight > li.active > a {
     border-color: #ed8323;
 }
 
+.bookedItem {
+    cursor: pointer;
+    display: block;
+    position: relative;
+    /*padding: 17px;*/
+    border: 2px solid #e6e6e6;
+    color: #737373;
+    -webkit-transition: 0.2s;
+    -moz-transition: 0.2s;
+    -o-transition: 0.2s;
+    -ms-transition: 0.2s;
+    transition: 0.2s;
+    background-color: rgba(255,255,255,1);
+    border-color: #ed8323;
+}
+
 .paymentOptions{
     padding-top: 20px;
+}
+
+.myBooking-list {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 13px;
 }

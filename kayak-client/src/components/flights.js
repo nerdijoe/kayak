@@ -88,7 +88,7 @@ class Flights extends Component {
             });
         })
     }
-
+    
     render() {
         return (
             <div>
@@ -143,10 +143,11 @@ class Flights extends Component {
                                         <div className="row">
                                             <div className="col-md-4">
                                                 <div className="form-group form-group-lg form-group-icon-left">
-                                                    <label>Departing</label>
+                                                    <label>Departure</label>
                                                     <input className="form-control" type="date" name="start"
                                                            value={this.state.departureDate}
                                                            onChange={(event) => {
+
                                                                this.setState({
                                                                    ...this.state,
                                                                    departureDate: event.target.value
@@ -157,7 +158,7 @@ class Flights extends Component {
                                             </div>
                                             <div className="col-md-4">
                                                 <div className="form-group form-group-lg form-group-icon-left">
-                                                    <label>Arriving</label>
+                                                    <label>Arrival</label>
                                                     <input className="form-control" name="end" type="date"
                                                            value={this.state.arrivalDate}
                                                            onChange={(event) => {

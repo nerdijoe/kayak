@@ -2,13 +2,15 @@
  * Created by ManaliJain on 11/23/17.
  */
 import React, {Component} from 'react';
-import {loginData,bookingSelected,carsData} from '../actions/index';
+import {loginData,bookingSelected,carsData,hotelsData,flightsData} from '../actions/index';
 import {connect} from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import {Button, Modal} from 'react-bootstrap';
 import * as Validate from '../validation/signupValidation';
 import * as API from '../api/bookings';
 import CarBooking from './carBooking';
+import HotelBooking from './hotelBooking';
+import FlightBooking from './flightBooking';
 
 class BookingPage extends Component{
     constructor(props) {
@@ -48,7 +50,7 @@ class BookingPage extends Component{
 
     closeModalBillingSuccess() {
         this.setState({ showModalSuccess: true });
-        this.props.history.push('/');
+        this.props.history.push('/myBookings');
     }
 
 
@@ -58,15 +60,40 @@ class BookingPage extends Component{
         } else {
             let valid = Validate.makePayment(this.state);
             if (valid === '') {
-                let bookingSelected = this.props.bookingSelectedProp;
-                let carsData = this.props.carsDataProp;
                 let userToken = localStorage.getItem('user_token');
-                let payload = {
-                    carId : bookingSelected.carSelected._id,
-                    startDate : carsData.searchParams.startDate,
-                    endDate : carsData.searchParams.endDate
+                let bookingSelected = this.props.bookingSelectedProp;
+                if(bookingSelected.bookingFlag !== "" ){
+                    if(bookingSelected.bookingFlag === "C"){
+                        let carsData = this.props.carsDataProp;
+                        let payload = {
+                            carId : bookingSelected.carSelected._id,
+                            startDate : carsData.searchParams.startDate,
+                            endDate : carsData.searchParams.endDate
+                        }
+                        this.callCarAPIForBilling(payload,userToken);
+                    }
+                    if(bookingSelected.bookingFlag === "F"){
+                        let flightsData = this.props.flightsDataProp;
+                        let payload = {
+                            flightId: bookingSelected.flightSelected._id,
+                            flightClass: flightsData.searchParams.class,
+                            qtyBooked: flightsData.searchParams.quantity,
+                            startDate: flightsData.searchParams.startDate,
+                            endDate: flightsData.searchParams.endDate
+                        }
+                        this.callFlightAPIForBilling(payload,userToken);
+                    }
+                    if(bookingSelected.bookingFlag === "H"){
+                        let hotelsData = this.props.hotelsDataProp;
+                        let payload = {
+                            hotelId: bookingSelected.hotelsData._id,
+                            startDate: hotelsData.searchParams.startDate,
+                            endDate: hotelsData.searchParams.endDate,
+                            qtyBooked: flightsData.searchParams.quantity,
+                        }
+                        this.callHotelAPIForBilling(payload,userToken);
+                    }
                 }
-                this.callAPIForBilling(payload,userToken);
             } else {
                 this.setState({
                     ...this.state,
@@ -77,11 +104,65 @@ class BookingPage extends Component{
         }
     }
 
-    callAPIForBilling = (payload,userToken) => {
+    callCarAPIForBilling = (payload,userToken) => {
+        console.log(" carrrr  payload is",payload);
+        console.log(" carrrr  usertoken  is",userToken);
         API.makeCarBooking(payload,userToken)
             .then((res) => {
             console.log(res);
             console.log("billing response came",res);
+                if(res.data !== null){
+                    this.openModalBillingSuccess();
+                    this.setState({
+                        ...this.state,
+                        messagediv: ''
+                    });
+                } else {
+                    this.setState({
+                        ...this.state,
+                        messagediv: "Payment was not successful... try again"
+                    });
+                }
+            }).catch( (error) => {
+            this.setState({
+                ...this.state,
+                messagediv: "Payment was not successful... try again"
+            });
+        })
+    };
+    callFlightAPIForBilling = (payload,userToken) => {
+        console.log(" carrrr  payload is",payload);
+        console.log(" carrrr  usertoken  is",userToken);
+        API.makeCarBooking(payload,userToken)
+            .then((res) => {
+                console.log(res);
+                console.log("billing response came",res);
+                if(res.data !== null){
+                    this.openModalBillingSuccess();
+                    this.setState({
+                        ...this.state,
+                        messagediv: ''
+                    });
+                } else {
+                    this.setState({
+                        ...this.state,
+                        messagediv: "Payment was not successful... try again"
+                    });
+                }
+            }).catch( (error) => {
+            this.setState({
+                ...this.state,
+                messagediv: "Payment was not successful... try again"
+            });
+        })
+    };
+    callHotelAPIForBilling = (payload,userToken) => {
+        console.log(" carrrr  payload is",payload);
+        console.log(" carrrr  usertoken  is",userToken);
+        API.makeCarBooking(payload,userToken)
+            .then((res) => {
+                console.log(res);
+                console.log("billing response came",res);
                 if(res.data !== null){
                     this.openModalBillingSuccess();
                     this.setState({
@@ -117,14 +198,15 @@ class BookingPage extends Component{
             let switchBookingDecision = null;
             if(bookingSelected.bookingFlag === "C"){
                 let carsData = this.props.carsDataProp;
-                // let carSelected = null;
                 switchBookingDecision = <CarBooking carsData = {carsData} carSelected = {bookingSelected.carSelected} />
             }
             if(bookingSelected.bookingFlag === "F"){
-                // switchBookingDecision = <FlightBooking/>
+                let flightsData = this.props.carsDataProp;
+                switchBookingDecision = <FlightBooking flightData = {flightsData} flightSelected = {bookingSelected.flightSelected}/>
             }
             if(bookingSelected.bookingFlag === "H"){
-                // switchBookingDecision = <HotelBooking/>
+                let hotelsData = this.props.carsDataProp;
+                switchBookingDecision = <HotelBooking hotelData = {hotelsData} hotelSelected = {bookingSelected.hotelSelected}/>
             }
             // let userLoginData = localStorage.getItem('user_login_data');
             // let loginData = null;
@@ -299,7 +381,9 @@ function mapDispatchToProps(dispatch) {
     return {
         loginData: (data) => dispatch(loginData(data)),
         bookingSelected: (data) => dispatch(bookingSelected(data)),
-        carsData: (data) => dispatch(carsData(data))
+        carsData: (data) => dispatch(carsData(data)),
+        flightsData: (data) => dispatch(flightsData(data)),
+        hotelsData: (data) => dispatch(hotelsData(data))
     };
 }
 
@@ -307,7 +391,9 @@ function mapStateToProps(state) {
     return{
         loginDataProp : state.loginData,
         bookingSelectedProp : state.bookingSelected,
-        carsDataProp : state.carsData
+        carsDataProp : state.carsData,
+        flightsDataProp : state.flightsData,
+        hotelsDataProp : state.hotelsData
     };
 }
 

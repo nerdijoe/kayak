@@ -61,10 +61,26 @@ export const hotelFilterData = (data) => {
     }
 }
 
-export const bookingSelected = (data)=> {
+export const cBookingSelected = (data)=> {
     console.log("hotelList ssssssss", data);
     return {
         type: "CAR_SELECTED",
+        data
+    }
+}
+
+export const hBookingSelected = (data)=> {
+    console.log("hotelList ssssssss", data);
+    return {
+        type: "HOTEL_SELECTED",
+        data
+    }
+}
+
+export const fBookingSelected = (data)=> {
+    console.log("hotelList ssssssss", data);
+    return {
+        type: "FLIGHT_SELECTED",
         data
     }
 }
