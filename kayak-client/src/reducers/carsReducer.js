@@ -4,8 +4,7 @@
 
 const carState = {
     'carSearch' : '',
-    'searchParams' : '',
-    'carFilteredList':'',
+    'searchParams' : ''
 }
 
 export default function (state=carState,action){

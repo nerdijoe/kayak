@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import FlightSearchList from './flight-search-list';
+import FlightSearchList from './flight-list';
 import FlightFilter from './flight-search-filter';
 import {connect} from 'react-redux';
 import {flightFilterData} from '../actions/index';

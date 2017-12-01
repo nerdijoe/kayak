@@ -1287,3 +1287,16 @@ h5 {
     color:#FFFFFF;
     text-align: center;
 }
+.icon-group {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+.icon-group > li {
+    float: left;
+    margin-right: 5px;
+}
+.review-pad{
+    padding-left: 30px;
+}

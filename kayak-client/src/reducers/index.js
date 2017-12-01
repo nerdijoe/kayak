@@ -6,16 +6,22 @@ import loginReducer from './loginReducer';
 import flightData from './flight-data';
 import carsReducer from './carsReducer';
 import hotelsReducer from './hotelsReducer';
+import flightsReducer from './flightsReducer';
 import flightFilteredData from './filter-flight-data';
-import carFilteredData from './filter-car-data'
+import carFilteredData from './filter-car-data';
+import hotelFilteredData from './filter-hotel-data';
+import bookingReducer from './bookingReducer';
 
 const allReducers = combineReducers({
     loginData: loginReducer,
     flightData:flightData,
     carsData : carsReducer,
-    hotelsData : hotelsReducer
+    hotelsData : hotelsReducer,
+    flightsData : flightsReducer,
     flightFilteredData:flightFilteredData,
-    carFilteredData:carFilteredData
+    carFilteredData:carFilteredData,
+    hotelFilteredData:hotelFilteredData,
+    bookingSelected: bookingReducer
 });
 
 export default allReducers;
