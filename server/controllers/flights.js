@@ -64,7 +64,7 @@ exports.delete = (req, res) => {
 };
 
 //- Search Flight
-//Get /flights/search?departure=SJC&arrivalAt=SFO&class=Economy&departureDate=11/25/2017
+//Get /flights/search?departure=SJC&arrivalAt=SFO&departureDate=11/25/2017
 exports.search = (req, res) => {
   console.log('search flight');
   const data = req.query;
@@ -72,15 +72,12 @@ exports.search = (req, res) => {
 
   var departure = data.departure;
   var arrival = data.arrivalAt;
-  var flightClass = data.classType;
   var departureDate = data.departureDate;
 
   var results = [];
   var result_json;
 
-  Flight.find({
-    "class": flightClass,
-  })
+  Flight.find({})
     .populate('departureAirport arrivalAirport airline')
     .exec(function(err, flights){
       // console.log(flights);
