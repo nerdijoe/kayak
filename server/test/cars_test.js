@@ -51,7 +51,7 @@ describe('Files and Folders', () => {
             password: 'haha',
           })
           .end((err, result) => {
-            console.log('****** result.body=', result.body);
+            //console.log('****** result.body=', result.body);
             token = result.body.token;
 
             CarDealer.create({
@@ -95,7 +95,7 @@ describe('Files and Folders', () => {
         capacity: car_capacity,
       })
       .end((err, result) => {
-        console.log("*** POST cars", result.body);
+        // console.log("*** POST cars", result.body);
         result.should.have.status(200);
         result.should.be.an('object');
 
@@ -122,7 +122,7 @@ describe('Files and Folders', () => {
       .get(`/cars/${car_id}`)
       .set('token', token)
       .end((err, result) => {
-        console.log("*** get one car", result.body);
+        // console.log("*** get one car", result.body);
         result.should.have.status(200);
         result.should.be.an('object');
         result.body.should.be.an('object');
@@ -145,7 +145,7 @@ describe('Files and Folders', () => {
       .get('/cars')
       .set('token', token)
       .end((err, result) => {
-        console.log("*** get cars", result.body);
+        // console.log("*** get cars", result.body);
         result.should.have.status(200);
         result.should.be.an('object');
         result.body.should.be.an('array');
@@ -161,7 +161,7 @@ describe('Files and Folders', () => {
       .get('/cardealers')
       .set('token', token)
       .end((err, result) => {
-        console.log("*** get files", result.body);
+        // console.log("*** get files", result.body);
         result.should.have.status(200);
         result.should.be.an('object');
         result.body.should.be.an('array');
@@ -176,7 +176,7 @@ describe('Files and Folders', () => {
       .get(`/cardealers/${dealer._id}`)
       .set('token', token)
       .end((err, result) => {
-        console.log("*** get files", result.body);
+        // console.log("*** get files", result.body);
         result.should.have.status(200);
         result.should.be.an('object');
         result.body.should.be.an('object');
@@ -184,72 +184,4 @@ describe('Files and Folders', () => {
         done();
       });
   });
-
-  // it('GET - /folders/root - should return one folder in the root folder', (done) => {
-  //   chai.request(server)
-  //     .get('/folders/root')
-  //     .set('token', token)
-  //     .end((err, result) => {
-  //       console.log("*** get folders", result.body);
-  //       result.should.have.status(200);
-  //       result.should.be.an('object');
-  //       result.body.should.be.an('array');
-  //       result.body.length.should.equal(1);
-
-  //       done();
-  //     });
-  // });
-
-  // it('GET - /folders/root - folder information should match with the the folder that was created in the root folder', (done) => {
-  //   chai.request(server)
-  //     .get('/folders/root')
-  //     .set('token', token)
-  //     .end((err, result) => {
-  //       console.log("*** get folders", result.body);
-  //       result.should.have.status(200);
-  //       result.should.be.an('object');
-  //       result.body.should.be.an('array');
-
-  //       result.body[0].name.should.equal(newDirName);
-  //       result.body[0].path.should.equal(currentPath);
-  //       result.body[0].full_path.should.equal(newDirPath);
-  //       result.body[0].is_starred.should.equal(folder_is_starred);
-  //       result.body[0].is_deleted.should.equal(folder_is_deleted);
-
-  //       done();
-  //     });
-  // });
-
-  // it('GET - /files/share - should return all files that are given share access by other user', (done) => {
-  //   chai.request(server)
-  //     .get('/files/share')
-  //     .set('token', token)
-  //     .end((err, result) => {
-  //       console.log("*** get files share", result.body);
-  //       result.should.have.status(200);
-  //       result.should.be.an('object');
-  //       result.body.should.be.an('array');
-  //       result.body.length.should.equal(0);
-
-  //       done();
-  //     });
-  // });
-
-  // it('GET - /folders/share - should return all folders that are given share access by other user', (done) => {
-  //   chai.request(server)
-  //     .get('/folders/share')
-  //     .set('token', token)
-  //     .end((err, result) => {
-  //       console.log("*** get folders share", result.body);
-  //       result.should.have.status(200);
-  //       result.should.be.an('object');
-  //       result.body.should.be.an('array');
-  //       result.body.length.should.equal(0);
-
-  //       done();
-  //     });
-  // });
-
-
-
 })

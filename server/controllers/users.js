@@ -4,7 +4,7 @@ const passwordHash = require('password-hash');
 exports.getAll = (req, res) => {
   db.User.findAll()
     .then((users) => {
-      console.log('getAll users =', users);
+      // console.log('getAll users =', users);
       res.json(users);
     }).catch((err) => {
       console.log(err);
