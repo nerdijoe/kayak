@@ -14,7 +14,6 @@ exports.getUserBillings = (req, res) => {
   HotelBilling
     .find({ userId })
     .populate('hotel')
-    .populate('room')
     .exec((err, results) => {
     console.log('getAll results=', results);
   if (err) res.json(err);
@@ -48,13 +47,12 @@ exports.book = (req, res) => {
       const booking = HotelBilling({
         userId: req.decoded.id,
         hotel,
-        room: data.room,
         startDate: data.startDate,
         endDate: data.endDate,
         daysBooked,
         qtyBooked: data.qtyBooked,
-        priceBooked: data.room.price,
-        totalAmount: (data.room.price * daysBooked * data.qtyBooked),
+        priceBooked: hotel.price,
+        totalAmount: (hotel.price * daysBooked * data.qtyBooked),
       });
 
       booking.save((err, booked) => {
@@ -76,7 +74,6 @@ exports.getAll = (req, res) => {
     .find({})
     // .where('dealer').equals(mongoose.Types.ObjectId('5a0ea59c0837c46a7e3f11f5'))
     .populate('hotel')
-    .populate('room')
     .exec((err, results) => {
     console.log('getAll results=', results);
   if (err) res.json(err);
@@ -91,7 +88,6 @@ exports.getOne = (req, res) => {
   HotelBilling
     .findById(id)
     .populate('hotel')
-    .populate('room')
     .exec((err, result) => {
       console.log('getOne result=', result);
       if (err) res.json(err);

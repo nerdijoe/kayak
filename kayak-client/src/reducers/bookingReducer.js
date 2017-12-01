@@ -15,14 +15,26 @@ export default function (state=bookingSelected,action){
 
         case "CAR_SELECTED":
             console.log("at reducer",action.data);
-            const newState  = Object.assign({}, state, { carSelected: action.data});
-            console.log("new sate",newState);
-            return newState;
+            const carState  = Object.assign({}, state, { carSelected: action.data});
+            console.log("new sate",carState);
+            return carState;
+
+        case "HOTEL_SELECTED":
+            console.log("at reducer",action.data);
+            const hotelState  = Object.assign({}, state, { hotelSelected: action.data});
+            console.log("new sate",hotelState);
+            return hotelState;
+
+        case "FLIGHT_SELECTED":
+            console.log("at reducer",action.data);
+            const flightState  = Object.assign({}, state, { flightSelected: action.data});
+            console.log("new sate",flightState);
+            return flightState;
 
         case "BOOKING_FLAG":
             console.log("at reducer",action.data);
             const flagState  = Object.assign({}, state, { bookingFlag: action.data});
-            console.log("new sate",newState);
+            console.log("new sate",flagState);
             return flagState;
 
         default :
