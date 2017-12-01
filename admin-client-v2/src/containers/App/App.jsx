@@ -29,7 +29,13 @@ import {
 
   axiosFetchLogPages,
   axiosFetchLogPagesCount,
+<<<<<<< HEAD
 
+=======
+  axiosFetchLogSearches,
+  axiosFetchLogSearchesType,
+  axiosFetchLogSearchesDealerCity,
+>>>>>>> 60e2ef5ad29440a2aa46961f6589e83e72808efc
 } from '../../actions';
 
 
@@ -90,6 +96,12 @@ class App extends Component {
 
       this.props.axiosFetchLogPages();
       this.props.axiosFetchLogPagesCount();
+
+
+
+      this.props.axiosFetchLogSearches();
+      this.props.axiosFetchLogSearchesType();
+      this.props.axiosFetchLogSearchesDealerCity();
 
       
       if(localStorage.getItem('admin_token') == null) {
@@ -195,6 +207,10 @@ const mapDispatchToProps = (dispatch) => {
     
     axiosFetchLogPages: () => { dispatch(axiosFetchLogPages()); },
     axiosFetchLogPagesCount: () => { dispatch(axiosFetchLogPagesCount()); },
+    axiosFetchLogSearches: () => { dispatch(axiosFetchLogSearches()); },
+    axiosFetchLogSearchesType: () => { dispatch(axiosFetchLogSearchesType()); },
+    axiosFetchLogSearchesDealerCity: () => { dispatch(axiosFetchLogSearchesDealerCity()); },
+    
 };
 
 };

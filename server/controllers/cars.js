@@ -1,7 +1,10 @@
 const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
+
 const Car = require('../models/mongooseCar');
 const CarDealer = require('../models/mongooseCarDealer');
 const CarBilling = require('../models/mongooseCarBilling');
+const LogSearch = require('../models/mongooseLogSearch');
 
 exports.create = (req, res) => {
   console.log('createNewCar');
@@ -149,9 +152,35 @@ exports.search = (req, res) => {
     });
 };
 
+// function insertLogSearch() {
+
+// }
+
 exports.searchByQuery = (req, res) => {
   console.log('car search');
   const searchString = req.query;
+
+  console.log(`req.headers.token=[${req.headers.token}]`);
+
+  let decoded = '';
+  let userId = 0;
+  if (req.headers.token) {
+    decoded = jwt.verify(req.headers.token, process.env.JWT_KEY);
+    if (decoded) {
+      userId = decoded.id;
+    }
+  }
+  console.log('    decoded=', decoded);
+  console.log('    userId=', userId);
+
+  LogSearch.create({
+    userId,
+    type: 'car',
+    dealerCity: searchString.city,
+  }, (err, log) => {
+    if (err) res.json(err);
+    console.log(log);
+  });
 
   console.log('    searchString=', searchString);
 
@@ -170,3 +199,4 @@ exports.searchByQuery = (req, res) => {
         });
     });
 };
+
