@@ -2,23 +2,22 @@
  * Created by ManaliJain on 11/23/17.
  */
 import React, {Component} from 'react';
-import * as API from '../api/userLogin';
-import BookingList from './bookingList';
+import CarBookingList from './carBookingList';
+import HotelBookingList from './hotelBookingList';
+import FlightBookingList from './flightBookingList';
 import {loginData} from '../actions/index';
 import {connect} from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import * as API from '../api/bookings';
+
 class MyBookings extends Component{
     constructor(props) {
         super(props);
-        // // let loginData = this.props.loginDataProp;
-        // let userLoginData = localStorage.getItem('user_login_data');
-        // let loginData = null;
-        // if(userLoginData !== null)
-        // {
-        //     loginData = JSON.parse(userLoginData);
-        // }
+
         this.state = {
-            bookings : ''
+            carBookings : '',
+            hotelBookings : '',
+            flightBookings : ''
         }
     }
     componentWillMount(){
@@ -30,84 +29,99 @@ class MyBookings extends Component{
         if (localStorage.getItem('user_token') === null) {
             this.props.history.push('/');
         } else{
+            let userToken = localStorage.getItem('user_token');
+            API.getCarBookings(userToken)
+                .then((res) => {
+                    console.log(res);
+                    console.log("billing car response came111",res);
+                    if(res.data !== null){
+                        this.setState({
+                            message: res.data.message,
+                            carBookings: res.data
+                        });
+                    }
+                    API.getHotelBookings(userToken)
+                        .then((res) => {
+                            console.log(res);
+                            console.log("billing hotel response came111",res);
+                            if(res.data !== null){
+                                this.setState({
+                                    message: res.data.message,
+                                    hotelBookings: res.data
+                                });
+                            }
+                            API.getFlightBookings(userToken)
+                                .then((res) => {
+                                    console.log(res);
+                                    console.log("billing flight response came111",res);
+                                    if(res.data !== null){
+                                        this.setState({
+                                            message: res.data.message,
+                                            flightBookings: res.data
+                                        });
+                                    }
 
+                                }).catch( (error) => {
+                                this.setState({
+                                    ...this.state
+                                });
+                            })
+                        }).catch( (error) => {
+                        this.setState({
+                            ...this.state
+                        });
+                    })
+                }).catch( (error) => {
+                this.setState({
+                    ...this.state
+                });
+            })
         }
     }
 
-    // handleSubmitForAbout=(event) => {
-    //     var valid = Validate.about(this.state);
-    //     if (valid === '') {
-    //         var loginData = this.props.loginDataProp;
-    //         this.setState({
-    //             ...this.state,
-    //             "_id": loginData._id,
-    //             "id": loginData.id,
-    //             "uuid": loginData.uuid
-    //         }, this.callAPI);
-    //     } else {
-    //         this.setState({
-    //             ...this.state,
-    //             message: valid
-    //         });
-    //         event.preventDefault();
-    //     }
-    // }
-    //
-    // callAPI = () => {
-    //     API.saveAbout(this.state)
-    //         .then((res) => {
-    //             if (res.data.statusCode === 201) {
-    //                 this.setState({
-    //                     isLoggedIn: true,
-    //                     message: res.data.message
-    //                 });
-    //                 let overview ={
-    //                     "work": this.state.work,
-    //                     "education":this.state.education,
-    //                     "phone":this.state.phone,
-    //                     "events": this.state.events
-    //                 }
-    //                 this.props.aboutUpdate(JSON.stringify(overview));
-    //             } else if (res.data.statusCode === 500) {
-    //                 this.setState({
-    //                     isLoggedIn: false,
-    //                     message: res.data.message
-    //                 });
-    //             } else if(res.data.statusCode === 400) {
-    //                 this.setState({
-    //                     isLoggedIn: false,
-    //                     message: res.data.message
-    //                 });
-    //             } else if (res.data.statusCode === 601  || res.data.statusCode === 600) {
-    //                 alert("Token expired or invalid. Please login again");
-    //                 this.setState({
-    //                     isLoggedIn: false,
-    //                     message: res.data.message
-    //                 });
-    //                 sessionStorage.removeItem("jwtToken");
-    //                 this.props.loginState(false);
-    //             }
-    //         });
-    // };
-
     render() {
-        let bookingList ='';
-        if(this.state.bookings === '' || this.state.bookings === undefined){
-            bookingList = <BookingList key='' booking=''/>;
+        let carBookingList ='';
+        let hotelBookingList='';
+        let flightBookingList='';
+        if(this.state.carBookings === '' || this.state.carBookings === undefined){
+            carBookingList = <CarBookingList key='' carBooking=''/>;
         } else {
-            bookingList =  this.state.group.map((item, index) => {
+            carBookingList =  this.state.carBookings.map((item, index) => {
                 return (
-                    <BookingList
+                    <CarBookingList
                         key={index}
-                        booking={item}
+                        carBooking={item}
+                    />
+                );
+            })
+        }
+        if(this.state.hotelBookings === '' || this.state.hotelBookings === undefined){
+            hotelBookingList = <HotelBookingList key='' hotelBooking=''/>;
+        } else {
+            hotelBookingList =  this.state.hotelBookings.map((item, index) => {
+                return (
+                    <HotelBookingList
+                        key={index}
+                        hotelBooking={item}
+                    />
+                );
+            })
+        }
+        if(this.state.flightBookings === '' || this.state.flightBookings === undefined){
+            flightBookingList = <FlightBookingList key='' flightBooking=''/>;
+        } else {
+            hotelBookingList =  this.state.flightBookings.map((item, index) => {
+                return (
+                    <FlightBookingList
+                        key={index}
+                        flightBooking={item}
                     />
                 );
             })
         }
         return(
-            <div className="bg-front full-center" >
+            <div className="full-center" >
                 <div className="container">
-
                     <div className="row justify-content-md-center">
                         <div className ="col-lg-12">
                             <main className="home-access" role="main">
@@ -119,11 +133,35 @@ class MyBookings extends Component{
                                             <h2 className="home-access-section__header">
                                                 <div className="home-access-section__title">
                                                     <div className="home-access-section__title-text">
-                                                        <div>My Bookings</div>
+                                                        <div>Car Bookings</div>
                                                     </div>
                                                 </div>
                                             </h2>
-                                            {bookingList}
+                                            {carBookingList}
+                                        </div>
+                                    </li>
+                                    <li className="home-access-section">
+                                        <div className="starred">
+                                            <h2 className="home-access-section__header">
+                                                <div className="home-access-section__title">
+                                                    <div className="home-access-section__title-text">
+                                                        <div>Hotel Bookings</div>
+                                                    </div>
+                                                </div>
+                                            </h2>
+                                            {hotelBookingList}
+                                        </div>
+                                    </li>
+                                    <li className="home-access-section">
+                                        <div className="starred">
+                                            <h2 className="home-access-section__header">
+                                                <div className="home-access-section__title">
+                                                    <div className="home-access-section__title-text">
+                                                        <div>Flight Bookings</div>
+                                                    </div>
+                                                </div>
+                                            </h2>
+                                            {flightBookingList}
                                         </div>
                                     </li>
                                 </ul>
