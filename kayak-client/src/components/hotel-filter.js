@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {hotelFilterData} from '../actions/index';
 import {bindActionCreators} from 'redux';
 
-class CarFilter extends Component {
+class HotelFilter extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -35,15 +35,6 @@ class CarFilter extends Component {
                 hotelStarFilter: []
             }
         }
-        else {
-            this.state = {
-                priceSliderLow: 0,
-                priceSliderHigh: 0,
-                priceLow: 0,
-                priceHigh: 0,
-                hotelStarFilter: []
-            };
-        }
     }
 
     // document.body.style.backgroundImage = "none";
@@ -52,12 +43,12 @@ class CarFilter extends Component {
     applyFilter = () => {
         var hotelData = this.props.hotelsData.hotelSearch;
         var low = this.state.priceSliderLow, high = this.state.priceSliderHigh;
-        var hotelFilteredData = hotelData.filter(hotel => hotel.room.price >= low & hotel.room.price <= high);
-        let hotelStarFilter = this.state.carTypeFilter;
+        var hotelFilteredData = hotelData.filter(hotel => hotel.price >= low & hotel.price <= high);
+        let hotelStarFilter = this.state.hotelStarFilter;
         if (hotelStarFilter.length > 0) {
-            hotelFilteredData = hotelFilteredData.filter(car => hotelStarFilter.indexOf(car.stars) > -1);
+            hotelFilteredData = hotelFilteredData.filter(hotel => hotelStarFilter.indexOf(hotel.stars) > -1);
         }
-        this.props.carFilterData(hotelFilteredData);
+        this.props.hotelFilterData(hotelFilteredData);
     }
     typeModified = (event, stars) => {
         if (event.target.checked === true) {
@@ -138,7 +129,10 @@ class CarFilter extends Component {
                                    this.setState({
                                        priceSliderLow: event.target.value
                                    });
-                                   this.applyFilter();
+                                   // this.applyFilter()
+                               }}
+                               onMouseUp={() => {
+                                   this.applyFilter()
                                }}
                                step={1}/>
                         Value = {this.state.priceSliderLow}
@@ -154,10 +148,11 @@ class CarFilter extends Component {
                                    this.setState({
                                        priceSliderHigh: event.target.value
                                    });
-                                   this.applyFilter();
                                }}
                                step={1}
-                               onmouseup={this.applyFilter}
+                               onMouseUp={() => {
+                                   this.applyFilter()
+                               }}
                         />
                         Value = {this.state.priceSliderHigh}
                     </li>
@@ -181,4 +176,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps, matchDispatchToProps)(CarFilter);
+export default connect(mapStateToProps, matchDispatchToProps)(HotelFilter);
