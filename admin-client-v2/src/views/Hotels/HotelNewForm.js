@@ -27,25 +27,33 @@ class HotelNewForm extends Component {
         state:'',
         country: '',
         zipcode: '',
-        //roomType: '',
-        //price: 0,
+        roomType: 'big',
+        price: 0,
         zipcodeError: '',
-
+        errors: {
+            zipcodeError: '',
+            priceError: '',}
 
     };
   }
 
     handleValidation(){
         let formIsValid = true;
-        let error = '';
+        let errorsV = {zipcodeError: '', priceError: ''};
 
         //zipcode
         if(!this.state.zipcode.match(/^\d{5}(?:[-\s]\d{4})?$/)){
-             formIsValid = false;
-             error = "Only digits and at leat 5";
-            }
+            formIsValid = false;
+            errorsV.zipcodeError = "Only digits and at leat 5";
+        }
 
-        this.setState({zipcodeError: error});
+        //price
+        if(this.state.price <= 0){
+            formIsValid = false;
+            errorsV.priceError = "price error";
+        }
+
+        this.setState({errors: errorsV});
         return formIsValid;
     }
 
@@ -100,7 +108,7 @@ class HotelNewForm extends Component {
               Stars
               </Col>
               <Col sm={10}>
-                  <FormControl componentClass="select" value={this.state.stars} name="stars" onChange={(e) => { this.handleChange(e); }} required>
+                  <FormControl componentClass="select" defaultValue={this.state.stars} name="stars" onChange={(e) => { this.handleChange(e); }} required>
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -148,15 +156,37 @@ class HotelNewForm extends Component {
             </Col>
           </FormGroup>
 
-          <FormGroup controlId="formControlsSelect">
-              <Col componentClass={ControlLabel} sm={2}>
-              Zipcode
-              </Col>
-              <Col sm={10}>
-                  <FormControl type="text" name="zipcode" value={this.state.zipcode} onChange={(e) => { this.handleChange(e); }} required/>
-                  <span style={{color: "red"}}>{this.state.zipcodeError}</span>
-              </Col>
+      <FormGroup controlId="formControlsSelect">
+          <Col componentClass={ControlLabel} sm={2}>
+          Zipcode
+          </Col>
+          <Col sm={10}>
+          <FormControl type="text" name="zipcode" value={this.state.zipcode} onChange={(e) => { this.handleChange(e); }} required/>
+      <span style={{color: "red"}}>{this.state.errors.zipcodeError}</span>
+      </Col>
+      </FormGroup>
+
+      <FormGroup controlId="formControlsSelect">
+          <Col componentClass={ControlLabel} sm={2}>
+          Room Type
+      </Col>
+      <Col sm={10}>
+          <FormControl required componentClass="select" defaultValue={this.state.roomType} name="roomType" onChange={(e) => { this.handleChange(e); }} required>
+      <option value="big">big</option>
+          <option value="small">small</option>
+          </FormControl>
+          </Col>
           </FormGroup>
+
+          <FormGroup controlId="formHorizontalEmail">
+          <Col componentClass={ControlLabel} sm={2}>
+          Price($)/D
+          </Col>
+          <Col sm={10}>
+          <FormControl required type="number" name="price" value={this.state.price} onChange={(e) => { this.handleChange(e); }} />
+      <span style={{color: "red"}}>{this.state.errors.priceError}</span>
+      </Col>
+      </FormGroup>
 
           <FormGroup>
             <Col smOffset={10} sm={2}>

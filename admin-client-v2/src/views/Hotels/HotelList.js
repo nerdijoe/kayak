@@ -12,12 +12,14 @@ import {
   Row,
   Col,
   DropdownButton,
+  FormControl,
   MenuItem,
 } from 'react-bootstrap';
 
 import {
   axiosAddNewHotel,
   axiosDeleteHotel,
+  searchHotel,
 } from '../../actions';
 
 import HotelNewForm from './HotelNewForm';
@@ -41,9 +43,10 @@ class HotelList extends Component {
       counry: '',
       zipcode: '',
       isDeleted: '',
-      //roomType: '',
-      //price: 0,
+      roomType: '',
+      price: 0,
       },
+        searchBar: '',
       _notificationSystem: null,
     };
 
@@ -113,6 +116,17 @@ class HotelList extends Component {
     this._addNotification(e);
   }
 
+    onChange(e){
+        const target = e.target;
+        console.log(`handleChange [${target.value}]`);
+
+        this.setState({
+            [target.name]: target.value,
+        });
+        this.props.searchHotel(target.value);
+
+    }
+
   render() {
     const popover = (
       <Popover id="modal-popover" title="popover">
@@ -128,8 +142,13 @@ class HotelList extends Component {
     return (
       <div className="Content">
         <Row>
-          <Col md={8} >
+          <Col md={4} >
             <Button bsStyle="success" bsSize="large" onClick={() => this.openModal() }>Add New Hotel</Button>
+          </Col>
+          <Col md={5} >
+              <FormControl type="text" value={this.state.searchBar} name="searchBar"
+                  onChange={(e) => this.onChange(e)} placeholder="INPUT SEARCH KEY WORD">
+              </FormControl>
           </Col>
         </Row>
 
@@ -150,8 +169,8 @@ class HotelList extends Component {
               </tr>
           </thead>
           <tbody>
-            {
-                this.props.hotels && this.props.hotels.filter(hotel => hotel.isDeleted !== true).map((hotel) => {
+            {(this.props.searchHotels.length == 0 ? this.props.hotels : this.props.searchHotels).filter(hotel =>
+      hotel.isDeleted !== true).map((hotel) => {
                 return (
                   <tr key={hotel._id}>
                     <td>{hotel.name}</td>
@@ -161,8 +180,8 @@ class HotelList extends Component {
                     <td>{hotel.state}</td>
                     <td>{hotel.country}</td>
                     <td>{hotel.zipcode}</td>
-                    <td>room type</td>
-                    <td>price</td>
+                    <td>{hotel.roomType}</td>
+                    <td>{hotel.price}</td>
                     <td>
                       <Button bsStyle="info" onClick={() => this.openEditModal(hotel) }>edit</Button>
                       <DropdownButton title="..." id="bg-nested-dropdown">
@@ -234,8 +253,8 @@ class HotelList extends Component {
                   <td>{this.state.deleteHotelData.state}</td>
                   <td>{this.state.deleteHotelData.counry}</td>
                   <td>{this.state.deleteHotelData.zipcode}</td>
-                  <td>room type</td>
-                  <td>price</td>
+                  <td>{this.state.deleteHotelData.roomType}</td>
+                  <td>{this.state.deleteHotelData.price}</td>
               </tr>
             </Table>
             <p>Do you want to delete this hotel?</p>
@@ -258,12 +277,14 @@ const mapDispatchToProps = (dispatch) => {
   return {
     axiosAddNewHotel: (data) => { dispatch(axiosAddNewHotel(data)); },
     axiosDeleteHotel: (data) => { dispatch(axiosDeleteHotel(data)); },
+    searchHotel: (data) => { dispatch(searchHotel(data)); },
   };
 };
 
 const mapStateToProps = (state) => {
   return {
     hotels: state.HotelReducer.hotels,
+    searchHotels: state.HotelReducer.searchHotels,
   };
 };
 

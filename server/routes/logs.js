@@ -1,10 +1,12 @@
 const router = require('express').Router();
-const logPages = require('../controllers/logPages');
+const logsController = require('../controllers/logs');
 
-router.post('/pages', logPages.create);
-router.get('/pages', logPages.getAll);
-router.get('/pages/:type', logPages.aggregate);
+router.post('/pages', logsController.createLogPage);
+router.get('/pages', logsController.getAllLogPage);
+router.get('/pages/:type', logsController.aggregatePages);
 
+router.get('/searches', logsController.getAllLogSearch);
+router.get('/searches/:type', logsController.aggregateSearches);
 // router.get('/search', carController.searchByQuery);
 // router.post('/search', carController.search);
 // router.get('/:id', carController.getOne);

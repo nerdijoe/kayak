@@ -28,10 +28,11 @@ class HotelEditForm extends Component {
       state:this.props.editHotelData.state,
       country: this.props.editHotelData.country,
       zipcode: this.props.editHotelData.zipcode,
-      //roomType: this.props.editHotelData.roomType,
-      //price: this.props.editHotelData.price,
-      zipcodeError: '',
-
+      roomType: this.props.editHotelData.roomType,
+      price: this.props.editHotelData.price,
+      errors: {
+            zipcodeError: '',
+            priceError: '',}
     };
   }
   componentDidMount() {
@@ -40,17 +41,23 @@ class HotelEditForm extends Component {
   }
 
   handleValidation(){
-        let formIsValid = true;
-        let error = '';
+      let formIsValid = true;
+      let errorsV = {zipcodeError: '', priceError: ''};
 
         //zipcode
         if(!this.state.zipcode.match(/^\d{5}(?:[-\s]\d{4})?$/)){
             formIsValid = false;
-            error = "Only digits and at leat 5";
+            errorsV.zipcodeError = "Only digits and at leat 5";
         }
 
-        this.setState({zipcodeError: error});
-        return formIsValid;
+      //price
+      if(this.state.price <= 0){
+          formIsValid = false;
+          errorsV.priceError = "price error";
+      }
+
+      this.setState({errors: errorsV});
+      return formIsValid;
   }
 
   handleChange(e) {
@@ -75,10 +82,10 @@ class HotelEditForm extends Component {
         state: this.state.state,
         country: this.state.country,
         zipcode: this.state.zipcode,
-        isDelted: false,
-        //roomType: this.props.editHotelData.roomType,
-        //price: this.props.editHotelData.price,
+        roomType: this.state.roomType,
+        price: this.state.price,
     }
+
 
       if(this.handleValidation()){
           alert("Form edit saved");
@@ -169,9 +176,31 @@ class HotelEditForm extends Component {
               </Col>
               <Col sm={10}>
                 <FormControl type="text" name="zipcode" value={this.state.zipcode} onChange={(e) => { this.handleChange(e); }} required/>
-                <span style={{color: "red"}}>{this.state.zipcodeError}</span>
+                <span style={{color: "red"}}>{this.state.errors.zipcodeError}</span>
               </Col>
           </FormGroup>
+
+      <FormGroup controlId="formControlsSelect">
+          <Col componentClass={ControlLabel} sm={2}>
+          Room Type
+      </Col>
+      <Col sm={10}>
+          <FormControl required componentClass="select" defaultValue={this.state.roomType} name="roomType" onChange={(e) => { this.handleChange(e); }} required>
+            <option value="big">big</option>
+            <option value="small">small</option>
+          </FormControl>
+          </Col>
+          </FormGroup>
+
+          <FormGroup controlId="formHorizontalEmail">
+          <Col componentClass={ControlLabel} sm={2}>
+          Price($)/D
+          </Col>
+          <Col sm={10}>
+          <FormControl required type="number" name="price" value={this.state.price} onChange={(e) => { this.handleChange(e); }} />
+            <span style={{color: "red"}}>{this.state.errors.priceError}</span>
+      </Col>
+      </FormGroup>
 
       <FormGroup>
             <Col smOffset={10} sm={2}>

@@ -142,7 +142,7 @@ export const editUser = (data) => {
 };
 
 
-<<<<<<< HEAD
+
 
 export const addNewFlight = (data) => {
     return {
@@ -168,6 +168,13 @@ export const deleteFlight = (data) => {
 export const fetchFlight = (data) => {
     return {
         type: actionType.FETCH_FLIGHT,
+        data,
+    };
+};
+
+export const searchFlight = (data) => {
+    return {
+        type: actionType.FLIGHT_SEARCH,
         data,
     };
 };
@@ -215,8 +222,15 @@ export const fetchHotel = (data) => {
     };
 };
 
+export const searchHotel = (data) => {
+    return {
+        type: actionType.HOTEL_SEARCH,
+        data,
+    };
+};
 
-=======
+
+
 export const fetchLogPages = (data) => {
   return {
     type: actionType.FETCH_LOG_PAGES,
@@ -227,6 +241,28 @@ export const fetchLogPages = (data) => {
 export const fetchLogPagesCount = (data) => {
   return {
     type: actionType.FETCH_LOG_PAGES_COUNT,
+    data,
+  };
+};
+
+
+export const fetchLogSearches = (data) => {
+  return {
+    type: actionType.FETCH_LOG_SEARCHES,
+    data,
+  };
+};
+
+export const fetchLogSearchesType = (data) => {
+  return {
+    type: actionType.FETCH_LOG_SEARCHES_TYPE,
+    data,
+  };
+};
+
+export const fetchLogSearchesDealerCity = (data) => {
+  return {
+    type: actionType.FETCH_LOG_SEARCHES_DEALERCITY,
     data,
   };
 };
@@ -457,7 +493,7 @@ export const axiosEditUser = user => (dispatch) => {
 };
 
 
-<<<<<<< HEAD
+
 export const axiosAddNewFlight = data => (dispatch) => {
     const admin_token = localStorage.getItem('admin_token');
     console.log('axiosAddNewFlight data=', data);
@@ -468,7 +504,8 @@ export const axiosAddNewFlight = data => (dispatch) => {
         departureAirport: data.departureAirport,
         arrivalAirport:data.arrivalAirport,
         airline: data.airline,
-        prices: data.prices,
+        class: data.class,
+        price: data.price,
     }, {
         headers: {
             admin_token,
@@ -523,10 +560,10 @@ export const axiosDeleteFlight = data => (dispatch) => {
         },
     })
         .then((res) => {
-        console.log('-------------------after axiosDeleteCar');
+        console.log('-------------------after axiosDeleteFlight');
     console.log(res);
 
-    dispatch(deleteCar(data));
+    dispatch(deleteFlight(data));
 }).catch((err) => {
         console.log(err);
 });
@@ -541,6 +578,7 @@ export const axiosFetchFlight = () => (dispatch) => {
     console.log(res.data);
 
     dispatch(fetchFlight(res.data));
+
 }).catch((err) => {
         console.log(err);
 });
@@ -582,14 +620,15 @@ export const axiosAddNewHotel = data => (dispatch) => {
     const admin_token = localStorage.getItem('admin_token');
     console.log('axiosAddNewHotel data=', data);
     axios.post('http://localhost:3010/hotels', {
-        //need to add data here
-        /*flightNumber: data.flightNumber,
-        departureTime: data.departureTime,
-        arrivalTime: data.arrivalTime,
-        departureAirport: data.departureAirport,
-        arrivalAirport:data.arrivalAirport,
-        airline: data.airline,
-        prices: data.prices,*/
+        name: data.name,
+        stars: data.stars,
+        address: data.address,
+        city: data.city,
+        state: data.state,
+        country: data.country,
+        zipcode: data.zipcode,
+        roomType: data.roomType,
+        price: data.price,
     }, {
         headers: {
             admin_token,
@@ -610,14 +649,15 @@ export const axiosEditHotel = data => (dispatch) => {
     console.log('axiosEditHotel data=', data);
 
     axios.put(`http://localhost:3010/hotels/${data._id}`, {
-        //need to add data here
-       /* flightNumber: data.flightNumber,
-        departureTime: data.departureTime,
-        arrivalTime: data.arrivalTime,
-        departureAirport: data.departureAirport,
-        arrivalAirport:data.arrivalAirport,
-        airline: data.airline,
-        prices: data.airline,*/
+        name: data.name,
+        stars: data.stars,
+        address: data.address,
+        city: data.city,
+        state: data.state,
+        country: data.country,
+        zipcode: data.zipcode,
+        roomType: data.roomType,
+        price: data.price,
     }, {
         headers: {
             admin_token,
@@ -690,6 +730,50 @@ export const axiosFetchLogPagesCount = () => (dispatch) => {
       console.log(res.data);
 
       dispatch(fetchLogPagesCount(res.data));
+    }).catch((err) => {
+      console.log(err);
+    });
+};
+
+
+
+export const axiosFetchLogSearches = () => (dispatch) => {
+  //get admin token
+
+  axios.get('http://localhost:3010/logs/searches')
+    .then((res) => {
+      console.log('--- after axiosFetchLogSearches');
+      console.log(res.data);
+
+      dispatch(fetchLogSearches(res.data));
+    }).catch((err) => {
+      console.log(err);
+    });
+};
+
+export const axiosFetchLogSearchesType = () => (dispatch) => {
+  //get admin token
+
+  axios.get('http://localhost:3010/logs/searches/type')
+    .then((res) => {
+      console.log('--- after axiosFetchLogSearhesType');
+      console.log(res.data);
+
+      dispatch(fetchLogSearchesType(res.data));
+    }).catch((err) => {
+      console.log(err);
+    });
+};
+
+export const axiosFetchLogSearchesDealerCity = () => (dispatch) => {
+  //get admin token
+
+  axios.get('http://localhost:3010/logs/searches/dealercity')
+    .then((res) => {
+      console.log('--- after axiosFetchLogSearchesDealerCity');
+      console.log(res.data);
+
+      dispatch(fetchLogSearchesDealerCity(res.data));
     }).catch((err) => {
       console.log(err);
     });

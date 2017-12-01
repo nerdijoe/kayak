@@ -24,9 +24,9 @@ class FlightEditForm extends Component {
       flightNumber: this.props.editFlightData.flightNumber,
       departureTime: this.props.editFlightData.departureTime,
       arrivalTime:this.props.editFlightData.arrivalTime,
-      departureAirport: this.props.editFlightData.departureAirport,
-      arrivalAirport:this.props.editFlightData.arrivalAirport,
-      airline: this.props.editFlightData.airline,
+      departureAirport: this.props.editFlightData.departureAirport._id,
+      arrivalAirport:this.props.editFlightData.arrivalAirport._id,
+      airline: this.props.editFlightData.airline._id,
       class: this.props.editFlightData.class,
       price: this.props.editFlightData.price,
       errors: {
@@ -39,6 +39,7 @@ class FlightEditForm extends Component {
     console.log('componentDidMount');
     console.log('  this.props.editFlightData=', this.props.editFlightData);
     console.log('this.props.airport=', this.props.airports);
+    console.log('arrivalTime type is: ', this.state.arrivalTime.substr(0,15));
   }
 
   handleChange(e) {
@@ -62,10 +63,6 @@ class FlightEditForm extends Component {
 
         //price
         if(this.state.price <= 0){
-            formIsValid = false;
-            errorsV.priceError = "price error";
-        }
-        if(!this.state.price.match(/^\d+(\.\d{2})?$/)){
             formIsValid = false;
             errorsV.priceError = "price error";
         }
@@ -109,7 +106,7 @@ class FlightEditForm extends Component {
 
         <Form horizontal onSubmit={(e) => { this.handleSubmit(e); }} >
 
-  <FormGroup controlId="formControlsSelect">
+  <FormGroup controlId="formHorizontalEmail">
           <Col componentClass={ControlLabel} sm={2}>
           Flight Number
       </Col>
@@ -120,23 +117,23 @@ class FlightEditForm extends Component {
       </Col>
       </FormGroup>
 
-      <FormGroup controlId="formControlsSelect">
+      <FormGroup controlId="formHorizontalEmail">
           <Col componentClass={ControlLabel} sm={2}>
           Departure Time
       </Col>
       <Col sm={10}>
-          <FormControl type="datetime-local" value={this.state.departureTime} name="departureTime"
+          <FormControl type="datetime-local" value={this.state.departureTime.substr(0,16)} name="departureTime"
       onChange={(e) => { this.handleChange(e); }} required>
       </FormControl>
       </Col>
       </FormGroup>
 
-      <FormGroup controlId="formControlsSelect">
+      <FormGroup controlId="formHorizontalEmail">
           <Col componentClass={ControlLabel} sm={2}>
           Arrival Time
       </Col>
       <Col sm={10}>
-          <FormControl type="datetime-local" value={this.state.arrivalTimeTime} name="arrivalTime"
+          <FormControl type="datetime-local" value={this.state.arrivalTime.substr(0,16)} name="arrivalTime"
       onChange={(e) => { this.handleChange(e); }} required>
       </FormControl>
       </Col>
@@ -195,10 +192,10 @@ class FlightEditForm extends Component {
           Class Type
       </Col>
       <Col sm={10}>
-          <FormControl required componentClass="select" value={this.state.class} name="class" onChange={(e) => { this.handleChange(e); }} required>
-      <option value="Business">Business</option>
-          <option value="Economic">Economic</option>
-          <option value="First">First</option>
+          <FormControl required componentClass="select" defaultValue={this.state.class} name="class" onChange={(e) => { this.handleChange(e); }} required>
+      <option value="business">Business</option>
+          <option value="economy">Economy</option>
+          <option value="first">First</option>
           </FormControl>
           </Col>
           </FormGroup>
@@ -208,10 +205,11 @@ class FlightEditForm extends Component {
           Price($)
           </Col>
           <Col sm={10}>
-          <FormControl required type="number" name="price" value={this.state.economic} onChange={(e) => { this.handleChange(e); }} />
+          <FormControl required type="number" name="price" value={this.state.price} onChange={(e) => { this.handleChange(e); }} />
       <span style={{color: "red"}}>{this.state.errors.priceError}</span>
       </Col>
       </FormGroup>
+
           <FormGroup>
             <Col smOffset={10} sm={2}>
               <Button bsStyle="success" type="submit">

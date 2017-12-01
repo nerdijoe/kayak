@@ -2,26 +2,17 @@ import * as actionType from '../actions/constants';
 
 const initialState = {
   hotels: [],
+  searchHotels: [],
 };
 
 const HotelReducer = (state = initialState, action) =>
 {
     switch (action.type) {
         case actionType.HOTEL_ADD: {
-            const newHotel = {
-                name: action.data.name,
-                stars: action.data.stars,
-                city: action.data.city,
-                state: action.data.state,
-                country: action.data.country,
-                zipcode: action.data.zipcode,
-                isDeleted: action.data.isDeleted,
-                //rommType: action.data.rommType,
-                //price: action.data.price,
-            }
             return {
                 ...state,
                 hotels: [...state.hotels, action.data],
+                searchHotels: [...state.searchHotels, action.data],
             };
         }
 
@@ -34,6 +25,7 @@ const HotelReducer = (state = initialState, action) =>
             return {
                 ...state,
                 hotels: updatedHotels,
+                searchHotels: updatedHotels,
             };
         }
         case actionType.HOTEL_DELETE: {
@@ -45,6 +37,7 @@ const HotelReducer = (state = initialState, action) =>
             return {
                 ...state,
                 hotels: updatedHotels,
+                searchHotels: updatedHotels,
             };
         }
 
@@ -53,6 +46,29 @@ const HotelReducer = (state = initialState, action) =>
                 ...state,
                 hotels: [...action.data],
             };
+        }
+
+        case actionType.HOTEL_SEARCH: {
+            const searchCriterion = action.data;
+            const searchResult = state.hotels.filter(function(hotel){
+                const inName = hotel.name.includes(searchCriterion);
+                /*const inDepartureTime = flight.departureTime.includes(searchCriterion);
+                const inArrivalTime = flight.arrivalTime.includes(searchCriterion);
+                const inDepartureAirport = flight.departureAirport.name.includes(searchCriterion);
+                const inArrivalAirport = flight.arrivalAirport.name.includes(searchCriterion);
+                const inAirline = flight.airline.name.includes(searchCriterion);
+                const inClass = flight.class.includes(searchCriterion);
+                const inPrice = flight.price.toString().includes(searchCriterion);*/
+
+                const result = inName;
+                    /*|| inDepartureTime || inArrivalTime || inDepartureAirport || inArrivalAirport || inAirline || inClass || inPrice;*/
+                return result;
+            } );
+
+            return {
+                ...state,
+                searchHotels: searchResult,
+        };
         }
 
         default:

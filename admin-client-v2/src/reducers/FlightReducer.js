@@ -2,26 +2,17 @@ import * as actionType from '../actions/constants';
 
 const initialState = {
   flights: [],
+  searchFlights: [],
 };
 
 const FlightReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionType.FLIGHT_ADD: {
-      const newFlight = {
-          flightNumber: action.data.flightNumber,
-          departureTime: action.data.departureTime,
-          arrivalTime: action.data.arrivalTime,
-          departureAirport: action.data.departureAirport.name,
-          arrivalAirport:action.data.arrivalAirport.name,
-          airline: action.data.airline.name,
-          prices: [
-              {"type": "business", "price": action.data.prices[0].price},
-              {"type": "economic", "price": action.data.prices[1].price},
-              {"type": "first", "price": action.data.prices[2].price} ]
-      }
+
       return {
         ...state,
         flights: [...state.flights, action.data],
+        searchFlights: [...state.searchFlights, action.data],
       };
     }
 
@@ -34,6 +25,7 @@ const FlightReducer = (state = initialState, action) => {
       return {
         ...state,
         flights: updatedFlights,
+        searchFlights: updatedFlights,
       };
     }
     case actionType.FLIGHT_DELETE: {
@@ -46,6 +38,7 @@ const FlightReducer = (state = initialState, action) => {
       return {
         ...state,
         flights: updatedFlights,
+        searchFlights: updatedFlights,
       };
     }
 
@@ -55,6 +48,28 @@ const FlightReducer = (state = initialState, action) => {
         flights: [...action.data],
       };
     }
+
+      case actionType.FLIGHT_SEARCH: {
+        const searchCriterion = action.data;
+        const searchResult = state.flights.filter(function(flight){
+          const inFlightNumber = flight.flightNumber.includes(searchCriterion);
+          const inDepartureTime = flight.departureTime.includes(searchCriterion);
+            const inArrivalTime = flight.arrivalTime.includes(searchCriterion);
+            const inDepartureAirport = flight.departureAirport.name.includes(searchCriterion);
+            const inArrivalAirport = flight.arrivalAirport.name.includes(searchCriterion);
+            const inAirline = flight.airline.name.includes(searchCriterion);
+            const inClass = flight.class.includes(searchCriterion);
+            const inPrice = flight.price.toString().includes(searchCriterion);
+
+          const result = inFlightNumber || inDepartureTime || inArrivalTime || inDepartureAirport || inArrivalAirport || inAirline || inClass || inPrice;
+          return result;
+        } );
+
+          return {
+              ...state,
+              searchFlights: searchResult,
+      };
+      }
 
     case actionType.FETCH_AIRPORT: {
           return {

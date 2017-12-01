@@ -11,6 +11,7 @@ import {
   Tooltip,
   Row,
   Col,
+  FormControl,
   DropdownButton,
   MenuItem,
 } from 'react-bootstrap';
@@ -18,6 +19,8 @@ import {
 import {
   axiosAddNewFlight,
   axiosDeleteFlight,
+  searchFlight,
+
 } from '../../actions';
 
 import FlightNewForm from './FlightNewForm';
@@ -39,15 +42,17 @@ class FlightList extends Component {
       departureAirport: '',
       arrivalAirport:'',
       airline: '',
-      classType: '',
+      class: '',
       price: '',
       },
+      searchBar: '',
       _notificationSystem: null,
     };
   }
 
   getInitialState() {
-    return { showModal: false };
+    return { showModal: false,
+    };
   }
 
   componentDidMount() {
@@ -69,9 +74,8 @@ class FlightList extends Component {
   }
 
   openEditModal(flight) {
-    console.log('open');
-    console.log("this.props.airports is: ");
-      console.log(this.props.airports);
+    console.log('open edit');
+    console.log('flight=', flight);
     this.setState({ editModal: true });
     this.setState({ editFlightData: flight });
   }
@@ -81,10 +85,11 @@ class FlightList extends Component {
   }
 
   openDeleteModal(flight) {
-    console.log('open');
-    console.log(flight.prices[0].price);
+    console.log('open delete modal');
+
     this.setState({ deleteModal: true });
     this.setState({ deleteFlightData: flight });
+    console.log('delete flight data is: ', this.state.deleteFlightData);
   }
 
   _addNotification(event) {
@@ -115,6 +120,17 @@ class FlightList extends Component {
     this._addNotification(e);
   }
 
+  onChange(e){
+      const target = e.target;
+      console.log(`handleChange [${target.value}]`);
+
+      this.setState({
+          [target.name]: target.value,
+      });
+      this.props.searchFlight(target.value);
+
+  }
+
   render() {
     const popover = (
       <Popover id="modal-popover" title="popover">
@@ -130,11 +146,15 @@ class FlightList extends Component {
     return (
       <div className="Content">
         <Row>
-          <Col md={8} >
+          <Col md={4} >
             <Button bsStyle="success" bsSize="large" onClick={() => this.openModal() }>Add New Flight</Button>
           </Col>
+          <Col md={5} >
+            <FormControl type="text" value={this.state.searchBar} name="searchBar"
+                onChange={(e) => this.onChange(e)} placeholder="INPUT SEARCH KEY WORD">
+            </FormControl>
+          </Col>
         </Row>
-
         <NotificationSystem ref="notificationSystem" />
 
         <Table responsive>
@@ -153,18 +173,18 @@ class FlightList extends Component {
               </tr>
           </thead>
           <tbody>
-            {
-                this.props.flights && this.props.flights.filter(flight => flight.isDeleted !== true).map((flight) => {
+            {(this.props.searchFlights.length == 0 ? this.props.flights : this.props.searchFlights).filter(flight =>
+                flight.isDeleted !== true).map((flight) => {
                 return (
                   <tr key={flight._id}>
                     <td>{flight.flightNumber}</td>
-                    <td>{flight.departureTime}</td>
-                    <td>{flight.arrivalTime}</td>
+                    <td>{flight.departureTime.substr(0,16)}</td>
+                    <td>{flight.arrivalTime.substr(0,16)}</td>
                     <td>{flight.departureAirport.name}</td>
                     <td>{flight.arrivalAirport.name}</td>
-                    <td>{flight.airport}</td>
-                    <td>Class Type</td>
-                    <td>Price</td>
+                    <td>{flight.airline.name}</td>
+                    <td>{flight.class}</td>
+                    <td>{flight.price}</td>
 
                     <td>
                       <Button bsStyle="info" onClick={() => this.openEditModal(flight) }>edit</Button>
@@ -233,13 +253,13 @@ class FlightList extends Component {
 
               <tr>
                   <td>{this.state.deleteFlightData.flightNumber}</td>
-                  <td>{this.state.deleteFlightData.departureTime}</td>
-                  <td>{this.state.deleteFlightData.arrivalTime}</td>
-                  <td>{this.state.deleteFlightData.departureAirport}</td>
-                  <td>{this.state.deleteFlightData.arrivalAirport}</td>
-                  <td>{this.state.deleteFlightData.airline}</td>
-                  <td>Class Type</td>
-                  <td>Price</td>
+                  <td>{this.state.deleteFlightData.departureTime.substr(0,16)}</td>
+                  <td>{this.state.deleteFlightData.arrivalTime.substr(0,16)}</td>
+                  <td>{this.state.deleteFlightData.departureAirport.name}</td>
+                  <td>{this.state.deleteFlightData.arrivalAirport.name}</td>
+                  <td>{this.state.deleteFlightData.airline.name}</td>
+                  <td>{this.state.deleteFlightData.class}</td>
+                  <td>{this.state.deleteFlightData.price}</td>
 
               </tr>
             </Table>
@@ -263,6 +283,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     axiosAddNewFlight: (data) => { dispatch(axiosAddNewFlight(data)); },
     axiosDeleteFlight: (data) => { dispatch(axiosDeleteFlight(data)); },
+    searchFlight: (data) => { dispatch(searchFlight(data)); },
+
   };
 };
 
@@ -271,6 +293,7 @@ const mapStateToProps = (state) => {
     flights: state.FlightReducer.flights,
     airports: state.FlightReducer.airports,
     airlines: state.FlightReducer.airlines,
+    searchFlights: state.FlightReducer.searchFlights,
   };
 };
 
