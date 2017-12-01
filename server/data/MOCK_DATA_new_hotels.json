@@ -1,0 +1,3 @@
+[{"name":"Acqualina Resort & Spa","stars":3,"address":"1257 Bluestem Avenue","city":"Sacramento","state":"California","country":"US","zipcode":"94250","roomType":"small","price": 80},
+  {"name":"Acqualina Resort & Spa","stars":3,"address":"1257 Bluestem Avenue","city":"Sacramento","state":"California","country":"US","zipcode":"94250","roomType":"big","price": 120},
+{"name":"Pavilion Inn","stars":2,"address":"23506 Dapin Pass","city":"San Jose","state":"California","country":"US","zipcode":"95150","roomType":"big","price": 200}]
