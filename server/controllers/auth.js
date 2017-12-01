@@ -82,3 +82,17 @@ exports.signinKafka = (req, res) => {
     }
   });
 };
+
+exports.signupKafka = (req, res) => {
+
+  kafka.make_request('request_topic', { action: action.USER_SIGN_UP, body: req.body }, (err, results) => {
+    console.log('signupKafka');
+    // console.log('   results=', results);
+    if (err) {
+      console.log('  ----> signupKafka Error');
+      res.json(err);
+    } else {
+      res.json(results);
+    }
+  });
+};
