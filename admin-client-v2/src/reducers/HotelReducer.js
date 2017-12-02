@@ -9,6 +9,7 @@ const HotelReducer = (state = initialState, action) =>
 {
     switch (action.type) {
         case actionType.HOTEL_ADD: {
+            state.searchHotels = [...state.hotels];
             return {
                 ...state,
                 hotels: [...state.hotels, action.data],
@@ -52,16 +53,17 @@ const HotelReducer = (state = initialState, action) =>
             const searchCriterion = action.data;
             const searchResult = state.hotels.filter(function(hotel){
                 const inName = hotel.name.includes(searchCriterion);
-                /*const inDepartureTime = flight.departureTime.includes(searchCriterion);
-                const inArrivalTime = flight.arrivalTime.includes(searchCriterion);
-                const inDepartureAirport = flight.departureAirport.name.includes(searchCriterion);
-                const inArrivalAirport = flight.arrivalAirport.name.includes(searchCriterion);
-                const inAirline = flight.airline.name.includes(searchCriterion);
-                const inClass = flight.class.includes(searchCriterion);
-                const inPrice = flight.price.toString().includes(searchCriterion);*/
+                const inStars = hotel.stars.toString().includes(searchCriterion);
+                const inAddress = hotel.address.includes(searchCriterion);
+                const inCity = hotel.city.includes(searchCriterion);
+                const inState = hotel.state.includes(searchCriterion);
+                const inCountry = hotel.country.includes(searchCriterion);
+                const inZipcode = hotel.zipcode.includes(searchCriterion);
+                const inRoomType = hotel.roomType.includes(searchCriterion);
+                const inPrice = hotel.price.toString().includes(searchCriterion);
 
-                const result = inName;
-                    /*|| inDepartureTime || inArrivalTime || inDepartureAirport || inArrivalAirport || inAirline || inClass || inPrice;*/
+                const result = inName || inStars || inAddress || inCity || inState || inCountry || inZipcode || inRoomType || inPrice;
+
                 return result;
             } );
 

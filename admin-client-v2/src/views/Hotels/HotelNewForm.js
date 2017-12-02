@@ -201,12 +201,7 @@ class HotelNewForm extends Component {
   }
 }
 
-/*const mapStateToProps = (state) => {
-    return {
-        airports: state.HotelReducer.airports,
-        airlines: state.HotelReducer.airlines,
-    };
-};*/
+
 
 const mapDispatchToProps = (dispatch) => {
   return {

@@ -9,6 +9,8 @@ const FlightReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionType.FLIGHT_ADD: {
 
+      state.searchFlights = [...state.flights];
+
       return {
         ...state,
         flights: [...state.flights, action.data],
@@ -52,8 +54,8 @@ const FlightReducer = (state = initialState, action) => {
       case actionType.FLIGHT_SEARCH: {
         const searchCriterion = action.data;
         const searchResult = state.flights.filter(function(flight){
-          const inFlightNumber = flight.flightNumber.includes(searchCriterion);
-          const inDepartureTime = flight.departureTime.includes(searchCriterion);
+            const inFlightNumber = flight.flightNumber.includes(searchCriterion);
+            const inDepartureTime = flight.departureTime.includes(searchCriterion);
             const inArrivalTime = flight.arrivalTime.includes(searchCriterion);
             const inDepartureAirport = flight.departureAirport.name.includes(searchCriterion);
             const inArrivalAirport = flight.arrivalAirport.name.includes(searchCriterion);

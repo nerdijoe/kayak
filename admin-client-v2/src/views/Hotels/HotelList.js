@@ -101,11 +101,13 @@ class HotelList extends Component {
   handleAdd(e) {
         console.log('add button handle close modal');
         this.setState({ showModal: false });
+        this.setState({ searchBar: '' });
   }
 
     handleEdit(e) {
         console.log('edit button handle close modal');
         this.setState({ editModal: false });
+        this.setState({ searchBar: '' });
     }
 
   handleDelete(e) {
@@ -166,6 +168,7 @@ class HotelList extends Component {
               <th>Zipcode</th>
               <th>Room Type</th>
               <th>Price</th>
+              <th>Action</th>
               </tr>
           </thead>
           <tbody>

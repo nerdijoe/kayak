@@ -185,7 +185,7 @@ class HotelEditForm extends Component {
           Room Type
       </Col>
       <Col sm={10}>
-          <FormControl required componentClass="select" defaultValue={this.state.roomType} name="roomType" onChange={(e) => { this.handleChange(e); }} required>
+          <FormControl required componentClass="select" value={this.state.roomType} name="roomType" onChange={(e) => { this.handleChange(e); }} required>
             <option value="big">big</option>
             <option value="small">small</option>
           </FormControl>

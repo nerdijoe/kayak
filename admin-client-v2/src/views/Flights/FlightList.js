@@ -56,7 +56,6 @@ class FlightList extends Component {
   }
 
   componentDidMount() {
-
     this._notificationSystem = this.refs.notificationSystem;
   }
 
@@ -102,15 +101,16 @@ class FlightList extends Component {
     });
   }
 
-    handleAdd(e) {
-        console.log('add button handle close modal');
-        this.setState({ showModal: false });
-    }
+  handleAdd(e) {
+    console.log('add button handle close modal');
+    this.setState({ showModal: false });
+  }
 
-    handleEdit(e) {
-        console.log('edit button handle close modal');
-        this.setState({ editModal: false });
-    }
+  handleEdit(e) {
+    console.log('edit button handle close modal');
+    this.setState({ editModal: false });
+    this.setState({ searchBar: '' });
+  }
 
   handleDelete(e) {
     console.log('delete');

@@ -51,21 +51,21 @@ class FlightEditForm extends Component {
     });
   }
 
-    handleValidation(){
-        let formIsValid = true;
-        let errorsV = {flightNumberError: '', priceError: ''};
+  handleValidation(){
+     let formIsValid = true;
+     let errorsV = {flightNumberError: '', priceError: ''};
 
         //flight number
-        if(!this.state.flightNumber.match(/^[A-Z]{2}\d{3}$/)){
-            formIsValid = false;
-            errorsV.flightNumberError = "2 upcase letters and 3 digits";
-        }
+     if(!this.state.flightNumber.match(/^[A-Z]{2}\d{3}$/)){
+         formIsValid = false;
+         errorsV.flightNumberError = "2 upcase letters and 3 digits";
+     }
 
-        //price
-        if(this.state.price <= 0){
-            formIsValid = false;
-            errorsV.priceError = "price error";
-        }
+     //price
+     if(this.state.price <= 0){
+         formIsValid = false;
+         errorsV.priceError = "price error";
+     }
 
         this.setState({errors: errorsV});
         return formIsValid;
@@ -109,12 +109,12 @@ class FlightEditForm extends Component {
   <FormGroup controlId="formHorizontalEmail">
           <Col componentClass={ControlLabel} sm={2}>
           Flight Number
-      </Col>
-      <Col sm={10}>
-          <FormControl required type="text" value={this.state.flightNumber} name="flightNumber" onChange={(e) => { this.handleChange(e); }}>
-  </FormControl>
-      <span style={{color: "red"}}>{this.state.errors.flightNumberError}</span>
-      </Col>
+          </Col>
+          <Col sm={10}>
+              <FormControl required type="text" value={this.state.flightNumber} name="flightNumber" onChange={(e) => { this.handleChange(e); }}>
+              </FormControl>
+              <span style={{color: "red"}}>{this.state.errors.flightNumberError}</span>
+          </Col>
       </FormGroup>
 
       <FormGroup controlId="formHorizontalEmail">

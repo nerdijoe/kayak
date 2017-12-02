@@ -115,7 +115,7 @@ class UserList extends Component {
             this.props.users.map((user) => {
             return (
         <tr key={user._id}>
-    <td>{user.firstName}</td>
+        <td>{user.firstName}</td>
         <td>{user.lastName}</td>
         <td>{user.email}</td>
         <td>{user.address}</td>
