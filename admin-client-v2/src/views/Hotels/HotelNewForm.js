@@ -37,7 +37,7 @@ class HotelNewForm extends Component {
     };
   }
 
-    handleValidation(){
+  handleValidation(){
         let formIsValid = true;
         let errorsV = {zipcodeError: '', priceError: ''};
 
@@ -55,8 +55,7 @@ class HotelNewForm extends Component {
 
         this.setState({errors: errorsV});
         return formIsValid;
-    }
-
+  }
 
 
   handleChange(e) {
@@ -156,37 +155,37 @@ class HotelNewForm extends Component {
             </Col>
           </FormGroup>
 
-      <FormGroup controlId="formControlsSelect">
-          <Col componentClass={ControlLabel} sm={2}>
-          Zipcode
-          </Col>
-          <Col sm={10}>
-          <FormControl type="text" name="zipcode" value={this.state.zipcode} onChange={(e) => { this.handleChange(e); }} required/>
-      <span style={{color: "red"}}>{this.state.errors.zipcodeError}</span>
-      </Col>
-      </FormGroup>
+          <FormGroup controlId="formControlsSelect">
+              <Col componentClass={ControlLabel} sm={2}>
+              Zipcode
+              </Col>
+              <Col sm={10}>
+                  <FormControl type="text" name="zipcode" value={this.state.zipcode} onChange={(e) => { this.handleChange(e); }} required/>
+                  <span style={{color: "red"}}>{this.state.errors.zipcodeError}</span>
+              </Col>
+          </FormGroup>
 
-      <FormGroup controlId="formControlsSelect">
-          <Col componentClass={ControlLabel} sm={2}>
-          Room Type
-      </Col>
-      <Col sm={10}>
-          <FormControl required componentClass="select" defaultValue={this.state.roomType} name="roomType" onChange={(e) => { this.handleChange(e); }} required>
-      <option value="big">big</option>
-          <option value="small">small</option>
-          </FormControl>
-          </Col>
+          <FormGroup controlId="formControlsSelect">
+              <Col componentClass={ControlLabel} sm={2}>
+              Room Type
+              </Col>
+              <Col sm={10}>
+                  <FormControl required componentClass="select" defaultValue={this.state.roomType} name="roomType" onChange={(e) => { this.handleChange(e); }} required>
+                      <option value="big">big</option>
+                      <option value="small">small</option>
+                  </FormControl>
+              </Col>
           </FormGroup>
 
           <FormGroup controlId="formHorizontalEmail">
-          <Col componentClass={ControlLabel} sm={2}>
-          Price($)/D
-          </Col>
-          <Col sm={10}>
-          <FormControl required type="number" name="price" value={this.state.price} onChange={(e) => { this.handleChange(e); }} />
-      <span style={{color: "red"}}>{this.state.errors.priceError}</span>
-      </Col>
-      </FormGroup>
+              <Col componentClass={ControlLabel} sm={2}>
+              Price($)/D
+              </Col>
+              <Col sm={10}>
+                  <FormControl required type="number" name="price" value={this.state.price} onChange={(e) => { this.handleChange(e); }} />
+                  <span style={{color: "red"}}>{this.state.errors.priceError}</span>
+              </Col>
+          </FormGroup>
 
           <FormGroup>
             <Col smOffset={10} sm={2}>

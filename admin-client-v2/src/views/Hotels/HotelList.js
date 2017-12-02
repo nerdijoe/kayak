@@ -104,11 +104,11 @@ class HotelList extends Component {
         this.setState({ searchBar: '' });
   }
 
-    handleEdit(e) {
+  handleEdit(e) {
         console.log('edit button handle close modal');
         this.setState({ editModal: false });
         this.setState({ searchBar: '' });
-    }
+  }
 
   handleDelete(e) {
     console.log('delete');

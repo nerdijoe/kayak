@@ -141,6 +141,13 @@ export const editUser = (data) => {
     };
 };
 
+export const searchUser = (data) => {
+    return {
+        type: actionType.USER_SEARCH,
+        data,
+    };
+};
+
 
 
 

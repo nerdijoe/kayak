@@ -142,7 +142,6 @@ class HotelEditForm extends Component {
               </Col>
           </FormGroup>
 
-
           <FormGroup controlId="formHorizontalEmail">
               <Col componentClass={ControlLabel} sm={2}>
               City
@@ -180,29 +179,29 @@ class HotelEditForm extends Component {
               </Col>
           </FormGroup>
 
-      <FormGroup controlId="formControlsSelect">
-          <Col componentClass={ControlLabel} sm={2}>
-          Room Type
-      </Col>
-      <Col sm={10}>
-          <FormControl required componentClass="select" value={this.state.roomType} name="roomType" onChange={(e) => { this.handleChange(e); }} required>
-            <option value="big">big</option>
-            <option value="small">small</option>
-          </FormControl>
-          </Col>
+          <FormGroup controlId="formControlsSelect">
+              <Col componentClass={ControlLabel} sm={2}>
+              Room Type
+              </Col>
+              <Col sm={10}>
+                  <FormControl required componentClass="select" value={this.state.roomType} name="roomType" onChange={(e) => { this.handleChange(e); }} required>
+                    <option value="big">big</option>
+                    <option value="small">small</option>
+                  </FormControl>
+              </Col>
           </FormGroup>
 
           <FormGroup controlId="formHorizontalEmail">
-          <Col componentClass={ControlLabel} sm={2}>
-          Price($)/D
-          </Col>
-          <Col sm={10}>
-          <FormControl required type="number" name="price" value={this.state.price} onChange={(e) => { this.handleChange(e); }} />
-            <span style={{color: "red"}}>{this.state.errors.priceError}</span>
-      </Col>
-      </FormGroup>
+              <Col componentClass={ControlLabel} sm={2}>
+              Price($)/D
+              </Col>
+              <Col sm={10}>
+                  <FormControl required type="number" name="price" value={this.state.price} onChange={(e) => { this.handleChange(e); }} />
+                  <span style={{color: "red"}}>{this.state.errors.priceError}</span>
+              </Col>
+          </FormGroup>
 
-      <FormGroup>
+          <FormGroup>
             <Col smOffset={10} sm={2}>
               <Button bsStyle="success" type="submit">
                 Save

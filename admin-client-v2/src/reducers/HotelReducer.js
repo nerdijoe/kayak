@@ -46,6 +46,7 @@ const HotelReducer = (state = initialState, action) =>
             return {
                 ...state,
                 hotels: [...action.data],
+                searchHotels:  [...action.data],
             };
         }
 

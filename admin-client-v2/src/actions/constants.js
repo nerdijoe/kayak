@@ -19,7 +19,7 @@ export const FETCH_CAR_BILLING_SEARCH_YEAR = 'FETCH_CAR_BILLING_SEARCH_YEAR';
 
 export const FETCH_USER = 'FETCH_USER';
 export const EDIT_USER = 'EDIT_USER';
-
+export const USER_SEARCH = 'USER_SEARCH';
 
 export const FLIGHT_ADD = 'FLIGHT_ADD';
 export const FLIGHT_EDIT = 'FLIGHT_EDIT';

@@ -173,8 +173,7 @@ class FlightList extends Component {
               </tr>
           </thead>
           <tbody>
-            {(this.props.searchFlights.length == 0 ? this.props.flights : this.props.searchFlights).filter(flight =>
-                flight.isDeleted !== true).map((flight) => {
+            {this.props.flights && this.props.searchFlights.filter(flight => flight.isDeleted !== true).map((flight) => {
                 return (
                   <tr key={flight._id}>
                     <td>{flight.flightNumber}</td>
