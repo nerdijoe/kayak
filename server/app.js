@@ -94,12 +94,12 @@ app.use('/carbillings', carBillings);
 app.use('/logs', log);
 
 const hotels = require('./routes/hotels');
-const hotelBillings = require('./routes/flightBillings');
+const hotelBillings = require('./routes/hotelBillings');
 app.use('/hotels', hotels);
 app.use('/hotelBillings', hotelBillings);
 
 const flights = require('./routes/flights');
-const flightBillings = require('./routes/hotelBillings');
+const flightBillings = require('./routes/flightBillings');
 app.use('/flights', flights);
 app.use('/flightbillings', flightBillings);
 
