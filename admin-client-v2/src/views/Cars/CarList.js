@@ -13,11 +13,13 @@ import {
   Col,
   DropdownButton,
   MenuItem,
+  FormControl,
 } from 'react-bootstrap';
 
 import {
   axiosAddNewCar,
   axiosDeleteCar,
+  searchCar,
 } from '../../actions';
 
 import CarNewForm from './CarNewForm';
@@ -41,6 +43,7 @@ class CarList extends Component {
         doorNumber: '',
         capacity: '',
       },
+      searchBar: '',
       _notificationSystem: null,
     };
   }
@@ -98,6 +101,17 @@ class CarList extends Component {
     this._addNotification(e);
   }
 
+  onChange(e){
+    const target = e.target;
+    console.log(`handleChange [${target.value}]`);
+
+    this.setState({
+       [target.name]: target.value,
+    });
+    this.props.searchCar(target.value);
+
+  }
+
   render() {
     const popover = (
       <Popover id="modal-popover" title="popover">
@@ -113,8 +127,13 @@ class CarList extends Component {
     return (
       <div className="Content">
         <Row>
-          <Col md={8} >
+          <Col md={4} >
             <Button bsStyle="success" bsSize="large" onClick={() => this.openModal() }>Add New Car</Button>
+          </Col>
+          <Col md={5} >
+              <FormControl type="text" value={this.state.searchBar} name="searchBar"
+          onChange={(e) => this.onChange(e)} placeholder="INPUT SEARCH KEY WORD">
+              </FormControl>
           </Col>
         </Row>
 
@@ -135,7 +154,7 @@ class CarList extends Component {
           </thead>
           <tbody>
             {
-              this.props.cars.filter(car => car.isDeleted !== true).map((car) => {
+              this.props.cars && this.props.searchCars.filter(car => car.isDeleted !== true).map((car) => {
                 return (
                   <tr key={car._id}>
                     <td>{car.dealer.name}</td>
@@ -236,12 +255,14 @@ const mapDispatchToProps = (dispatch) => {
   return {
     axiosAddNewCar: (data) => { dispatch(axiosAddNewCar(data)); },
     axiosDeleteCar: (data) => { dispatch(axiosDeleteCar(data)); },
+    searchCar: (data) => { dispatch(searchCar(data)); },
   };
 };
 
 const mapStateToProps = (state) => {
   return {
     cars: state.CarReducer.cars,
+    searchCars: state.CarReducer.searchCars,
   };
 };
 
