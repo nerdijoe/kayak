@@ -27,6 +27,10 @@ import {
   axiosFetchHotelBillingName,
   axiosFetchHotelBillingCity,
   axiosFetchHotelBillingCumulative,
+
+  axiosFetchFlightBillingAll,
+  axiosFetchFlightBillingCumulative,
+  
   
   axiosFetchUser,
 
@@ -100,6 +104,9 @@ class App extends Component {
       this.props.axiosFetchHotelBillingCity();
       this.props.axiosFetchHotelBillingCumulative();
       
+      this.props.axiosFetchFlightBillingAll();
+      this.props.axiosFetchFlightBillingCumulative();
+
       this.props.axiosFetchAirport();
       this.props.axiosFetchAirline();
       this.props.axiosFetchUser();
@@ -222,6 +229,9 @@ const mapDispatchToProps = (dispatch) => {
     axiosFetchHotelBillingName: () => { dispatch(axiosFetchHotelBillingName()); },
     axiosFetchHotelBillingCity: () => { dispatch(axiosFetchHotelBillingCity()); },
     axiosFetchHotelBillingCumulative: () => { dispatch(axiosFetchHotelBillingCumulative()); },
+
+    axiosFetchFlightBillingAll: () => { dispatch(axiosFetchFlightBillingAll()); },
+    axiosFetchFlightBillingCumulative: () => { dispatch(axiosFetchFlightBillingCumulative()); },
 
     axiosFetchLogPages: () => { dispatch(axiosFetchLogPages()); },
     axiosFetchLogPagesCount: () => { dispatch(axiosFetchLogPagesCount()); },

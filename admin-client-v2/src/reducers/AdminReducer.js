@@ -16,6 +16,15 @@ const initialState = {
   hotelBillingCity: [],
   hotelBillingCumulative: {},
   hotelBillingSearch: [],
+  flightBillingAll: [],
+  flightBillingCumulative: {},
+  flightBillingName: [],
+  flightBillingDepAirport: [],
+  flightBillingDepCity: [],
+  flightBillingArrAirport: [],
+  flightBillingArrCity: [],
+  flightBillingClass: [],
+  flightBillingCustom: [],
   logPages: [],
   logPagesCount: [],
   logSearches: [],
@@ -102,6 +111,27 @@ const AdminReducer = (state = initialState, action) => {
         hotelBillingCumulative: action.data,
       };
     }
+
+    case actionType.FETCH_FLIGHT_BILLING_ALL: {
+      return {
+        ...state,
+        flightBillingAll: [...action.data],
+      };
+    }
+    case actionType.FETCH_FLIGHT_BILLING_CUMULATIVE: {
+      return {
+        ...state,
+        flightBillingCumulative: action.data,
+      };
+    }
+    case actionType.FETCH_FLIGHT_BILLING_NAME: {
+      return {
+        ...state,
+        flightBillingName: [...action.data],
+      };
+    }
+
+
 
     case actionType.FETCH_CAR_BILLING_SEARCH_DATE: {
       let updated = [];
