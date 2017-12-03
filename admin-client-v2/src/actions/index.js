@@ -125,6 +125,57 @@ export const fetchCarBillingSearchYear = (data) => {
     data,
   };
 };
+
+export const fetchHotelBillingAll = (data) => {
+  return {
+    type: actionType.FETCH_HOTEL_BILLING_ALL,
+    data,
+  };
+};
+
+export const fetchHotelBillingCount = (data) => {
+  return {
+    type: actionType.FETCH_HOTEL_BILLING_COUNT,
+    data,
+  };
+};
+
+export const fetchHotelBillingTotal = (data) => {
+  return {
+    type: actionType.FETCH_HOTEL_BILLING_TOTAL,
+    data,
+  };
+};
+
+export const fetchHotelBillingCustom = (data) => {
+  return {
+    type: actionType.FETCH_HOTEL_BILLING_CUSTOM,
+    data,
+  };
+};
+
+export const fetchHotelBillingCity = (data) => {
+  return {
+    type: actionType.FETCH_HOTEL_BILLING_CITY,
+    data,
+  };
+};
+
+export const fetchHotelBillingName = (data) => {
+  return {
+    type: actionType.FETCH_HOTEL_BILLING_NAME,
+    data,
+  };
+};
+
+export const fetchHotelBillingCumulative = (data) => {
+  return {
+    type: actionType.FETCH_HOTEL_BILLING_CUMULATIVE,
+    data,
+  };
+};
+
+
 // add by NaYue 11/21/2017
 
 export const fetchUser = (data) => {
@@ -465,6 +516,100 @@ export const axiosFetchCarBillingTotal = () => (dispatch) => {
     });
 };
 
+export const axiosFetchHotelBillingAll = () => (dispatch) => {
+  //get admin token
+  const token = localStorage.getItem('admin_token');
+
+  axios.get('http://localhost:3010/hotelbillings', {
+    headers: {
+      token,
+    },
+  })
+    .then((res) => {
+      console.log('--- after axiosFetchHotelBillingAll');
+      console.log(res.data);
+
+      dispatch(fetchHotelBillingAll(res.data));
+    }).catch((err) => {
+      console.log(err);
+    });
+};
+
+export const axiosFetchHotelBillingCustom = () => (dispatch) => {
+  //get admin token
+  const token = localStorage.getItem('admin_token');
+
+  axios.get('http://localhost:3010/hotelbillings/aggregate/custom', {
+    headers: {
+      token,
+    },
+  })
+    .then((res) => {
+      console.log('--- after axiosFetchHotelBillingCustom');
+      console.log(res.data);
+
+      dispatch(fetchHotelBillingCustom(res.data));
+    }).catch((err) => {
+      console.log(err);
+    });
+};
+
+export const axiosFetchHotelBillingName = () => (dispatch) => {
+  //get admin token
+  const token = localStorage.getItem('admin_token');
+
+  axios.get('http://localhost:3010/hotelbillings/aggregate/name', {
+    headers: {
+      token,
+    },
+  })
+    .then((res) => {
+      console.log('--- after axiosFetchHotelBillingName');
+      console.log(res.data);
+
+      dispatch(fetchHotelBillingName(res.data));
+    }).catch((err) => {
+      console.log(err);
+    });
+};
+
+export const axiosFetchHotelBillingCity = () => (dispatch) => {
+  //get admin token
+  const token = localStorage.getItem('admin_token');
+
+  axios.get('http://localhost:3010/hotelbillings/aggregate/city', {
+    headers: {
+      token,
+    },
+  })
+    .then((res) => {
+      console.log('--- after axiosFetchHotelBillingCity');
+      console.log(res.data);
+
+      dispatch(fetchHotelBillingCity(res.data));
+    }).catch((err) => {
+      console.log(err);
+    });
+};
+
+export const axiosFetchHotelBillingCumulative = () => (dispatch) => {
+  //get admin token
+  const token = localStorage.getItem('admin_token');
+
+  axios.get('http://localhost:3010/hotelbillings/aggregate/cumulative', {
+    headers: {
+      token,
+    },
+  })
+    .then((res) => {
+      console.log('--- after axiosFetchHotelBillingCumulative');
+      console.log(res.data);
+
+      dispatch(fetchHotelBillingCumulative(res.data));
+    }).catch((err) => {
+      console.log(err);
+    });
+};
 
 
 export const axiosFetchUser = () => (dispatch) => {
