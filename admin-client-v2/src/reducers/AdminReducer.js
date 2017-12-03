@@ -9,9 +9,13 @@ const initialState = {
   carBillingAll: [],
   carBillingCount: [],
   carBillingTotal: [],
-  carBillingSearch: [],
-  hotelBillingAll: [],
+  carBillingCumulative: {},
+  carBillingName: [],
+  carBillingCity: [],
 
+  carBillingSearch: [],
+  
+  hotelBillingAll: [],
   hotelBillingCount: [],
   hotelBillingTotal: [],
   hotelBillingSearch: [],
@@ -87,6 +91,28 @@ const AdminReducer = (state = initialState, action) => {
         carBillingTotal: [...action.data],
       };
     }
+    case actionType.FETCH_CAR_BILLING_CUMULATIVE: {
+      return {
+        ...state,
+        carBillingCumulative: action.data,
+      };
+    }
+    case actionType.FETCH_CAR_BILLING_NAME: {
+      return {
+        ...state,
+        carBillingName: [...action.data],
+      };
+    }
+    case actionType.FETCH_CAR_BILLING_CITY: {
+      return {
+        ...state,
+        carBillingCity: [...action.data],
+      };
+    }
+
+
+
+
     case actionType.FETCH_HOTEL_BILLING_ALL: {
       return {
         ...state,

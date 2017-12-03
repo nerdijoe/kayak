@@ -34,6 +34,7 @@ exports.book = (req, res) => {
         userId: req.decoded.id,
         car,
         dealer: car.dealer,
+        dealerCity: car.dealer.city,
         daysBooked,
         priceBooked: car.price,
         totalAmount: (car.price * daysBooked),
@@ -110,6 +111,25 @@ exports.aggregate = (req, res) => {
   const type = req.params.type;
 
   switch (type) {
+    case 'cumulative': {
+      // count how many hotels
+      CarBilling
+        .aggregate([
+          {
+            $group: {
+              _id: '',
+              count: { $sum: 1 },
+              total: { $sum: '$totalAmount' },
+              days: { $sum: '$daysBooked' },
+              prices: { $sum: '$priceBooked' },
+
+            },
+          }], (err, result) => {
+          if (err) res.json(err);
+          res.json(result[0]);
+        });
+      break;
+    }
     case 'count': {
       // count how many dealers
       CarBilling
@@ -148,6 +168,91 @@ exports.aggregate = (req, res) => {
         });
       break;
     }
+    case 'name': {
+      // only return 2017 created bookings
+      const startDate = new Date(2017, 1, 1);
+      const endDate = new Date(2017, 12, 1);
+      
+      console.log('startDate = ', startDate);
+      console.log('endDate=', endDate);
+      CarBilling
+        .aggregate(
+          [
+            { $match: { createdAt: { $gte: startDate, $lte: endDate } } },
+            {
+              $group: {
+                _id: '$dealer',
+                count: { $sum: 1 },
+                total: { $sum: '$totalAmount' },
+                days: { $sum: '$daysBooked' },
+                prices: { $sum: '$priceBooked' },
+              },
+            },
+            {
+              $sort: { total: -1 },
+            },
+          ],
+          (err, result) => {
+
+            CarDealer.populate(result, { path: '_id' }, (err, populatedTransactions) => {
+              // Your populated translactions are inside populatedTransactions
+              if (err) res.json(err);
+              res.json(populatedTransactions);
+            });
+  
+          }
+        );
+      break;
+    }
+    case 'city': {
+      // count how many hotels
+
+      // update dealerCity
+      // CarBilling
+      //   .find({})
+      //   .populate('dealer')
+      //   .exec((err, results) => {
+          
+      //     results.map( item => {
+      //       console.log('item.name=', item.name);
+      //       console.log('item.city=', item.city);
+
+      //       CarBilling.findByIdAndUpdate(
+      //         item._id,
+      //         {
+      //           $set: {
+      //             dealerCity: item.dealer.city,
+      //           },
+      //         },
+      //         (err, result) => {
+      //           console.log('after edit car result=', result);
+      //         }
+      //       );
+      //     })
+      //   })
+
+      CarBilling
+        .aggregate([
+          {
+            $group: {
+              _id: '$dealerCity',
+              count: { $sum: 1 },
+              total: { $sum: '$totalAmount' },
+              days: { $sum: '$daysBooked' },
+              prices: { $sum: '$priceBooked' },
+
+            },
+          },
+          {
+            $sort: { total: -1 },
+          },
+        ], (err, result) => {
+          if (err) res.json(err);
+          res.json(result);
+        });
+      break;
+    }
+
     // case 'monthly': {
     //   const monthStartDate = moment('01/01/2017', 'MM/DD/YYYY'); //'2017-01-01';
       

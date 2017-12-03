@@ -81,7 +81,9 @@ exports.getAll = (req, res) => {
     .find({})
     // .where('dealer').equals(mongoose.Types.ObjectId('5a0ea59c0837c46a7e3f11f5'))
     .populate('flight')
-    // .populate('airline')
+    .populate('airline')
+    .populate('departureAirport')
+    .populate('arrivalAirport')
     .exec((err, results) => {
     console.log('getAll results=', results);
   if (err) res.json(err);

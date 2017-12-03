@@ -61,13 +61,24 @@ class Dashboard extends Component {
 
     const customDataBar = { labels, series: [series] };
 
+    // Dealer City
+    const cityLabels = this.props.hotelBillingCity.map((item) => {
+      return item._id;
+    });
+    const citySeries = this.props.hotelBillingCity.map((item) => {
+      return item.total;
+    });
+    const cityDataBar = { labels: cityLabels, series: [citySeries] };
+
+
+
     console.log('hotelBillingCumulative=', this.props.hotelBillingCumulative);
 
     let totalRevenue = currencyWithNoDecimal(this.props.hotelBillingCumulative.total);
 
-    let totalCount = this.props.hotelBillingCumulative.count;
-    let totalDays = this.props.hotelBillingCumulative.days;
-    let totalRooms = this.props.hotelBillingCumulative.rooms;
+    let totalCount = currencyWithNoDecimal(this.props.hotelBillingCumulative.count);
+    let totalDays = currencyWithNoDecimal(this.props.hotelBillingCumulative.days);
+    let totalRooms = currencyWithNoDecimal(this.props.hotelBillingCumulative.rooms);
     let averagePrice = currencyWithDecimal(this.props.hotelBillingCumulative.prices / this.props.hotelBillingCumulative.count);
 
 
@@ -99,7 +110,7 @@ class Dashboard extends Component {
       }
     });
 
-    const totalUniqueUsers = Object.keys(uniqueUsers).length;
+    const totalUniqueUsers = currencyWithNoDecimal(Object.keys(uniqueUsers).length);
     console.log('totalRevenue=', totalRevenue);
     console.log('totalCount=', totalCount);
     console.log('totalDays=', totalDays);
@@ -245,31 +256,77 @@ class Dashboard extends Component {
                     </Row>
 
                     <Row>
-                      <h3>Top 10 </h3>
-                      <Table striped bordered condensed hover>
-                        <thead>
-                          <tr>
-                            <th>#</th>
-                            <th>Hotel</th>
-                            <th>Total Bookings</th>
-                            <th>Total Revenue</th>
-                          </tr>
-                        </thead>
-                        <tbody>
+                      <Col md={12}>
+                        <Card
+                            id="chartActivity"
+                            title="Total Revenue by City"
+                            category=""
+                            stats="Data information certified"
+                            statsIcon="fa fa-check"
+                            content={
+                                <div className="ct-chart">
+                                    <ChartistGraph
+                                        data={cityDataBar}
+                                        type="Bar"
+                                        options={optionsBar}
+                                        responsiveOptions={responsiveBar}
+                                    />
+                                </div>
+                            }
+                            // legend={
+                            //     <div className="legend">
+                            //         {this.createLegend(legendBar)}
+                            //     </div>
+                            // }
+                        />
+                      </Col>
+                    </Row>
 
-                          { this.props.hotelBillingName.slice(0, 10).map((item, i) => {
-                            return (
-                              <tr key={i}>
-                                <td>{i+1}</td>
-                                <td>{item._id}</td>
-                                <td>{item.count}</td>
-                                <td>{item.total}</td>
-                              </tr>
-                            );
-                          })}
 
-                        </tbody>
-                      </Table>
+                    <Row>
+                      <Col md={12}>
+                        <Card
+                          id="chartActivity"
+                          title="Top 10 Revenue By Hotel"
+                          category="Taxes included"
+                          stats="Data information certified"
+                          statsIcon="fa fa-check"
+                          content={
+                            <Table striped bordered condensed hover>
+                              <thead>
+                                <tr>
+                                  <th>#</th>
+                                  <th>Hotel</th>
+                                  <th>Total Rooms Booked</th>
+                                  <th>Total Days Booked</th>
+                                  <th>Total Revenue</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+
+                                { this.props.hotelBillingName.slice(0, 10).map((item, i) => {
+                                  return (
+                                    <tr key={i}>
+                                      <td>{i+1}</td>
+                                      <td>{item._id}</td>
+                                      <td>{item.rooms}</td>
+                                      <td>{item.days}</td>
+                                      <td>{currencyWithNoDecimal(item.total)}</td>
+                                    </tr>
+                                  );
+                                })}
+
+                              </tbody>
+                            </Table>
+                          }
+                          // legend={
+                          //     <div className="legend">
+                          //         {this.createLegend(legendBar)}
+                          //     </div>
+                          // }
+                          />
+                        </Col>
+
                     </Row>
                 </Grid>
 

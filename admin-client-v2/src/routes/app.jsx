@@ -8,7 +8,7 @@ import Notifications from 'views/Notifications/Notifications';
 import Upgrade from 'views/Upgrade/Upgrade';
 import SignIn from 'views/Auth/SignIn';
 
-import DashboardKayak from 'views/Dashboard/DashboardKayak';
+import DashboardCar from 'views/Dashboard/DashboardCar';
 import DashboardLog from 'views/Dashboard/DashboardLog';
 import DashboardHotel from 'views/Dashboard/DashboardHotel';
 import DashboardFlight from 'views/Dashboard/DashboardFlight';
@@ -22,10 +22,9 @@ import HotelBillingList from 'views/HotelBillings/HotelBillingList';
 import FlightBillingList from 'views/FlightBillings/FlightBillingList';
 
 const appRoutes = [
-    { path: "/dashboardkayak", name: "Car Stats", icon: "pe-7s-graph", component: DashboardKayak },
+    { path: "/dashboardcar", name: "Car Stats", icon: "pe-7s-graph", component: DashboardCar },
     { path: "/dashboardhotel", name: "Hotel Stats", icon: "pe-7s-graph", component: DashboardHotel },
     { path: "/dashboardflight", name: "Flight Stats", icon: "pe-7s-graph", component: DashboardFlight },
-    
     { path: "/dashboardlog", name: "User Logs", icon: "pe-7s-id", component: DashboardLog },
     { path: "/dashboard", name: "Dashboard", icon: "pe-7s-graph", component: Dashboard },
     // { path: "/user", name: "User Profile", icon: "pe-7s-user", component: UserProfile },

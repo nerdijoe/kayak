@@ -21,6 +21,9 @@ import {
   axiosFetchCarBillingAll,
   axiosFetchCarBillingCount,
   axiosFetchCarBillingTotal,
+  axiosFetchCarBillingCumulative,
+  axiosFetchCarBillingName,
+  axiosFetchCarBillingCity,
 
   axiosFetchHotelBillingAll,
   axiosFetchHotelBillingCustom,
@@ -106,7 +109,10 @@ class App extends Component {
       this.props.axiosFetchCarBillingAll();
       this.props.axiosFetchCarBillingCount();
       this.props.axiosFetchCarBillingTotal();
-
+      this.props.axiosFetchCarBillingCumulative();
+      this.props.axiosFetchCarBillingName();
+      this.props.axiosFetchCarBillingCity();
+      
       this.props.axiosFetchHotelBillingAll();
       this.props.axiosFetchHotelBillingCustom();
       this.props.axiosFetchHotelBillingName();
@@ -235,7 +241,10 @@ const mapDispatchToProps = (dispatch) => {
     axiosFetchCarBillingAll: () => { dispatch(axiosFetchCarBillingAll());},
     axiosFetchCarBillingCount: () => { dispatch(axiosFetchCarBillingCount());},
     axiosFetchCarBillingTotal: () => { dispatch(axiosFetchCarBillingTotal());},
-
+    axiosFetchCarBillingCumulative: () => { dispatch(axiosFetchCarBillingCumulative());},
+    axiosFetchCarBillingName: () => { dispatch(axiosFetchCarBillingName());},
+    axiosFetchCarBillingCity: () => { dispatch(axiosFetchCarBillingCity());},
+    
     axiosFetchUser: () => { dispatch(axiosFetchUser()); },
 
     axiosFetchFlight: () => { dispatch(axiosFetchFlight()); },

@@ -113,6 +113,30 @@ export const fetchCarBillingTotal = (data) => {
   };
 };
 
+export const fetchCarBillingCumulative = (data) => {
+  return {
+    type: actionType.FETCH_CAR_BILLING_CUMULATIVE,
+    data,
+  };
+};
+
+export const fetchCarBillingName = (data) => {
+  return {
+    type: actionType.FETCH_CAR_BILLING_NAME,
+    data,
+  };
+};
+
+export const fetchCarBillingCity = (data) => {
+  return {
+    type: actionType.FETCH_CAR_BILLING_CITY,
+    data,
+  };
+};
+
+
+
+
 
 export const fetchCarBillingSearchDate = (data) => {
   return {
@@ -650,6 +674,67 @@ export const axiosFetchCarBillingTotal = () => (dispatch) => {
       console.log(err);
     });
 };
+
+export const axiosFetchCarBillingCumulative = () => (dispatch) => {
+  //get admin token
+  const token = localStorage.getItem('admin_token');
+
+  axios.get('http://localhost:3010/carbillings/aggregate/cumulative', {
+    headers: {
+      token,
+    },
+  })
+    .then((res) => {
+      console.log('--- after axiosFetchCarBillingCumulative');
+      console.log(res.data);
+
+      dispatch(fetchCarBillingCumulative(res.data));
+    }).catch((err) => {
+      console.log(err);
+    });
+};
+
+export const axiosFetchCarBillingName = () => (dispatch) => {
+  //get admin token
+  const token = localStorage.getItem('admin_token');
+
+  axios.get('http://localhost:3010/carbillings/aggregate/name', {
+    headers: {
+      token,
+    },
+  })
+    .then((res) => {
+      console.log('--- after axiosFetchCarBillingName');
+      console.log(res.data);
+
+      dispatch(fetchCarBillingName(res.data));
+    }).catch((err) => {
+      console.log(err);
+    });
+};
+
+export const axiosFetchCarBillingCity = () => (dispatch) => {
+  //get admin token
+  const token = localStorage.getItem('admin_token');
+
+  axios.get('http://localhost:3010/carbillings/aggregate/city', {
+    headers: {
+      token,
+    },
+  })
+    .then((res) => {
+      console.log('--- after axiosFetchCarBillingCity');
+      console.log(res.data);
+
+      dispatch(fetchCarBillingCity(res.data));
+    }).catch((err) => {
+      console.log(err);
+    });
+};
+
+
+
+
 
 export const axiosFetchHotelBillingAll = () => (dispatch) => {
   //get admin token
