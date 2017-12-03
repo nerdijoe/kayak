@@ -37,7 +37,7 @@ class Hotels extends Component{
                 guests: this.state.guests,
                 rooms: this.state.rooms
             }
-            console.log('hotel state is ',payload);
+            console.log('hotel payload is manali',payload);
             this.callForHotelSearch(payload);
         }else{
             this.setState({
@@ -113,7 +113,7 @@ class Hotels extends Component{
                                         <div className="col-md-3">
                                             <div className="form-group form-group-lg form-group-icon-left">
                                                 <label>Check-out</label>
-                                                <input className="form-control" name="end" type="date" min="2017-12-05"
+                                                <input className="form-control" name="end" type="date"
                                                        value={this.state.endDate} onChange={(event) => {
                                                     this.setState({...this.state, endDate: event.target.value});
                                                 }}required/>
