@@ -92,6 +92,7 @@ exports.search = (req, res) => {
 
             // console.log(flight);
             result_json = {};
+            result_json._id = flight._id;
             result_json.airlines = flight.airline.name;
             result_json.flightNumber = flight.flightNumber;
             result_json.departTime = flight.departureTime;
