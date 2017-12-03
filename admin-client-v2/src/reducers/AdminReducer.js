@@ -10,6 +10,12 @@ const initialState = {
   carBillingCount: [],
   carBillingTotal: [],
   carBillingSearch: [],
+  hotelBillingAll: [],
+  hotelBillingCustom: [],
+  hotelBillingName: [],
+  hotelBillingCity: [],
+  hotelBillingCumulative: {},
+  hotelBillingSearch: [],
   logPages: [],
   logPagesCount: [],
   logSearches: [],
@@ -65,6 +71,38 @@ const AdminReducer = (state = initialState, action) => {
         carBillingTotal: [...action.data],
       };
     }
+    case actionType.FETCH_HOTEL_BILLING_ALL: {
+      return {
+        ...state,
+        hotelBillingAll: [...action.data],
+        hotelBillingSearch: [...action.data],
+      };
+    }
+    case actionType.FETCH_HOTEL_BILLING_CUSTOM: {
+      return {
+        ...state,
+        hotelBillingCustom: [...action.data],
+      };
+    }
+    case actionType.FETCH_HOTEL_BILLING_NAME: {
+      return {
+        ...state,
+        hotelBillingName: [...action.data],
+      };
+    }
+    case actionType.FETCH_HOTEL_BILLING_CITY: {
+      return {
+        ...state,
+        hotelBillingCity: [...action.data],
+      };
+    }
+    case actionType.FETCH_HOTEL_BILLING_CUMULATIVE: {
+      return {
+        ...state,
+        hotelBillingCumulative: action.data,
+      };
+    }
+
     case actionType.FETCH_CAR_BILLING_SEARCH_DATE: {
       let updated = [];
       let date = action.data;

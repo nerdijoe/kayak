@@ -4,6 +4,8 @@ const Schema = mongoose.Schema;
 
 const hotelBillingSchema = new Schema({
   userId: { type: Number, required: true },
+  hotelName: { type: String, default: '' },
+  hotelCity: { type: String, default: '' },
   hotel: { type: Schema.Types.ObjectId, ref: 'Hotel', required: true },
   startDate: { type: Date, required: true },
   endDate: { type: Date, required: true },
