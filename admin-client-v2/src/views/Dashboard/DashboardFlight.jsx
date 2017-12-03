@@ -110,9 +110,9 @@ class Dashboard extends Component {
 
     let totalRevenue = currencyWithNoDecimal(this.props.flightBillingCumulative.total);
 
-    let totalCount = this.props.flightBillingCumulative.count;
+    let totalCount = currencyWithNoDecimal(this.props.flightBillingCumulative.count);
     let totalDays = 0
-    let totalSeats = this.props.flightBillingCumulative.seats;
+    let totalSeats = currencyWithNoDecimal(this.props.flightBillingCumulative.seats);
     let averagePrice = currencyWithDecimal(this.props.flightBillingCumulative.prices / this.props.flightBillingCumulative.count);
 
 
@@ -144,7 +144,7 @@ class Dashboard extends Component {
       }
     });
 
-    const totalUniqueUsers = Object.keys(uniqueUsers).length;
+    const totalUniqueUsers = currencyWithNoDecimal(Object.keys(uniqueUsers).length);
     console.log('totalRevenue=', totalRevenue);
     console.log('totalCount=', totalCount);
     console.log('totalDays=', totalDays);
@@ -375,7 +375,7 @@ class Dashboard extends Component {
                               <thead>
                                 <tr>
                                   <th>#</th>
-                                  <th>Hotel</th>
+                                  <th>Flight</th>
                                   <th>Tickets Sold</th>
                                   <th>Total Revenue</th>
                                 </tr>

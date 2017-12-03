@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
 import ChartistGraph from 'react-chartist';
-import { Grid, Row, Col } from 'react-bootstrap';
+import {
+  Grid,
+  Row,
+  Col,
+  Table,
+  ProgressBar,
+} from 'react-bootstrap';
+
 import { connect } from 'react-redux';
 import Moment from 'moment';
 import ReactGridLayout from 'react-grid-layout';
@@ -22,6 +29,11 @@ import {
     legendBar
 } from 'variables/VariablesKayak.jsx';
 
+import {
+  currencyWithNoDecimal,
+  currencyWithDecimal,
+} from 'helpers/Currency';
+
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 class Dashboard extends Component {
@@ -40,17 +52,34 @@ class Dashboard extends Component {
         return legend;
     }
     render() {
-    const labels = this.props.carBillingTotal.map((item) => {
+    const labels = this.props.carBillingName.slice(0, 10).map((item) => {
       return item._id.name;
     });
-    const series = this.props.carBillingTotal.map((item) => {
+    const series = this.props.carBillingName.slice(0, 10).map((item) => {
       return item.total;
     });
-
-    let totalRevenue = 0;
-    let totalRentals = this.props.carBillingAll.length;
-    let totalRentalsDays = 0;
     const customDataBar = { labels, series: [series] };
+
+    
+    // Dealer City
+    const cityLabels = this.props.carBillingCity.map((item) => {
+      return item._id;
+    });
+    const citySeries = this.props.carBillingCity.map((item) => {
+      return item.total;
+    });
+    const cityDataBar = { labels: cityLabels, series: [citySeries] };
+    
+    
+
+
+
+    let totalRevenue = currencyWithNoDecimal(this.props.carBillingCumulative.total);;
+    let totalCount = currencyWithNoDecimal(this.props.carBillingCumulative.count);
+    let totalDays = currencyWithNoDecimal(this.props.carBillingCumulative.days);
+    let averagePrice = currencyWithDecimal(this.props.carBillingCumulative.prices / this.props.carBillingCumulative.count);
+    
+    
 
     const monthly = {};
     const monthlyArr = new Array(12);
@@ -61,8 +90,8 @@ class Dashboard extends Component {
       console.log('    moment formatted=', Moment(item.createdAt).format('L'));
       console.log('    month=', month)
       let amount = item.totalAmount;
-      totalRevenue += amount;
-      totalRentalsDays += item.daysBooked;
+      // totalRevenue += amount;
+      // totalRentalsDays += item.daysBooked;
       if(monthly.hasOwnProperty(month)) {
         monthly[month] += amount;
         monthlyArr[month-1] += amount;
@@ -78,10 +107,10 @@ class Dashboard extends Component {
       }
     });
 
-    const totalUniqueUsers = Object.keys(uniqueUsers).length;
+    const totalUniqueUsers = currencyWithNoDecimal(Object.keys(uniqueUsers).length);
     console.log('totalRevenue=', totalRevenue);
-    console.log('totalRentals=', totalRentals);
-    console.log('totalRentalsDays=', totalRentalsDays);
+    console.log('totalCount=', totalCount);
+    console.log('totalDays=', totalDays);
     console.log('uniqueUsers=', uniqueUsers);
     console.log('uniqueUsers total=', totalUniqueUsers);
     console.log('monthly =', monthly);
@@ -107,44 +136,58 @@ class Dashboard extends Component {
             <div className="content">
                 <Grid fluid>
                     <Row>
-                        <Col lg={3} sm={6}>
+                        <Col lg={4} sm={6}>
                             <StatsCard
                                 bigIcon={<i className="pe-7s-car text-warning"></i>}
                                 statsText="Total Rentals"
-                                statsValue={totalRentals}
+                                statsValue={totalCount}
                                 statsIcon={<i className="fa fa-refresh"></i>}
                                 statsIconText="Updated now"
                             />
                         </Col>
-                        <Col lg={3} sm={6}>
+                        <Col lg={4} sm={6}>
                             <StatsCard
-                                bigIcon={<i className="pe-7s-wallet text-success"></i>}
+                                bigIcon={<i className="pe-7s-cash text-success"></i>}
                                 statsText="Total Revenue"
                                 statsValue={totalRevenue}
                                 statsIcon={<i className="fa fa-calendar-o"></i>}
                                 statsIconText="Last day"
                             />
                         </Col>
-                        <Col lg={3} sm={6}>
+                        <Col lg={4} sm={6}>
                             <StatsCard
                                 bigIcon={<i className="pe-7s-date text-danger"></i>}
                                 statsText="Days Booked"
-                                statsValue={totalRentalsDays}
+                                statsValue={totalDays}
                                 statsIcon={<i className="fa fa-clock-o"></i>}
                                 statsIconText="In the last hour"
                             />
                         </Col>
-                        <Col lg={3} sm={6}>
+
+                    </Row>
+                    <Row>
+
+                      <Col lg={4} sm={6}>
+                          <StatsCard
+                            bigIcon={<i className="pe-7s-graph1 text-success"></i>}
+                            statsText="Average Rental Price"
+                            statsValue={averagePrice}
+                            statsIcon={<i className="fa fa-calendar-o"></i>}
+                            statsIconText="in USD"
+                          />
+                      </Col>
+                      <Col lg={4} sm={6}>
                             <StatsCard
-                                bigIcon={<i className="fa fa-twitter text-info"></i>}
+                                bigIcon={<i className="fa pe-7s-smile text-info"></i>}
                                 statsText="Unique Users"
                                 statsValue={totalUniqueUsers}
                                 statsIcon={<i className="fa fa-refresh"></i>}
-                                statsIconText="Updated now"
+                                statsIconText="In the last hour"
                             />
                         </Col>
+
                     </Row>
-                    <Row>
+
 
                     <Row>
                         <Col md={6}>
@@ -198,7 +241,78 @@ class Dashboard extends Component {
                         </Col>
 
                     </Row>
+                    
+                    <Row>
+                      <Col md={12}>
+                        <Card
+                            id="chartActivity"
+                            title="Total Revenue by City"
+                            category=""
+                            stats="Data information certified"
+                            statsIcon="fa fa-check"
+                            content={
+                                <div className="ct-chart">
+                                    <ChartistGraph
+                                        data={cityDataBar}
+                                        type="Bar"
+                                        options={optionsBar}
+                                        responsiveOptions={responsiveBar}
+                                    />
+                                </div>
+                            }
+                            // legend={
+                            //     <div className="legend">
+                            //         {this.createLegend(legendBar)}
+                            //     </div>
+                            // }
+                        />
+                      </Col>
                     </Row>
+
+                    <Row>
+                      <Col md={12}>
+                        <Card
+                          id="chartActivity"
+                          title="Top 10 Revenue By Airlines"
+                          category="Taxes included"
+                          stats="Data information certified"
+                          statsIcon="fa fa-check"
+                          content={
+                            <Table striped bordered condensed hover>
+                              <thead>
+                                <tr>
+                                  <th>#</th>
+                                  <th>Hotel</th>
+                                  <th>Total days</th>
+                                  <th>Total Revenue</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+
+                                { this.props.carBillingName.slice(0, 10).map((item, i) => {
+                                  return (
+                                    <tr key={i}>
+                                      <td>{i+1}</td>
+                                      <td>{item._id.name}</td>
+                                      <td>{item.days}</td>
+                                      <td>{currencyWithNoDecimal(item.total)}</td>
+                                    </tr>
+                                  );
+                                })}
+
+                              </tbody>
+                            </Table>
+                          }
+                          // legend={
+                          //     <div className="legend">
+                          //         {this.createLegend(legendBar)}
+                          //     </div>
+                          // }
+                          />
+                        </Col>
+
+                    </Row>
+
 
                 </Grid>
 
@@ -207,7 +321,7 @@ class Dashboard extends Component {
                     <StatsCard
                       bigIcon={<i className="pe-7s-car text-warning"></i>}
                       statsText="Total Rentals"
-                      statsValue={totalRentals}
+                      statsValue={totalCount}
                       statsIcon={<i className="fa fa-refresh"></i>}
                       statsIconText="Updated now"
                     />
@@ -225,7 +339,7 @@ class Dashboard extends Component {
                     <StatsCard
                       bigIcon={<i className="pe-7s-date text-danger"></i>}
                       statsText="Days Booked"
-                      statsValue={totalRentalsDays}
+                      statsValue={totalDays}
                       statsIcon={<i className="fa fa-clock-o"></i>}
                       statsIconText="In the last hour"
                     />
@@ -239,7 +353,7 @@ class Dashboard extends Component {
                     <StatsCard
                       bigIcon={<i className="pe-7s-car text-warning"></i>}
                       statsText="Total Rentals"
-                      statsValue={totalRentals}
+                      statsValue={totalCount}
                       statsIcon={<i className="fa fa-refresh"></i>}
                       statsIconText="Updated now"
                     />
@@ -257,7 +371,7 @@ class Dashboard extends Component {
                     <StatsCard
                       bigIcon={<i className="pe-7s-date text-danger"></i>}
                       statsText="Days Booked"
-                      statsValue={totalRentalsDays}
+                      statsValue={totalDays}
                       statsIcon={<i className="fa fa-clock-o"></i>}
                       statsIconText="In the last hour"
                     />
@@ -273,6 +387,9 @@ const mapStateToProps = (state) => {
     carBillingAll: state.AdminReducer.carBillingAll,
     carBillingCount: state.AdminReducer.carBillingCount,
     carBillingTotal: state.AdminReducer.carBillingTotal,
+    carBillingCumulative: state.AdminReducer.carBillingCumulative,
+    carBillingName: state.AdminReducer.carBillingName,
+    carBillingCity: state.AdminReducer.carBillingCity,
   };
 };
 
