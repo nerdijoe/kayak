@@ -3,6 +3,8 @@ const moment = require('moment');
 
 const Flight = require('../models/mongooseFlight');
 const FlightBilling = require('../models/mongooseFlightBilling');
+const Airline = require('../models/mongooseFlightAirline');
+const Airport = require('../models/mongooseFlightAirport');
 
 // User
 // router.get('/user', helper.auth, hotelBillingController.getUserBillings);
@@ -41,6 +43,17 @@ exports.book = (req, res) => {
       const booking = FlightBilling({
         userId: req.decoded.id,
         flight,
+        flightNumber: flight.flightNumber,
+        airline: flight.airline,
+        departureAirport: flight.departureAirport,
+        arrivalAirport: flight.arrivalAirport,
+        departureCity: flight.departureAirport.city,
+        departureCountry: flight.departureAirport.country,
+        arrivalCity: flight.arrivalAirport.city,
+        arrivalCountry: flight.arrivalAirport.country,
+        departureTime: flight.departureTime,
+        arrivalTime: flight.arrivalTime,
+        classBooked: flight.class,
         priceBooked: flight.price,
         qtyBooked: data.qtyBooked,
         totalAmount: (flight.price * data.qtyBooked),
@@ -65,6 +78,7 @@ exports.getAll = (req, res) => {
     .find({})
     // .where('dealer').equals(mongoose.Types.ObjectId('5a0ea59c0837c46a7e3f11f5'))
     .populate('flight')
+    // .populate('airline')
     .exec((err, results) => {
     console.log('getAll results=', results);
   if (err) res.json(err);
@@ -87,50 +101,216 @@ exports.getOne = (req, res) => {
 };
 
 
-// router.get('/aggregate/:type', helper.authAdmin, hotelBillingController.aggregate);
-// exports.aggregate = (req, res) => {
-//   const type = req.params.type;
-//
-//   switch (type) {
-//     case 'count': {
-//       // count how many dealers
-//       CarBilling
-//         .aggregate([
-//           {
-//             $group: {
-//               _id: '$dealer',
-//               count: { $sum: 1 },
-//             },
-//           }], (err, result) => {
-//           CarDealer.populate(result, { path: '_id' }, (err, populatedTransactions) => {
-//             // Your populated translactions are inside populatedTransactions
-//             if (err) res.json(err);
-//             res.json(populatedTransactions);
-//           });
-//
-//         });
-//       break;
-//     }
-//     case 'total': {
-//       // sum of total amount per dealer
-//       CarBilling
-//         .aggregate([
-//           {
-//             $group: {
-//               _id: '$dealer',
-//               total: { $sum: '$totalAmount' },
-//             },
-//           },
-//         ], (err, result) => {
-//           CarDealer.populate(result, { path: '_id' }, (err, populatedTransactions) => {
-//             // Your populated translactions are inside populatedTransactions
-//             if (err) res.json(err);
-//             res.json(populatedTransactions);
-//           });
-//         });
-//       break;
-//     }
-//     default:
-//       res.json('invalid type');
-//   }
-// };
+exports.aggregate = (req, res) => {
+  const type = req.params.type;
+
+  switch (type) {
+    case 'cumulative': {
+      // count how many hotels
+      FlightBilling
+        .aggregate([
+          {
+            $group: {
+              _id: '',
+              count: { $sum: 1 },
+              total: { $sum: '$totalAmount' },
+              seats: { $sum: '$qtyBooked' },
+              prices: { $sum: '$priceBooked' },
+
+            },
+          }], (err, result) => {
+          if (err) res.json(err);
+          res.json(result[0]);
+        });
+      break;
+    }
+    case 'name': {
+      // only return 2017 created bookings
+      const startDate = new Date(2017, 1, 1);
+      const endDate = new Date(2017, 12, 1);
+      
+      console.log('startDate = ', startDate);
+      console.log('endDate=', endDate);
+      FlightBilling
+        .aggregate(
+          [
+            { $match: { createdAt: { $gte: startDate, $lte: endDate } } },
+            {
+              $group: {
+                _id: '$airline',
+                count: { $sum: 1 },
+                total: { $sum: '$totalAmount' },
+                seats: { $sum: '$qtyBooked' },
+                prices: { $sum: '$priceBooked' },
+              },
+            },
+            {
+              $sort: { total: -1 },
+            },
+          ],
+          (err, result) => {
+
+            Airline.populate(result, { path: '_id' }, (err, populatedTransactions) => {
+              // Your populated translactions are inside populatedTransactions
+              if (err) res.json(err);
+              res.json(populatedTransactions);
+            });
+  
+          }
+        );
+      break;
+    }
+
+    case 'departureairport': {
+      // count how many hotels
+      FlightBilling
+        .aggregate([
+          {
+            $group: {
+              _id: '$departureAirport',
+              count: { $sum: 1 },
+              total: { $sum: '$totalAmount' },
+              seats: { $sum: '$qtyBooked' },
+              prices: { $sum: '$priceBooked' },
+
+            },
+          },
+          {
+            $sort: { total: -1 },
+          },
+        ], (err, result) => {
+          Airport.populate(result, { path: '_id' }, (err, populatedTransactions) => {
+            // Your populated translactions are inside populatedTransactions
+            if (err) res.json(err);
+            res.json(populatedTransactions);
+          });
+        });
+      break;
+    }
+    case 'arrivalairport': {
+      // count how many hotels
+      FlightBilling
+        .aggregate([
+          {
+            $group: {
+              _id: '$arrivalAirport',
+              count: { $sum: 1 },
+              total: { $sum: '$totalAmount' },
+              seats: { $sum: '$qtyBooked' },
+              prices: { $sum: '$priceBooked' },
+
+            },
+          },
+          {
+            $sort: { total: -1 },
+          },
+        ], (err, result) => {
+          Airport.populate(result, { path: '_id' }, (err, populatedTransactions) => {
+            // Your populated translactions are inside populatedTransactions
+            if (err) res.json(err);
+            res.json(populatedTransactions);
+          });
+        });
+      break;
+    }
+    case 'departurecity': {
+      // count how many hotels
+      FlightBilling
+        .aggregate([
+          {
+            $group: {
+              _id: '$departureCity',
+              count: { $sum: 1 },
+              total: { $sum: '$totalAmount' },
+              seats: { $sum: '$qtyBooked' },
+              prices: { $sum: '$priceBooked' },
+
+            },
+          },
+          {
+            $sort: { total: -1 },
+          },
+        ], (err, result) => {
+          if (err) res.json(err);
+          res.json(result);
+        });
+      break;
+    }
+    case 'arrivalcity': {
+      // count how many hotels
+      FlightBilling
+        .aggregate([
+          {
+            $group: {
+              _id: '$arrivalCity',
+              count: { $sum: 1 },
+              total: { $sum: '$totalAmount' },
+              seats: { $sum: '$qtyBooked' },
+              prices: { $sum: '$priceBooked' },
+
+            },
+          },
+          {
+            $sort: { total: -1 },
+          },
+        ], (err, result) => {
+          if (err) res.json(err);
+          res.json(result);
+        });
+      break;
+    }
+    case 'class': {
+      // count how many hotels
+      FlightBilling
+        .aggregate([
+          {
+            $group: {
+              _id: '$classBooked',
+              count: { $sum: 1 },
+              total: { $sum: '$totalAmount' },
+              seats: { $sum: '$qtyBooked' },
+              prices: { $sum: '$priceBooked' },
+
+            },
+          },
+          {
+            $sort: { total: -1 },
+          },
+        ], (err, result) => {
+          if (err) res.json(err);
+          res.json(result);
+        });
+      break;
+    }
+
+    case 'custom': {
+      // count how many hotels
+      FlightBilling
+        .aggregate([
+          {
+            $group: {
+              _id: '$flight',
+              count: { $sum: 1 },
+              total: { $sum: '$totalAmount' },
+              seats: { $sum: '$qtyBooked' },
+              prices: { $sum: '$priceBooked' },
+
+            },
+          },
+          {
+            $sort: { total: -1 },
+          },
+        ], (err, result) => {
+          Flight.populate(result, { path: '_id' }, (err, populatedTransactions) => {
+            // Your populated translactions are inside populatedTransactions
+            if (err) res.json(err);
+            res.json(populatedTransactions);
+          });
+
+        });
+      break;
+    }
+    default:
+      res.json('invalid type');
+  }
+};
