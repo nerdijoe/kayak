@@ -27,45 +27,45 @@ class FlightBookingList extends Component{
                             <div className="booking-item-container">
                                 <div className="booking-item">
                                     <div className="row">
-                                        {/*<div className="starred-item__content starred-item__title col-sm-2">*/}
-                                        {/*<p className="booking-item-flight-className">Place :</p>*/}
-                                        {/*<p className="booking-item-car-title">{booking.dealer.city}</p>*/}
-                                        {/*</div>*/}
-                                        {/*<div className="starred-item__content col-sm-1">*/}
-                                        {/*<p className="booking-item-flight-className">Number of Days Booked :</p>*/}
-                                        {/*<p className="booking-item-car-title">{booking.daysBooked}</p>*/}
-                                        {/*</div>*/}
-                                        {/*<div className="starred-item__content col-sm-1">*/}
-                                        {/*<p className="booking-item-flight-className">Model :</p>*/}
-                                        {/*<p className="booking-item-car-title">{booking.car.model}</p>*/}
-                                        {/*</div>*/}
-                                        {/*<div className="starred-item__content col-sm-1">*/}
-                                        {/*<p className="booking-item-flight-className">Type :</p>*/}
-                                        {/*<p className="booking-item-car-title">{booking.car.type}</p>*/}
-                                        {/*</div>*/}
-                                        {/*<div className="starred-item__content col-sm-1">*/}
-                                        {/*<p className="booking-item-flight-className">Start Date :</p>*/}
-                                        {/*<p className="booking-item-car-title">{startDate}</p>*/}
-                                        {/*</div>*/}
-                                        {/*<div className="starred-item__content col-sm-1">*/}
-                                        {/*<p className="booking-item-flight-className">End Date :</p>*/}
-                                        {/*<p className="booking-item-car-title">{endDate}</p>*/}
-                                        {/*</div>*/}
-                                        {/*<div className="starred-item__content col-sm-1">*/}
-                                        {/*<p className="booking-item-flight-className">Price :</p>*/}
-                                        {/*<p className="booking-item-car-title">${booking.totalAmount}</p>*/}
-                                        {/*</div>*/}
-                                        {/*<div className="starred-item__content col-sm-1">*/}
-                                        {/*<p className="booking-item-flight-className">Price :</p>*/}
-                                        {/*<p className="booking-item-car-title">${booking.totalAmount}</p>*/}
-                                        {/*</div>*/}
-                                        {/*<div className="starred-item__content col-sm-3">*/}
-                                        {/*<p className="booking-item-flight-className">Dealer Address :</p>*/}
-                                        {/*<p className="booking-item-car-title">{booking.dealer.address}</p>*/}
-                                        {/*<p className="booking-item-car-title">{booking.dealer.city}</p>*/}
-                                        {/*<p className="booking-item-car-title">{booking.dealer.state} {booking.dealer.country}*/}
-                                        {/*{booking.dealer.zipcode}</p>*/}
-                                        {/*</div>*/}
+                                        <div className="starred-item__content starred-item__title col-sm-2">
+                                            <p className="booking-item-flight-className">Place :</p>
+                                            <p className="booking-item-car-title">{booking.dealer.city}</p>
+                                        </div>
+                                        <div className="starred-item__content col-sm-1">
+                                            <p className="booking-item-flight-className">Number of Days Booked :</p>
+                                            <p className="booking-item-car-title">{booking.daysBooked}</p>
+                                        </div>
+                                        <div className="starred-item__content col-sm-1">
+                                            <p className="booking-item-flight-className">Model :</p>
+                                            <p className="booking-item-car-title">{booking.car.model}</p>
+                                        </div>
+                                        <div className="starred-item__content col-sm-1">
+                                            <p className="booking-item-flight-className">Type :</p>
+                                            <p className="booking-item-car-title">{booking.car.type}</p>
+                                        </div>
+                                        <div className="starred-item__content col-sm-1">
+                                             <p className="booking-item-flight-className">Start Date :</p>
+                                            <p className="booking-item-car-title">{startDate}</p>
+                                        </div>
+                                        <div className="starred-item__content col-sm-1">
+                                            <p className="booking-item-flight-className">End Date :</p>
+                                            <p className="booking-item-car-title">{endDate}</p>
+                                        </div>
+                                        <div className="starred-item__content col-sm-1">
+                                            <p className="booking-item-flight-className">Price :</p>
+                                            <p className="booking-item-car-title">${booking.totalAmount}</p>
+                                        </div>
+                                        <div className="starred-item__content col-sm-1">
+                                             <p className="booking-item-flight-className">Price :</p>
+                                            <p className="booking-item-car-title">${booking.totalAmount}</p>
+                                        </div>
+                                        <div className="starred-item__content col-sm-3">
+                                            <p className="booking-item-flight-className">Dealer Address :</p>
+                                            <p className="booking-item-car-title">{booking.dealer.address}</p>
+                                            <p className="booking-item-car-title">{booking.dealer.city}</p>
+                                            <p className="booking-item-car-title">{booking.dealer.state} {booking.dealer.country}
+                                            {booking.dealer.zipcode}</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
