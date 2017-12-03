@@ -65,14 +65,8 @@ mongoose.connect(dbConfig[appEnv], { useMongoClient: true }, (err, res) => {
 
 
 // Redis setup
-var redis = require('redis');
-var redisClient = redis.createClient(); //creates a new client
-
-redisClient.on('connect', function() {
-    console.log('Redis connected');
-});
-
-global.redisClient = redisClient;
+var redis = require('./routes/redis/redis');
+redis.setupClient();
 
 // Redis setup end
 
