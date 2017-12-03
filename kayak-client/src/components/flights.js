@@ -327,7 +327,7 @@ class Flights extends Component {
                         </div>
                     </div>
                 </div>
-                <button className="btn-lg btn-search" type="submit" onClick={this.handleFlightSearch}>Search for
+                <button className="btn btn-book" type="submit" onClick={this.handleFlightSearch}>Search for
                     Flights -->
                 </button>
             </div>
