@@ -21,6 +21,23 @@ import {
   axiosFetchCarBillingAll,
   axiosFetchCarBillingCount,
   axiosFetchCarBillingTotal,
+
+  axiosFetchHotelBillingAll,
+  axiosFetchHotelBillingCustom,
+  axiosFetchHotelBillingName,
+  axiosFetchHotelBillingCity,
+  axiosFetchHotelBillingCumulative,
+
+  axiosFetchFlightBillingAll,
+  axiosFetchFlightBillingCumulative,
+  axiosFetchFlightBillingName,
+  axiosFetchFlightBillingDepAirport,
+  axiosFetchFlightBillingDepCity,
+  axiosFetchFlightBillingArrAirport,
+  axiosFetchFlightBillingArrCity,
+  axiosFetchFlightBillingClass,
+  axiosFetchFlightBillingCustom,
+
   axiosFetchUser,
 
   axiosFetchFlight,
@@ -90,7 +107,22 @@ class App extends Component {
       this.props.axiosFetchCarBillingCount();
       this.props.axiosFetchCarBillingTotal();
 
-
+      this.props.axiosFetchHotelBillingAll();
+      this.props.axiosFetchHotelBillingCustom();
+      this.props.axiosFetchHotelBillingName();
+      this.props.axiosFetchHotelBillingCity();
+      this.props.axiosFetchHotelBillingCumulative();
+      
+      this.props.axiosFetchFlightBillingAll();
+      this.props.axiosFetchFlightBillingCumulative();
+      this.props.axiosFetchFlightBillingName();
+      this.props.axiosFetchFlightBillingDepAirport();
+      this.props.axiosFetchFlightBillingDepCity();
+      this.props.axiosFetchFlightBillingArrAirport();
+      this.props.axiosFetchFlightBillingArrCity();
+      this.props.axiosFetchFlightBillingClass();
+      this.props.axiosFetchFlightBillingCustom();
+      
       this.props.axiosFetchAirport();
       this.props.axiosFetchAirline();
       this.props.axiosFetchUser();
@@ -209,13 +241,27 @@ const mapDispatchToProps = (dispatch) => {
     axiosFetchFlight: () => { dispatch(axiosFetchFlight()); },
     axiosFetchAirport: () => { dispatch(axiosFetchAirport()); },
     axiosFetchAirline: () => { dispatch(axiosFetchAirline()); },
-
-    axiosFetchHotel: () => { dispatch(axiosFetchHotel()); },
-    axiosFetchHotelBillingAll: () => { dispatch(axiosFetchHotelBillingAll());},
-    axiosFetchHotelBillingCount: () => { dispatch(axiosFetchHotelBillingCount());},
-    axiosFetchHotelBillingTotal: () => { dispatch(axiosFetchHotelBillingTotal());},
-
     
+    axiosFetchHotel: () => { dispatch(axiosFetchHotel()); },
+
+    axiosFetchHotelBillingAll: () => { dispatch(axiosFetchHotelBillingAll()); },
+    axiosFetchHotelBillingCustom: () => { dispatch(axiosFetchHotelBillingCustom()); },
+    axiosFetchHotelBillingName: () => { dispatch(axiosFetchHotelBillingName()); },
+    axiosFetchHotelBillingCity: () => { dispatch(axiosFetchHotelBillingCity()); },
+    axiosFetchHotelBillingCumulative: () => { dispatch(axiosFetchHotelBillingCumulative()); },
+
+
+    axiosFetchFlightBillingAll: () => { dispatch(axiosFetchFlightBillingAll()); },
+    axiosFetchFlightBillingCumulative: () => { dispatch(axiosFetchFlightBillingCumulative()); },
+    axiosFetchFlightBillingName: () => { dispatch(axiosFetchFlightBillingName()); },
+    axiosFetchFlightBillingDepAirport: () => { dispatch(axiosFetchFlightBillingDepAirport()); },
+    axiosFetchFlightBillingDepCity: () => { dispatch(axiosFetchFlightBillingDepCity()); },
+    axiosFetchFlightBillingArrAirport: () => { dispatch(axiosFetchFlightBillingArrAirport()); },
+    axiosFetchFlightBillingArrCity: () => { dispatch(axiosFetchFlightBillingArrCity()); },
+    axiosFetchFlightBillingClass: () => { dispatch(axiosFetchFlightBillingClass()); },
+    axiosFetchFlightBillingCustom: () => { dispatch(axiosFetchFlightBillingCustom()); },
+    
+
     axiosFetchLogPages: () => { dispatch(axiosFetchLogPages()); },
     axiosFetchLogPagesCount: () => { dispatch(axiosFetchLogPagesCount()); },
     axiosFetchLogSearches: () => { dispatch(axiosFetchLogSearches()); },

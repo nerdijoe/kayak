@@ -13,16 +13,11 @@ import * as API from '../api/bookings';
 class MyBookings extends Component{
     constructor(props) {
         super(props);
-
         this.state = {
             carBookings : '',
             hotelBookings : '',
             flightBookings : ''
         }
-    }
-    componentWillMount(){
-        // document.body.style.backgroundImage = "none";
-        // document.body.style.backgroundColor = "lightgrey";
     }
 
     componentDidMount() {
@@ -30,71 +25,115 @@ class MyBookings extends Component{
             this.props.history.push('/');
         } else{
             let userToken = localStorage.getItem('user_token');
+            // API.getCarBookings(userToken)
+            //     .then((res) => {
+            //         console.log("billing car response came111",res);
+            //         if(res.data !== null){
+            //             this.setState({
+            //                 message: res.data.message,
+            //                 carBookings: res.data
+            //             });
+            //         }
+            //         API.getHotelBookings(userToken)
+            //             .then((hotelRes) => {
+            //                 console.log("billing hotel response came111",hotelRes);
+            //                 if(hotelRes.data !== null){
+            //                     this.setState({
+            //                         message: hotelRes.data.message,
+            //                         hotelBookings: hotelRes.data
+            //                     });
+            //                 }
+            //                 API.getFlightBookings(userToken)
+            //                     .then((flightRes) => {
+            //                         console.log("billing flight response came111",flightRes);
+            //                         if(flightRes.data !== null){
+            //                             this.setState({
+            //                                 message: flightRes.data.message,
+            //                                 flightBookings: flightRes.data
+            //                             });
+            //                         }
+            //
+            //                     }).catch( (error) => {
+            //                     this.setState({
+            //                         ...this.state
+            //                     });
+            //                 })
+            //             }).catch( (error) => {
+            //             this.setState({
+            //                 ...this.state
+            //             });
+            //         })
+            //     }).catch( (error) => {
+            //     this.setState({
+            //         ...this.state
+            //     });
+            // })
+
             API.getCarBookings(userToken)
                 .then((res) => {
-                    console.log(res);
                     console.log("billing car response came111",res);
-                    if(res.data !== null){
+                    if(res.data !== null) {
                         this.setState({
                             message: res.data.message,
                             carBookings: res.data
                         });
                     }
-                    API.getHotelBookings(userToken)
-                        .then((res) => {
-                            console.log(res);
-                            console.log("billing hotel response came111",res);
-                            if(res.data !== null){
-                                this.setState({
-                                    message: res.data.message,
-                                    hotelBookings: res.data
-                                });
-                            }
-                            API.getFlightBookings(userToken)
-                                .then((res) => {
-                                    console.log(res);
-                                    console.log("billing flight response came111",res);
-                                    if(res.data !== null){
-                                        this.setState({
-                                            message: res.data.message,
-                                            flightBookings: res.data
-                                        });
-                                    }
+                }).catch( (error) => {
+                this.setState({
+                ...this.state
+                });
+            });
 
-                                }).catch( (error) => {
-                                this.setState({
-                                    ...this.state
-                                });
-                            })
-                        }).catch( (error) => {
+            API.getHotelBookings(userToken)
+                .then((hotelRes) => {
+                    console.log("billing hotel response came111",hotelRes);
+                    if(hotelRes.data !== null){
                         this.setState({
-                            ...this.state
+                            message: hotelRes.data.message,
+                            hotelBookings: hotelRes.data
                         });
-                    })
+                    }
+                }).catch( (error) => {
+                this.setState({
+                    ...this.state
+                });
+            });
+
+            API.getFlightBookings(userToken)
+                .then((flightRes) => {
+                    console.log("billing flight response came111",flightRes);
+                    if(flightRes.data !== null){
+                        this.setState({
+                            message: flightRes.data.message,
+                            flightBookings: flightRes.data
+                        });
+                    }
+
                 }).catch( (error) => {
                 this.setState({
                     ...this.state
                 });
             })
+
         }
     }
 
     render() {
-        let carBookingList ='';
-        let hotelBookingList='';
-        let flightBookingList='';
-        if(this.state.carBookings === '' || this.state.carBookings === undefined){
-            carBookingList = <CarBookingList key='' carBooking=''/>;
-        } else {
-            carBookingList =  this.state.carBookings.map((item, index) => {
-                return (
-                    <CarBookingList
-                        key={index}
-                        carBooking={item}
-                    />
-                );
-            })
-        }
+        let carBookingList =null;
+        let hotelBookingList=null;
+        let flightBookingList=null;
+        // if(this.state.carBookings === '' || this.state.carBookings === undefined){
+        //     carBookingList = <CarBookingList key='' carBooking=''/>;
+        // } else {
+        //     carBookingList =  this.state.carBookings.map((item, index) => {
+        //         return (
+        //             <CarBookingList
+        //                 key={index}
+        //                 carBooking={item}
+        //             />
+        //         );
+        //     })
+        // }
         if(this.state.hotelBookings === '' || this.state.hotelBookings === undefined){
             hotelBookingList = <HotelBookingList key='' hotelBooking=''/>;
         } else {
@@ -107,18 +146,18 @@ class MyBookings extends Component{
                 );
             })
         }
-        if(this.state.flightBookings === '' || this.state.flightBookings === undefined){
-            flightBookingList = <FlightBookingList key='' flightBooking=''/>;
-        } else {
-            hotelBookingList =  this.state.flightBookings.map((item, index) => {
-                return (
-                    <FlightBookingList
-                        key={index}
-                        flightBooking={item}
-                    />
-                );
-            })
-        }
+        // if(this.state.flightBookings === '' || this.state.flightBookings === undefined){
+        //     flightBookingList = <FlightBookingList key='' flightBooking=''/>;
+        // } else {
+        //     hotelBookingList =  this.state.flightBookings.map((item, index) => {
+        //         return (
+        //             <FlightBookingList
+        //                 key={index}
+        //                 flightBooking={item}
+        //             />
+        //         );
+        //     })
+        // }
         return(
             <div className="full-center" >
                 <div className="container">

@@ -7,6 +7,7 @@ import {
   Table,
   ProgressBar,
 } from 'react-bootstrap';
+
 import { connect } from 'react-redux';
 import Moment from 'moment';
 import ReactGridLayout from 'react-grid-layout';
@@ -28,6 +29,11 @@ import {
     legendBar
 } from 'variables/VariablesKayak.jsx';
 
+import {
+  currencyWithNoDecimal,
+  currencyWithDecimal,
+} from 'helpers/Currency';
+
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 class Dashboard extends Component {
@@ -46,54 +52,38 @@ class Dashboard extends Component {
         return legend;
     }
     render() {
-    const labels = this.props.logPagesCount.map((item) => {
+    const labels = this.props.hotelBillingName.slice(0, 10).map((item) => {
       return item._id;
     });
-    const series = this.props.logPagesCount.map((item) => {
-      return item.count;
+    const series = this.props.hotelBillingName.slice(0, 10).map((item) => {
+      return item.total;
     });
 
-    let totalRevenue = 0;
-    let totalRentals = this.props.logPages.length;
-    let totalRentalsDays = 0;
     const customDataBar = { labels, series: [series] };
-    console.log('--------this.props.logPagesCount=', this.props.logPagesCount);
 
-    console.log('--------customDataBar=', customDataBar);
+    console.log('hotelBillingCumulative=', this.props.hotelBillingCumulative);
+
+    let totalRevenue = currencyWithNoDecimal(this.props.hotelBillingCumulative.total);
+
+    let totalCount = this.props.hotelBillingCumulative.count;
+    let totalDays = this.props.hotelBillingCumulative.days;
+    let totalRooms = this.props.hotelBillingCumulative.rooms;
+    let averagePrice = currencyWithDecimal(this.props.hotelBillingCumulative.prices / this.props.hotelBillingCumulative.count);
+
+
+
 
     const monthly = {};
     const monthlyArr = new Array(12);
     const uniqueUsers = {};
 
-    // this.props.carBillingAll.map((item) => {
-    //   let month = parseInt(Moment(item.createdAt).format('L').slice(0,2));
-    //   console.log('    moment formatted=', Moment(item.createdAt).format('L'));
-    //   console.log('    month=', month)
-    //   let amount = item.totalAmount;
-    //   totalRevenue += amount;
-    //   totalRentalsDays += item.daysBooked;
-    //   if(monthly.hasOwnProperty(month)) {
-    //     monthly[month] += amount;
-    //     monthlyArr[month-1] += amount;
-    //   } else {
-    //     monthly[month] = amount;
-    //     monthlyArr[month-1] = amount;
-    //   }
-
-    //   if(uniqueUsers.hasOwnProperty(item.userId)){
-    //     uniqueUsers[item.userId] += 1;
-    //   } else {
-    //     uniqueUsers[item.userId] = 1;
-    //   }
-    // });
-
-    this.props.logPages.map((item) => {
+    this.props.hotelBillingAll.map((item) => {
       let month = parseInt(Moment(item.createdAt).format('L').slice(0,2));
       console.log('    moment formatted=', Moment(item.createdAt).format('L'));
       console.log('    month=', month)
-      let amount = 1;
-      totalRevenue += amount;
-
+      let amount = item.totalAmount;
+      // totalRevenue += amount;
+      // totalRentalsDays += item.daysBooked;
       if(monthly.hasOwnProperty(month)) {
         monthly[month] += amount;
         monthlyArr[month-1] += amount;
@@ -109,17 +99,19 @@ class Dashboard extends Component {
       }
     });
 
-
     const totalUniqueUsers = Object.keys(uniqueUsers).length;
     console.log('totalRevenue=', totalRevenue);
-    console.log('totalRentals=', totalRentals);
-    console.log('totalRentalsDays=', totalRentalsDays);
+    console.log('totalCount=', totalCount);
+    console.log('totalDays=', totalDays);
+    console.log('totalRooms=', totalRooms);
+    console.log('averagePrice=', averagePrice);
+
     console.log('uniqueUsers=', uniqueUsers);
     console.log('uniqueUsers total=', totalUniqueUsers);
     console.log('monthly =', monthly);
     console.log('monthlyArr =', monthlyArr);
     const dataBarMonthly = {
-      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
       series: [
         monthlyArr,
         []
@@ -134,67 +126,77 @@ class Dashboard extends Component {
       {i: 'c', x: 4, y: 0, w: 2, h: 2}
     ];
 
-    // search Type
-    const searchTypelabels = this.props.logSearchesType.map((item) => {
-      return item._id;
-    });
-    const searchTypeSeries = this.props.logSearchesType.map((item) => {
-      return item.count;
-    });
-
-    const searchTypeDataBar = { labels: searchTypelabels, series: [searchTypeSeries] };
-
-
 
         return (
             <div className="content">
                 <Grid fluid>
                     <Row>
-                        <Col lg={3} sm={6}>
+                        <Col lg={4} sm={6}>
                             <StatsCard
-                                bigIcon={<i className="pe-7s-mouse text-warning"></i>}
-                                statsText="Total Pages Clicks"
-                                statsValue={totalRentals}
+                                bigIcon={<i className="pe-7s-ticket text-warning"></i>}
+                                statsText="Total Bookings"
+                                statsValue={totalCount}
                                 statsIcon={<i className="fa fa-refresh"></i>}
-                                statsIconText="Updated now"
+                                statsIconText="In the last hour"
                             />
                         </Col>
-                        {/* <Col lg={3} sm={6}>
+                        <Col lg={4} sm={6}>
                             <StatsCard
-                                bigIcon={<i className="pe-7s-wallet text-success"></i>}
+                                bigIcon={<i className="pe-7s-cash text-success"></i>}
                                 statsText="Total Revenue"
                                 statsValue={totalRevenue}
                                 statsIcon={<i className="fa fa-calendar-o"></i>}
-                                statsIconText="Last day"
+                                statsIconText="in USD"
                             />
                         </Col>
-                        <Col lg={3} sm={6}>
+                        <Col lg={4} sm={6}>
                             <StatsCard
                                 bigIcon={<i className="pe-7s-date text-danger"></i>}
                                 statsText="Days Booked"
-                                statsValue={totalRentalsDays}
+                                statsValue={totalDays}
                                 statsIcon={<i className="fa fa-clock-o"></i>}
                                 statsIconText="In the last hour"
                             />
-                        </Col> */}
-                        <Col lg={3} sm={6}>
+                        </Col>
+                    </Row>
+
+                    <Row>
+                      <Col lg={4} sm={6}>
+                          <StatsCard
+                            bigIcon={<i className="pe-7s-door-lock text-info"></i>}
+                            statsText="Total Rooms"
+                            statsValue={totalRooms}
+                            statsIcon={<i className="fa fa-calendar-o"></i>}
+                            statsIconText="In the last hour"
+                          />
+                      </Col>
+                      <Col lg={4} sm={6}>
+                          <StatsCard
+                            bigIcon={<i className="pe-7s-graph1 text-success"></i>}
+                            statsText="Average Room Price"
+                            statsValue={averagePrice}
+                            statsIcon={<i className="fa fa-calendar-o"></i>}
+                            statsIconText="in USD"
+                          />
+                      </Col>
+                      <Col lg={4} sm={6}>
                             <StatsCard
-                                bigIcon={<i className="fa fa-twitter text-info"></i>}
+                                bigIcon={<i className="fa pe-7s-smile text-info"></i>}
                                 statsText="Unique Users"
                                 statsValue={totalUniqueUsers}
                                 statsIcon={<i className="fa fa-refresh"></i>}
-                                statsIconText="Updated now"
+                                statsIconText="In the last hour"
                             />
                         </Col>
+
                     </Row>
-                    <Row>
 
                     <Row>
-                        <Col md={12}>
+                        <Col md={6}>
                             <Card
                                 id="chartActivity"
-                                title="Total Clicks per Page"
-                                category="Including sign-in and anynomouse users"
+                                title="2017 Hotel Revenue"
+                                category="Taxes included"
                                 stats="Data information certified"
                                 statsIcon="fa fa-check"
                                 content={
@@ -214,13 +216,12 @@ class Dashboard extends Component {
                                 // }
                             />
                         </Col>
-                    </Row>
-                    <Row>
-                        <Col md={12}>
+
+                        <Col md={6}>
                             <Card
                                 id="chartActivity"
-                                title="2017 Total Clicks"
-                                category="Including sign-in and anynomouse users"
+                                title="2017 Hotel Revenue Monthly"
+                                category="Taxes included"
                                 stats="Data information certified"
                                 statsIcon="fa fa-check"
                                 content={
@@ -242,54 +243,27 @@ class Dashboard extends Component {
                         </Col>
 
                     </Row>
-                    </Row>
 
                     <Row>
-                        <Col md={6}>
-                            <Card
-                                id="chartActivity"
-                                title="Total Searches"
-                                category="Including sign-in and anynomouse users"
-                                stats="Data information certified"
-                                statsIcon="fa fa-check"
-                                content={
-                                    <div className="ct-chart">
-                                        <ChartistGraph
-                                            data={searchTypeDataBar}
-                                            type="Bar"
-                                            options={optionsBar}
-                                            responsiveOptions={responsiveBar}
-                                        />
-                                    </div>
-                                }
-                                // legend={
-                                //     <div className="legend">
-                                //         {this.createLegend(legendBar)}
-                                //     </div>
-                                // }
-                            />
-                        </Col>
-                    </Row>
-                    <Row>
-                      <h3>City Search By Keywords</h3>
+                      <h3>Top 10 </h3>
                       <Table striped bordered condensed hover>
                         <thead>
                           <tr>
                             <th>#</th>
-                            <th>City Search keyword</th>
-                            <th>progressive bar</th>
-                            <th>Count</th>
+                            <th>Hotel</th>
+                            <th>Total Bookings</th>
+                            <th>Total Revenue</th>
                           </tr>
                         </thead>
                         <tbody>
 
-                          { this.props.logSearchesDealerCity.map((item, i) => {
+                          { this.props.hotelBillingName.slice(0, 10).map((item, i) => {
                             return (
                               <tr key={i}>
                                 <td>{i+1}</td>
                                 <td>{item._id}</td>
-                                <td><ProgressBar bsStyle="info" now={item.count} /></td>
                                 <td>{item.count}</td>
+                                <td>{item.total}</td>
                               </tr>
                             );
                           })}
@@ -309,11 +283,12 @@ const mapStateToProps = (state) => {
     carBillingAll: state.AdminReducer.carBillingAll,
     carBillingCount: state.AdminReducer.carBillingCount,
     carBillingTotal: state.AdminReducer.carBillingTotal,
-    logPages: state.AdminReducer.logPages,
-    logPagesCount: state.AdminReducer.logPagesCount,
-    logSearches: state.AdminReducer.logSearches,
-    logSearchesType: state.AdminReducer.logSearchesType,
-    logSearchesDealerCity: state.AdminReducer.logSearchesDealerCity,
+    hotelBillingAll: state.AdminReducer.hotelBillingAll,
+    hotelBillingCustom: state.AdminReducer.hotelBillingCustom,
+    hotelBillingName: state.AdminReducer.hotelBillingName,
+    hotelBillingCity: state.AdminReducer.hotelBillingCity,
+    hotelBillingCumulative: state.AdminReducer.hotelBillingCumulative,
+    
   };
 };
 

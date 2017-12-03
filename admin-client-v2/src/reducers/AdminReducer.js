@@ -11,9 +11,26 @@ const initialState = {
   carBillingTotal: [],
   carBillingSearch: [],
   hotelBillingAll: [],
+
   hotelBillingCount: [],
   hotelBillingTotal: [],
   hotelBillingSearch: [],
+
+  hotelBillingCustom: [],
+  hotelBillingName: [],
+  hotelBillingCity: [],
+  hotelBillingCumulative: {},
+
+  flightBillingAll: [],
+  flightBillingCumulative: {},
+  flightBillingName: [],
+  flightBillingDepAirport: [],
+  flightBillingDepCity: [],
+  flightBillingArrAirport: [],
+  flightBillingArrCity: [],
+  flightBillingClass: [],
+  flightBillingCustom: [],
+
   logPages: [],
   logPagesCount: [],
   logSearches: [],
@@ -69,6 +86,97 @@ const AdminReducer = (state = initialState, action) => {
         carBillingTotal: [...action.data],
       };
     }
+    case actionType.FETCH_HOTEL_BILLING_ALL: {
+      return {
+        ...state,
+        hotelBillingAll: [...action.data],
+        hotelBillingSearch: [...action.data],
+      };
+    }
+    case actionType.FETCH_HOTEL_BILLING_CUSTOM: {
+      return {
+        ...state,
+        hotelBillingCustom: [...action.data],
+      };
+    }
+    case actionType.FETCH_HOTEL_BILLING_NAME: {
+      return {
+        ...state,
+        hotelBillingName: [...action.data],
+      };
+    }
+    case actionType.FETCH_HOTEL_BILLING_CITY: {
+      return {
+        ...state,
+        hotelBillingCity: [...action.data],
+      };
+    }
+    case actionType.FETCH_HOTEL_BILLING_CUMULATIVE: {
+      return {
+        ...state,
+        hotelBillingCumulative: action.data,
+      };
+    }
+
+    case actionType.FETCH_FLIGHT_BILLING_ALL: {
+      return {
+        ...state,
+        flightBillingAll: [...action.data],
+      };
+    }
+    case actionType.FETCH_FLIGHT_BILLING_CUMULATIVE: {
+      return {
+        ...state,
+        flightBillingCumulative: action.data,
+      };
+    }
+    case actionType.FETCH_FLIGHT_BILLING_NAME: {
+      return {
+        ...state,
+        flightBillingName: [...action.data],
+      };
+    }
+    case actionType.FETCH_FLIGHT_BILLING_DEP_AIRPORT: {
+      return {
+        ...state,
+        flightBillingDepAirport: [...action.data],
+      };
+    }
+    case actionType.FETCH_FLIGHT_BILLING_DEP_CITY: {
+      return {
+        ...state,
+        flightBillingDepCity: [...action.data],
+      };
+    }
+    case actionType.FETCH_FLIGHT_BILLING_ARR_AIRPORT: {
+      return {
+        ...state,
+        flightBillingArrAirport: [...action.data],
+      };
+    }
+    case actionType.FETCH_FLIGHT_BILLING_ARR_CITY: {
+      return {
+        ...state,
+        flightBillingArrCity: [...action.data],
+      };
+    }
+    case actionType.FETCH_FLIGHT_BILLING_CLASS: {
+      return {
+        ...state,
+        flightBillingClass: [...action.data],
+      };
+    }
+    case actionType.FETCH_FLIGHT_BILLING_CUSTOM: {
+      return {
+        ...state,
+        flightBillingCustom: [...action.data],
+      };
+    }
+
+
+
+
+
     case actionType.FETCH_CAR_BILLING_SEARCH_DATE: {
       let updated = [];
       let date = action.data;
@@ -126,13 +234,6 @@ const AdminReducer = (state = initialState, action) => {
       };
     }
 
-    case actionType.FETCH_HOTEL_BILLING_ALL: {
-          return {
-              ...state,
-              hotelBillingAll: [...action.data],
-          hotelBillingSearch: [...action.data],
-      };
-    }
     case actionType.FETCH_HOTEL_BILLING_COUNT: {
           return {
               ...state,

@@ -26,10 +26,14 @@ class Hotels extends Component{
         var valid = Validate.hotelSearch(this.state);
         console.log("car state is", this.state);
         if(valid === ''){
+            let startDateSplit = this.state.startDate.split("-");
+            let endDateSplit = this.state.endDate.split("-");
+            let startDate = startDateSplit[1] + "/" + startDateSplit[2] + "/" + startDateSplit[0];
+            let endDate = endDateSplit[1] + "/" + endDateSplit[2] + "/" + endDateSplit[0];
             let payload ={
                 place: this.state.place,
-                startDate: this.state.startDate,
-                endDate: this.state.endDate,
+                startDate: startDate,
+                endDate: endDate,
                 guests: this.state.guests,
                 rooms: this.state.rooms
             }

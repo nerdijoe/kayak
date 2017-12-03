@@ -1,9 +1,14 @@
 import React , {Component} from 'react';
+import {fBookingSelected, bookingFlag} from "../actions/index";
 import { withRouter } from 'react-router-dom';
 import {connect} from 'react-redux';
 
 class FlightSearchList extends Component{
     handleFlightBooking=()=>{
+        let flightSelection = this.props.flight;
+        let payload = 'F';
+        this.props.fBookingSelected(flightSelection);
+        this.props.bookingFlag(payload);
         this.props.history.push('/booking');
         console.log('insdde booking flight');
     }
@@ -83,4 +88,19 @@ class FlightSearchList extends Component{
     }
 }
 
-export default FlightSearchList;
+function mapDispatchToProps(dispatch) {
+    return {
+        fBookingSelected: (data) => dispatch(fBookingSelected(data)),
+        bookingFlag: (data) => dispatch(bookingFlag(data))
+    };
+}
+
+function mapStateToProps(state) {
+    return{
+        bookingSelectedProp : state.fBookingSelected,
+        bookingFlagProp : state.bookingFlag
+    };
+}
+
+const flightSearchList = withRouter(connect(mapStateToProps, mapDispatchToProps)(FlightSearchList));
+export default flightSearchList;

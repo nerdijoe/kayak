@@ -7,7 +7,7 @@ router.post('/book', helper.auth, hotelBillingController.book);
 
 // Admin
 router.get('/', helper.authAdmin, hotelBillingController.getAll);
-// router.get('/aggregate/:type', helper.authAdmin, hotelBillingController.aggregate);
+router.get('/aggregate/:type', helper.authAdmin, hotelBillingController.aggregate);
 router.get('/:billingId', helper.authAdmin, hotelBillingController.getOne);
 
 module.exports = router;
