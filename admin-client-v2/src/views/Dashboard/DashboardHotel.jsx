@@ -29,6 +29,11 @@ import {
     legendBar
 } from 'variables/VariablesKayak.jsx';
 
+import {
+  currencyWithNoDecimal,
+  currencyWithDecimal,
+} from 'helpers/Currency';
+
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 class Dashboard extends Component {
@@ -58,11 +63,15 @@ class Dashboard extends Component {
 
     console.log('hotelBillingCumulative=', this.props.hotelBillingCumulative);
 
-    let totalRevenue = this.props.hotelBillingCumulative.total;
+    let totalRevenue = currencyWithNoDecimal(this.props.hotelBillingCumulative.total);
+
     let totalCount = this.props.hotelBillingCumulative.count;
     let totalDays = this.props.hotelBillingCumulative.days;
     let totalRooms = this.props.hotelBillingCumulative.rooms;
-    let averagePrice = this.props.hotelBillingCumulative.prices / this.props.hotelBillingCumulative.count;
+    let averagePrice = currencyWithDecimal(this.props.hotelBillingCumulative.prices / this.props.hotelBillingCumulative.count);
+
+
+
 
     const monthly = {};
     const monthlyArr = new Array(12);
@@ -102,7 +111,7 @@ class Dashboard extends Component {
     console.log('monthly =', monthly);
     console.log('monthlyArr =', monthlyArr);
     const dataBarMonthly = {
-      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
       series: [
         monthlyArr,
         []
@@ -122,25 +131,25 @@ class Dashboard extends Component {
             <div className="content">
                 <Grid fluid>
                     <Row>
-                        <Col lg={3} sm={6}>
+                        <Col lg={4} sm={6}>
                             <StatsCard
-                                bigIcon={<i className="pe-7s-car text-warning"></i>}
+                                bigIcon={<i className="pe-7s-ticket text-warning"></i>}
                                 statsText="Total Bookings"
                                 statsValue={totalCount}
                                 statsIcon={<i className="fa fa-refresh"></i>}
-                                statsIconText="Updated now"
+                                statsIconText="In the last hour"
                             />
                         </Col>
-                        <Col lg={3} sm={6}>
+                        <Col lg={4} sm={6}>
                             <StatsCard
-                                bigIcon={<i className="pe-7s-wallet text-success"></i>}
+                                bigIcon={<i className="pe-7s-cash text-success"></i>}
                                 statsText="Total Revenue"
                                 statsValue={totalRevenue}
                                 statsIcon={<i className="fa fa-calendar-o"></i>}
-                                statsIconText="Last day"
+                                statsIconText="in USD"
                             />
                         </Col>
-                        <Col lg={3} sm={6}>
+                        <Col lg={4} sm={6}>
                             <StatsCard
                                 bigIcon={<i className="pe-7s-date text-danger"></i>}
                                 statsText="Days Booked"
@@ -149,36 +158,36 @@ class Dashboard extends Component {
                                 statsIconText="In the last hour"
                             />
                         </Col>
-                        <Col lg={3} sm={6}>
-                            <StatsCard
-                                bigIcon={<i className="fa fa-twitter text-info"></i>}
-                                statsText="Unique Users"
-                                statsValue={totalUniqueUsers}
-                                statsIcon={<i className="fa fa-refresh"></i>}
-                                statsIconText="Updated now"
-                            />
-                        </Col>
                     </Row>
 
                     <Row>
-                      <Col lg={3} sm={6}>
+                      <Col lg={4} sm={6}>
                           <StatsCard
-                            bigIcon={<i className="pe-7s-wallet text-success"></i>}
+                            bigIcon={<i className="pe-7s-door-lock text-info"></i>}
                             statsText="Total Rooms"
                             statsValue={totalRooms}
                             statsIcon={<i className="fa fa-calendar-o"></i>}
-                            statsIconText="Last day"
+                            statsIconText="In the last hour"
                           />
                       </Col>
-                      <Col lg={3} sm={6}>
+                      <Col lg={4} sm={6}>
                           <StatsCard
-                            bigIcon={<i className="pe-7s-wallet text-success"></i>}
+                            bigIcon={<i className="pe-7s-graph1 text-success"></i>}
                             statsText="Average Room Price"
                             statsValue={averagePrice}
                             statsIcon={<i className="fa fa-calendar-o"></i>}
-                            statsIconText="Last day"
+                            statsIconText="in USD"
                           />
                       </Col>
+                      <Col lg={4} sm={6}>
+                            <StatsCard
+                                bigIcon={<i className="fa pe-7s-smile text-info"></i>}
+                                statsText="Unique Users"
+                                statsValue={totalUniqueUsers}
+                                statsIcon={<i className="fa fa-refresh"></i>}
+                                statsIconText="In the last hour"
+                            />
+                        </Col>
 
                     </Row>
 
