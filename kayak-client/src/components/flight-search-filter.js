@@ -70,7 +70,9 @@ class FlightFilter extends Component {
     classModified = (event,className)=>{
         if(event.target.checked === true){
             let classFilter = this.state.classFilter;
-            classFilter.push(className);
+            if(classFilter.indexOf(className) < 0) {
+                classFilter.push(className);
+            }
             this.setState({
                 ...this.state,
                 classFilter:[classFilter]

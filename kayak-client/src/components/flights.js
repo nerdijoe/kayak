@@ -13,12 +13,12 @@ class Flights extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            "flightTripSelection": 'round',
+            "flightTripSelection": 'one',
             destination: "",
             source: "",
             departureDate: "",
             arrivalDate: "",
-            classType: "",
+            classType: "Economy",
             seats: 1,
             message: ''
         }
@@ -67,7 +67,10 @@ class Flights extends Component {
                 if (res.data.length > 0) {
                     console.log('axiosSignIn', res);
                     this.props.flightsData(res.data, payload);
-                    this.props.flightFilterData(res.data);
+                    let fligthFilteredData = res.data;
+                    fligthFilteredData = fligthFilteredData.filter(flight => flight.class.toLowerCase() === payload.classType.toLowerCase()) ;
+                    // this.props.flightFilterData(res.data);
+                    this.props.flightFilterData(fligthFilteredData);
                     this.setState({
                         ...this.state,
                         message: ''
@@ -94,12 +97,13 @@ class Flights extends Component {
             <div>
                 <div className="nav">
                     <ul className="slimmenu-flight">
-                        <li className={this.isFlightTripActive('round')}><a
-                            onClick={() => this.flightTabCLick('round')}>Round Trip</a>
-                        </li>
                         <li className={this.isFlightTripActive('one')}><a onClick={() => this.flightTabCLick('one')}>One
                             Way</a>
                         </li>
+                        <li className={this.isFlightTripActive('round')}><a
+                            onClick={() => this.flightTabCLick('round')}>Round Trip</a>
+                        </li>
+
                     </ul>
                     <div className="tab-content">
                         <div className={this.isFLightTabActive('round')} id="flight-search-1">
