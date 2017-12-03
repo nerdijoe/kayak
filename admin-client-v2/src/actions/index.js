@@ -724,7 +724,138 @@ export const axiosFetchFlightBillingCumulative = () => (dispatch) => {
     });
 };
 
+export const axiosFetchFlightBillingName = () => (dispatch) => {
+  //get admin token
+  const token = localStorage.getItem('admin_token');
 
+  axios.get('http://localhost:3010/flightbillings/aggregate/name', {
+    headers: {
+      token,
+    },
+  })
+    .then((res) => {
+      console.log('--- after axiosFetchFlightBillingName');
+      console.log(res.data);
+
+      dispatch(fetchFlightBillingName(res.data));
+    }).catch((err) => {
+      console.log(err);
+    });
+};
+
+export const axiosFetchFlightBillingDepAirport = () => (dispatch) => {
+  //get admin token
+  const token = localStorage.getItem('admin_token');
+
+  axios.get('http://localhost:3010/flightbillings/aggregate/departureairport', {
+    headers: {
+      token,
+    },
+  })
+    .then((res) => {
+      console.log('--- after axiosFetchFlightBillingDepAirport');
+      console.log(res.data);
+
+      dispatch(fetchFlightBillingDepAirport(res.data));
+    }).catch((err) => {
+      console.log(err);
+    });
+};
+
+export const axiosFetchFlightBillingDepCity = () => (dispatch) => {
+  //get admin token
+  const token = localStorage.getItem('admin_token');
+
+  axios.get('http://localhost:3010/flightbillings/aggregate/departurecity', {
+    headers: {
+      token,
+    },
+  })
+    .then((res) => {
+      console.log('--- after axiosFetchFlightBillingDepCity');
+      console.log(res.data);
+
+      dispatch(fetchFlightBillingDepCity(res.data));
+    }).catch((err) => {
+      console.log(err);
+    });
+};
+
+export const axiosFetchFlightBillingArrAirport = () => (dispatch) => {
+  //get admin token
+  const token = localStorage.getItem('admin_token');
+
+  axios.get('http://localhost:3010/flightbillings/aggregate/arrivalairport', {
+    headers: {
+      token,
+    },
+  })
+    .then((res) => {
+      console.log('--- after axiosFetchFlightBillingArrAirport');
+      console.log(res.data);
+
+      dispatch(fetchFlightBillingArrAirport(res.data));
+    }).catch((err) => {
+      console.log(err);
+    });
+};
+
+export const axiosFetchFlightBillingArrCity = () => (dispatch) => {
+  //get admin token
+  const token = localStorage.getItem('admin_token');
+
+  axios.get('http://localhost:3010/flightbillings/aggregate/arrivalcity', {
+    headers: {
+      token,
+    },
+  })
+    .then((res) => {
+      console.log('--- after axiosFetchFlightBillingArrCity');
+      console.log(res.data);
+
+      dispatch(fetchFlightBillingArrCity(res.data));
+    }).catch((err) => {
+      console.log(err);
+    });
+};
+
+export const axiosFetchFlightBillingClass = () => (dispatch) => {
+  //get admin token
+  const token = localStorage.getItem('admin_token');
+
+  axios.get('http://localhost:3010/flightbillings/aggregate/class', {
+    headers: {
+      token,
+    },
+  })
+    .then((res) => {
+      console.log('--- after axiosFetchFlightBillingClass');
+      console.log(res.data);
+
+      dispatch(fetchFlightBillingClass(res.data));
+    }).catch((err) => {
+      console.log(err);
+    });
+};
+
+export const axiosFetchFlightBillingCustom = () => (dispatch) => {
+  //get admin token
+  const token = localStorage.getItem('admin_token');
+
+  axios.get('http://localhost:3010/flightbillings/aggregate/custom', {
+    headers: {
+      token,
+    },
+  })
+    .then((res) => {
+      console.log('--- after axiosFetchFlightBillingCustom');
+      console.log(res.data);
+
+      dispatch(fetchFlightBillingCustom(res.data));
+    }).catch((err) => {
+      console.log(err);
+    });
+};
 
 
 

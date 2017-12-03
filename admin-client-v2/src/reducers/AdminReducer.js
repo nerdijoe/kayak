@@ -130,6 +130,44 @@ const AdminReducer = (state = initialState, action) => {
         flightBillingName: [...action.data],
       };
     }
+    case actionType.FETCH_FLIGHT_BILLING_DEP_AIRPORT: {
+      return {
+        ...state,
+        flightBillingDepAirport: [...action.data],
+      };
+    }
+    case actionType.FETCH_FLIGHT_BILLING_DEP_CITY: {
+      return {
+        ...state,
+        flightBillingDepCity: [...action.data],
+      };
+    }
+    case actionType.FETCH_FLIGHT_BILLING_ARR_AIRPORT: {
+      return {
+        ...state,
+        flightBillingArrAirport: [...action.data],
+      };
+    }
+    case actionType.FETCH_FLIGHT_BILLING_ARR_CITY: {
+      return {
+        ...state,
+        flightBillingArrCity: [...action.data],
+      };
+    }
+    case actionType.FETCH_FLIGHT_BILLING_CLASS: {
+      return {
+        ...state,
+        flightBillingClass: [...action.data],
+      };
+    }
+    case actionType.FETCH_FLIGHT_BILLING_CUSTOM: {
+      return {
+        ...state,
+        flightBillingCustom: [...action.data],
+      };
+    }
+
+
 
 
 
