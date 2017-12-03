@@ -78,6 +78,13 @@ export const fetchCar = (data) => {
   };
 };
 
+export const searchCar = (data) => {
+    return {
+        type: actionType.CAR_SEARCH,
+        data,
+    };
+};
+
 export const fetchCarDealer = (data) => {
   return {
     type: actionType.FETCH_CAR_DEALER,
