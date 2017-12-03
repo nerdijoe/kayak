@@ -361,26 +361,26 @@ export const searchHotel = (data) => {
 };
 
 //-----------------------------------------------------------------
-export const fetchHotelBillingAll = (data) => {
-    return {
-        type: actionType.FETCH_HOTEL_BILLING_ALL,
-        data,
-    };
-};
+// export const fetchHotelBillingAll = (data) => {
+//     return {
+//         type: actionType.FETCH_HOTEL_BILLING_ALL,
+//         data,
+//     };
+// };
 
-export const fetchHotelBillingCount = (data) => {
-    return {
-        type: actionType.FETCH_HOTEL_BILLING_COUNT,
-        data,
-    };
-};
+// export const fetchHotelBillingCount = (data) => {
+//     return {
+//         type: actionType.FETCH_HOTEL_BILLING_COUNT,
+//         data,
+//     };
+// };
 
-export const fetchHotelBillingTotal = (data) => {
-    return {
-        type: actionType.FETCH_HOTEL_BILLING_TOTAL,
-        data,
-    };
-};
+// export const fetchHotelBillingTotal = (data) => {
+//     return {
+//         type: actionType.FETCH_HOTEL_BILLING_TOTAL,
+//         data,
+//     };
+// };
 
 
 export const fetchHotelBillingSearchDate = (data) => {
@@ -1149,23 +1149,23 @@ export const axiosFetchHotel = () => (dispatch) => {
 };
 
 
-export const axiosFetchHotelBillingAll = () => (dispatch) => {
-    //get admin token
-    const token = localStorage.getItem('admin_token');
-    axios.get('http://localhost:3010/hotelBillings', {
-        headers: {
-            token,
-        },
-    })
-        .then((res) => {
-        console.log('--- after axiosFetchHotelBillingAll');
-    console.log(res.data);
+// export const axiosFetchHotelBillingAll = () => (dispatch) => {
+//     //get admin token
+//     const token = localStorage.getItem('admin_token');
+//     axios.get('http://localhost:3010/hotelBillings', {
+//         headers: {
+//             token,
+//         },
+//     })
+//         .then((res) => {
+//         console.log('--- after axiosFetchHotelBillingAll');
+//     console.log(res.data);
 
-    dispatch(fetchHotelBillingAll(res.data));
-}).catch((err) => {
-        console.log(err);
-});
-};
+//     dispatch(fetchHotelBillingAll(res.data));
+// }).catch((err) => {
+//         console.log(err);
+// });
+// };
 
 export const axiosFetchHotelBillingCount = () => (dispatch) => {
     //get admin token

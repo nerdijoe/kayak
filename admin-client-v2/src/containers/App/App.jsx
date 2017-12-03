@@ -45,7 +45,7 @@ import {
   axiosFetchAirline,
 
   axiosFetchHotel,
-  axiosFetchHotelBillingAll,
+
   axiosFetchHotelBillingCount,
   axiosFetchHotelBillingTotal,
 
@@ -130,9 +130,9 @@ class App extends Component {
       this.props.axiosFetchFlight();
 
       this.props.axiosFetchHotel();
-      this.props.axiosFetchHotelBillingAll();
-      this.props.axiosFetchHotelBillingCount();
-      this.props.axiosFetchHotelBillingTotal();
+    //   this.props.axiosFetchHotelBillingAll();
+    //   this.props.axiosFetchHotelBillingCount();
+    //   this.props.axiosFetchHotelBillingTotal();
 
       this.props.axiosFetchLogPages();
       this.props.axiosFetchLogPagesCount();
