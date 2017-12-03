@@ -16,6 +16,7 @@ import {Button, Modal, OverlayTrigger, Popover, Tooltip} from 'react-bootstrap';
 import FlightSearch from './flight-search';
 import CarSearch from './car-search';
 import HotelSearch from './hotel-search';
+import * as logAPI from '../api/loggings';
 
 class HomePage extends Component {
     constructor(props) {
@@ -186,6 +187,76 @@ class HomePage extends Component {
     }
 
     render() {
+        console.log("this is the current path",this.props.location.pathname);
+        switch (this.props.location.pathname){
+            case '/':logAPI.logData('home')
+                .then((res)=>{
+                    console.log("data for home logged",res);
+                }).catch((err)=>{
+                    console.log("error in home logging",err);
+                });
+                    break;
+            case '/flights/search':logAPI.logData('search/flight')
+                .then((res)=>{
+                console.log("data for search flight logged",res);
+                }).catch((err)=>{
+                console.log("error in search flight logging",err);
+                });
+                    break;
+            case '/cars/search':logAPI.logData('search/car')
+                .then((res)=>{
+                    console.log("data for search car logged",res);
+                }).catch((err)=>{
+                    console.log("error in search car logging",err);
+                });
+                    break;
+            case '/hotels/search':logAPI.logData('search/hotel')
+                .then((res)=>{
+                    console.log("data for search hotel logged",res);
+                }).catch((err)=>{
+                    console.log("error in search hotel logging",err);
+                });
+                    break;
+            case '/updateUser':logAPI.logData('user/profile')
+                .then((res)=>{
+                    console.log("data for user profile logged",res);
+                }).catch((err)=>{
+                    console.log("error in user profile logging",err);
+                });
+                    break;
+            case '/myBookings':logAPI.logData('user/booking')
+                .then((res)=>{
+                    console.log("data for use booking logged",res);
+                }).catch((err)=>{
+                    console.log("error in user booking logging",err);
+                });
+                    break;
+            case '/booking':
+                            switch(this.props.bookingSelected.bookingFlag){
+                                case 'C':logAPI.logData('book/car')
+                                    .then((res)=>{
+                                        console.log("data for book car logged",res);
+                                    }).catch((err)=>{
+                                        console.log("error in book car logging",err);
+                                    });
+                                    break;
+                                case 'H':logAPI.logData('book/hotel')
+                                    .then((res)=>{
+                                        console.log("data for book hotel logged",res);
+                                    }).catch((err)=>{
+                                        console.log("error in book hotel logging",err);
+                                    });
+                                    break;
+                                case 'F':logAPI.logData('book/flight')
+                                    .then((res)=>{
+                                        console.log("data for book flight logged",res);
+                                    }).catch((err)=>{
+                                        console.log("error in book flight logging",err);
+                                    });
+                                    break;
+                            }
+                    break;
+        }
         let messagediv =null;
         if(this.state.message !== ''){
             messagediv = <div className="clearfix">
@@ -577,7 +648,8 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
     console.log("state App", state);
     return{
-        loginDataProp : state.loginData
+        loginDataProp : state.loginData,
+        bookingSelected:state.bookingSelected
     };
 }
 
