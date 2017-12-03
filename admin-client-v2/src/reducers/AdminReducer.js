@@ -10,6 +10,10 @@ const initialState = {
   carBillingCount: [],
   carBillingTotal: [],
   carBillingSearch: [],
+  hotelBillingAll: [],
+  hotelBillingCount: [],
+  hotelBillingTotal: [],
+  hotelBillingSearch: [],
   logPages: [],
   logPagesCount: [],
   logSearches: [],
@@ -121,6 +125,83 @@ const AdminReducer = (state = initialState, action) => {
         carBillingSearch: updated,
       };
     }
+
+    case actionType.FETCH_HOTEL_BILLING_ALL: {
+          return {
+              ...state,
+              hotelBillingAll: [...action.data],
+          hotelBillingSearch: [...action.data],
+      };
+    }
+    case actionType.FETCH_HOTEL_BILLING_COUNT: {
+          return {
+              ...state,
+              hotelBillingCount: [...action.data],
+      };
+    }
+    case actionType.FETCH_HOTEL_BILLING_TOTAL: {
+          return {
+              ...state,
+              hotelBillingTotal: [...action.data],
+      };
+    }
+    case actionType.FETCH_HOTEL_BILLING_SEARCH_DATE: {
+          let updated = [];
+          let date = action.data;
+          if(date) {
+              console.log('   date = ', Moment(date).format('L'));
+              updated = state.hotelBillingAll.filter((item) => {
+                  console.log(`${item.createdAt}-->`, Moment(item.createdAt).format('L'));
+              return Moment(item.createdAt).format('L') === Moment(date).format('L');
+          });
+              console.log('------------ updated=', updated);
+          } else {
+              updated = [...state.hotelBillingAll];
+          }
+
+          return {
+              ...state,
+              hotelBillingSearch: updated,
+      }
+    }
+    case actionType.FETCH_HOTEL_BILLING_SEARCH_MONTH: {
+          let updated = [];
+          let date = action.data;
+          if(date) {
+              console.log('   date = ', Moment(date).format('MMM YY'));
+              updated = state.hotelBillingAll.filter((item) => {
+                  console.log(`${item.createdAt}-->`, Moment(item.createdAt).format('MMM YY'));
+              return Moment(item.createdAt).format('MMM YY') === Moment(date).format('MMM YY');
+          });
+              console.log('------------ updated=', updated);
+          } else {
+              updated = [...state.hotelBillingAll];
+          }
+
+          return {
+              ...state,
+              hotelBillingSearch: updated,
+      }
+    }
+    case actionType.FETCH_HOTEL_BILLING_SEARCH_YEAR: {
+          let updated = [];
+          let date = action.data;
+          if(date) {
+              console.log('   date = ', Moment(date).format('YY'));
+              updated = state.hotelBillingAll.filter((item) => {
+                  console.log(`${item.createdAt}-->`, Moment(item.createdAt).format('YY'));
+              return Moment(item.createdAt).format('YY') === Moment(date).format('YY');
+          });
+              console.log('------------ updated=', updated);
+          } else {
+              updated = [...state.hotelBillingAll];
+          }
+          return {
+              ...state,
+              hotelBillingSearch: updated,
+      };
+    }
+
     case actionType.FETCH_LOG_PAGES: {
       return {
         ...state,

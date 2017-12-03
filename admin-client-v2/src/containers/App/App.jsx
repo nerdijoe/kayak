@@ -28,6 +28,9 @@ import {
   axiosFetchAirline,
 
   axiosFetchHotel,
+  axiosFetchHotelBillingAll,
+  axiosFetchHotelBillingCount,
+  axiosFetchHotelBillingTotal,
 
   axiosFetchLogPages,
   axiosFetchLogPagesCount,
@@ -95,6 +98,9 @@ class App extends Component {
       this.props.axiosFetchFlight();
 
       this.props.axiosFetchHotel();
+      this.props.axiosFetchHotelBillingAll();
+      this.props.axiosFetchHotelBillingCount();
+      this.props.axiosFetchHotelBillingTotal();
 
       this.props.axiosFetchLogPages();
       this.props.axiosFetchLogPagesCount();
@@ -203,8 +209,11 @@ const mapDispatchToProps = (dispatch) => {
     axiosFetchFlight: () => { dispatch(axiosFetchFlight()); },
     axiosFetchAirport: () => { dispatch(axiosFetchAirport()); },
     axiosFetchAirline: () => { dispatch(axiosFetchAirline()); },
-    axiosFetchHotel: () => { dispatch(axiosFetchHotel()); },
 
+    axiosFetchHotel: () => { dispatch(axiosFetchHotel()); },
+    axiosFetchHotelBillingAll: () => { dispatch(axiosFetchHotelBillingAll());},
+    axiosFetchHotelBillingCount: () => { dispatch(axiosFetchHotelBillingCount());},
+    axiosFetchHotelBillingTotal: () => { dispatch(axiosFetchHotelBillingTotal());},
 
     
     axiosFetchLogPages: () => { dispatch(axiosFetchLogPages()); },

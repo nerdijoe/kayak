@@ -243,7 +243,49 @@ export const searchHotel = (data) => {
     };
 };
 
+//-----------------------------------------------------------------
+export const fetchHotelBillingAll = (data) => {
+    return {
+        type: actionType.FETCH_HOTEL_BILLING_ALL,
+        data,
+    };
+};
 
+export const fetchHotelBillingCount = (data) => {
+    return {
+        type: actionType.FETCH_HOTEL_BILLING_COUNT,
+        data,
+    };
+};
+
+export const fetchHotelBillingTotal = (data) => {
+    return {
+        type: actionType.FETCH_HOTEL_BILLING_TOTAL,
+        data,
+    };
+};
+
+
+export const fetchHotelBillingSearchDate = (data) => {
+    return {
+        type: actionType.FETCH_HOTEL_BILLING_SEARCH_DATE,
+        data,
+    };
+};
+export const fetchHotelBillingSearchMonth = (data) => {
+    return {
+        type: actionType.FETCH_HOTEL_BILLING_SEARCH_MONTH,
+        data,
+    };
+};
+export const fetchHotelBillingSearchYear = (data) => {
+    return {
+        type: actionType.FETCH_HOTEL_BILLING_SEARCH_YEAR,
+        data,
+    };
+};
+
+//-------------------------------------------------------------------
 
 export const fetchLogPages = (data) => {
   return {
@@ -628,7 +670,7 @@ export const axiosFetchAirline = () => (dispatch) => {
 
 
 
-//--------------------------------
+
 
 export const axiosAddNewHotel = data => (dispatch) => {
     const admin_token = localStorage.getItem('admin_token');
@@ -720,6 +762,66 @@ export const axiosFetchHotel = () => (dispatch) => {
         console.log(err);
 });
 };
+
+
+export const axiosFetchHotelBillingAll = () => (dispatch) => {
+    //get admin token
+    const token = localStorage.getItem('admin_token');
+    axios.get('http://localhost:3010/hotelBillings', {
+        headers: {
+            token,
+        },
+    })
+        .then((res) => {
+        console.log('--- after axiosFetchHotelBillingAll');
+    console.log(res.data);
+
+    dispatch(fetchHotelBillingAll(res.data));
+}).catch((err) => {
+        console.log(err);
+});
+};
+
+export const axiosFetchHotelBillingCount = () => (dispatch) => {
+    //get admin token
+    const token = localStorage.getItem('admin_token');
+
+    axios.get('http://localhost:3010/hotelBillings/aggregate/count', {
+        headers: {
+            token,
+        },
+    })
+        .then((res) => {
+        console.log('--- after axiosFetchHotelBillingCount');
+    console.log(res.data);
+
+    dispatch(fetchHotelBillingCount(res.data));
+}).catch((err) => {
+        console.log(err);
+});
+};
+
+export const axiosFetchHotelBillingTotal = () => (dispatch) => {
+    //get admin token
+    const token = localStorage.getItem('admin_token');
+
+    axios.get('http://localhost:3010/hotelBillings/aggregate/total', {
+        headers: {
+            token,
+        },
+    })
+        .then((res) => {
+        console.log('--- after axiosFetchHotelBillingTotal');
+    console.log(res.data);
+
+    dispatch(fetchHotelBillingTotal(res.data));
+}).catch((err) => {
+        console.log(err);
+});
+};
+
+
+
 
 export const axiosFetchLogPages = () => (dispatch) => {
   //get admin token
