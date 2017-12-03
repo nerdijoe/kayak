@@ -21,6 +21,13 @@ import {
   axiosFetchCarBillingAll,
   axiosFetchCarBillingCount,
   axiosFetchCarBillingTotal,
+
+  axiosFetchHotelBillingAll,
+  axiosFetchHotelBillingCustom,
+  axiosFetchHotelBillingName,
+  axiosFetchHotelBillingCity,
+  axiosFetchHotelBillingCumulative,
+  
   axiosFetchUser,
 
   axiosFetchFlight,
@@ -87,7 +94,12 @@ class App extends Component {
       this.props.axiosFetchCarBillingCount();
       this.props.axiosFetchCarBillingTotal();
 
-
+      this.props.axiosFetchHotelBillingAll();
+      this.props.axiosFetchHotelBillingCustom();
+      this.props.axiosFetchHotelBillingName();
+      this.props.axiosFetchHotelBillingCity();
+      this.props.axiosFetchHotelBillingCumulative();
+      
       this.props.axiosFetchAirport();
       this.props.axiosFetchAirline();
       this.props.axiosFetchUser();
@@ -205,8 +217,12 @@ const mapDispatchToProps = (dispatch) => {
     axiosFetchAirline: () => { dispatch(axiosFetchAirline()); },
     axiosFetchHotel: () => { dispatch(axiosFetchHotel()); },
 
+    axiosFetchHotelBillingAll: () => { dispatch(axiosFetchHotelBillingAll()); },
+    axiosFetchHotelBillingCustom: () => { dispatch(axiosFetchHotelBillingCustom()); },
+    axiosFetchHotelBillingName: () => { dispatch(axiosFetchHotelBillingName()); },
+    axiosFetchHotelBillingCity: () => { dispatch(axiosFetchHotelBillingCity()); },
+    axiosFetchHotelBillingCumulative: () => { dispatch(axiosFetchHotelBillingCumulative()); },
 
-    
     axiosFetchLogPages: () => { dispatch(axiosFetchLogPages()); },
     axiosFetchLogPagesCount: () => { dispatch(axiosFetchLogPagesCount()); },
     axiosFetchLogSearches: () => { dispatch(axiosFetchLogSearches()); },

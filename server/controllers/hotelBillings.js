@@ -13,12 +13,13 @@ exports.getUserBillings = (req, res) => {
 
   HotelBilling
     .find({ userId })
+    .sort({startDate: -1})
     .populate('hotel')
     .exec((err, results) => {
-    console.log('getAll results=', results);
-  if (err) res.json(err);
-  res.json(results);
-});
+      console.log('getAll results=', results);
+      if (err) res.json(err);
+      res.json(results);
+    });
 };
 
 // router.post('/book', helper.auth, hotelBillingController.book);
@@ -46,6 +47,8 @@ exports.book = (req, res) => {
 
       const booking = HotelBilling({
         userId: req.decoded.id,
+        hotelName: hotel.name,
+        hotelCity: hotel.city,
         hotel,
         startDate: data.startDate,
         endDate: data.endDate,
@@ -75,10 +78,10 @@ exports.getAll = (req, res) => {
     // .where('dealer').equals(mongoose.Types.ObjectId('5a0ea59c0837c46a7e3f11f5'))
     .populate('hotel')
     .exec((err, results) => {
-    console.log('getAll results=', results);
-  if (err) res.json(err);
-  res.json(results);
-});
+      console.log('getAll results=', results);
+      if (err) res.json(err);
+      res.json(results);
+    });
 };
 
 // router.get('/:billingId', helper.authAdmin, hotelBillingController.getOne);
@@ -97,49 +100,155 @@ exports.getOne = (req, res) => {
 
 
 // router.get('/aggregate/:type', helper.authAdmin, hotelBillingController.aggregate);
-// exports.aggregate = (req, res) => {
-//   const type = req.params.type;
-//
-//   switch (type) {
-//     case 'count': {
-//       // count how many dealers
-//       CarBilling
-//         .aggregate([
-//           {
-//             $group: {
-//               _id: '$dealer',
-//               count: { $sum: 1 },
-//             },
-//           }], (err, result) => {
-//           CarDealer.populate(result, { path: '_id' }, (err, populatedTransactions) => {
-//             // Your populated translactions are inside populatedTransactions
-//             if (err) res.json(err);
-//             res.json(populatedTransactions);
-//           });
-//
-//         });
-//       break;
-//     }
-//     case 'total': {
-//       // sum of total amount per dealer
-//       CarBilling
-//         .aggregate([
-//           {
-//             $group: {
-//               _id: '$dealer',
-//               total: { $sum: '$totalAmount' },
-//             },
-//           },
-//         ], (err, result) => {
-//           CarDealer.populate(result, { path: '_id' }, (err, populatedTransactions) => {
-//             // Your populated translactions are inside populatedTransactions
-//             if (err) res.json(err);
-//             res.json(populatedTransactions);
-//           });
-//         });
-//       break;
-//     }
-//     default:
-//       res.json('invalid type');
-//   }
-// };
+exports.aggregate = (req, res) => {
+  const type = req.params.type;
+
+  switch (type) {
+    case 'count': {
+      // count how many hotels
+      HotelBilling
+        .aggregate([
+          {
+            $group: {
+              _id: '$hotel',
+              count: { $sum: 1 },
+            },
+          }], (err, result) => {
+          Hotel.populate(result, { path: '_id' }, (err, populatedTransactions) => {
+            // Your populated translactions are inside populatedTransactions
+            if (err) res.json(err);
+            res.json(populatedTransactions);
+          });
+
+        });
+      break;
+    }
+    case 'total': {
+      // sum of total amount per dealer
+      HotelBilling
+        .aggregate([
+          {
+            $group: {
+              _id: '$hotel',
+              total: { $sum: '$totalAmount' },
+            },
+          },
+        ], (err, result) => {
+          Hotel.populate(result, { path: '_id' }, (err, populatedTransactions) => {
+            // Your populated translactions are inside populatedTransactions
+            if (err) res.json(err);
+            res.json(populatedTransactions);
+          });
+        });
+      break;
+    }
+    case 'cumulative': {
+      // count how many hotels
+      HotelBilling
+        .aggregate([
+          {
+            $group: {
+              _id: '',
+              count: { $sum: 1 },
+              total: { $sum: '$totalAmount' },
+              days: { $sum: '$daysBooked' },
+              rooms: { $sum: '$qtyBooked' },
+              prices: { $sum: '$priceBooked' },
+
+            },
+          }], (err, result) => {
+          if (err) res.json(err);
+          res.json(result[0]);
+        });
+      break;
+    }
+    case 'name': {
+      // only return 2017 created bookings
+      const startDate = new Date(2017, 1, 1);
+      const endDate = new Date(2017, 12, 1);
+      
+      console.log('startDate = ', startDate);
+      console.log('endDate=', endDate);
+      HotelBilling
+        .aggregate(
+          [
+            { $match: { createdAt: { $gte: startDate, $lte: endDate } } },
+            {
+              $group: {
+                _id: '$hotelName',
+                count: { $sum: 1 },
+                total: { $sum: '$totalAmount' },
+                days: { $sum: '$daysBooked' },
+                rooms: { $sum: '$qtyBooked' },
+                prices: { $sum: '$priceBooked' },
+
+              },
+            },
+            {
+              $sort: { total: -1 },
+            },
+          ],
+          (err, result) => {
+            if (err) res.json(err);
+            res.json(result);
+          }
+        );
+      break;
+    }
+
+    case 'city': {
+      // count how many hotels
+      HotelBilling
+        .aggregate([
+          {
+            $group: {
+              _id: '$hotelCity',
+              count: { $sum: 1 },
+              total: { $sum: '$totalAmount' },
+              days: { $sum: '$daysBooked' },
+              rooms: { $sum: '$qtyBooked' },
+              prices: { $sum: '$priceBooked' },
+
+            },
+          },
+          {
+            $sort: { total: -1 },
+          },
+        ], (err, result) => {
+          if (err) res.json(err);
+          res.json(result);
+        });
+      break;
+    }
+    case 'custom': {
+      // count how many hotels
+      HotelBilling
+        .aggregate([
+          {
+            $group: {
+              _id: '$hotel',
+              count: { $sum: 1 },
+              total: { $sum: '$totalAmount' },
+              days: { $sum: '$daysBooked' },
+              rooms: { $sum: '$qtyBooked' },
+              prices: { $sum: '$priceBooked' },
+
+            },
+          },
+          {
+            $sort: { total: -1 },
+          },
+        ], (err, result) => {
+          Hotel.populate(result, { path: '_id' }, (err, populatedTransactions) => {
+            // Your populated translactions are inside populatedTransactions
+            if (err) res.json(err);
+            res.json(populatedTransactions);
+          });
+
+        });
+      break;
+    }
+    default:
+      res.json('invalid type');
+  }
+};

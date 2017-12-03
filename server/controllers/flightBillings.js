@@ -9,9 +9,10 @@ const FlightBilling = require('../models/mongooseFlightBilling');
 exports.getUserBillings = (req, res) => {
   console.log('getUserBillings req.decoded.id=', req.decoded.id);
   const userId = req.decoded.id;
-
+  // need to be sorted based on the departureTime
   FlightBilling
     .find({ userId })
+    .sort({ startDate: -1 })
     .populate('flight')
     .exec((err, results) => {
     console.log('getAll results=', results);
