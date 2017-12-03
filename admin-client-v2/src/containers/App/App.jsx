@@ -58,7 +58,14 @@ import {
   axiosFetchLogSearches,
   axiosFetchLogSearchesType,
   axiosFetchLogSearchesDealerCity,
-
+  axiosFetchLogSearchesHotelCity,
+  axiosFetchLogSearchesAirportA,
+  axiosFetchLogSearchesAirportB,
+  axiosFetchLogSearchesSeats,
+  axiosFetchLogSearchesClassType,
+  axiosFetchLogSearchesRooms,
+  axiosFetchLogSearchesGuests,
+  
 } from '../../actions';
 
 
@@ -147,7 +154,13 @@ class App extends Component {
       this.props.axiosFetchLogSearches();
       this.props.axiosFetchLogSearchesType();
       this.props.axiosFetchLogSearchesDealerCity();
-
+      this.props.axiosFetchLogSearchesHotelCity();
+      this.props.axiosFetchLogSearchesAirportA();
+      this.props.axiosFetchLogSearchesAirportB();
+      this.props.axiosFetchLogSearchesSeats();
+      this.props.axiosFetchLogSearchesClassType();
+      this.props.axiosFetchLogSearchesRooms();
+      this.props.axiosFetchLogSearchesGuests();
       
       if(localStorage.getItem('admin_token') == null) {
         this.props.history.push('/signin');
@@ -277,6 +290,15 @@ const mapDispatchToProps = (dispatch) => {
     axiosFetchLogSearchesType: () => { dispatch(axiosFetchLogSearchesType()); },
     axiosFetchLogSearchesDealerCity: () => { dispatch(axiosFetchLogSearchesDealerCity()); },
     
+    axiosFetchLogSearchesHotelCity: () => { dispatch(axiosFetchLogSearchesHotelCity()); },
+    axiosFetchLogSearchesAirportA: () => { dispatch(axiosFetchLogSearchesAirportA()); },
+    axiosFetchLogSearchesAirportB: () => { dispatch(axiosFetchLogSearchesAirportB()); },
+    axiosFetchLogSearchesSeats: () => { dispatch(axiosFetchLogSearchesSeats()); },
+    axiosFetchLogSearchesClassType: () => { dispatch(axiosFetchLogSearchesClassType()); },
+    axiosFetchLogSearchesRooms: () => { dispatch(axiosFetchLogSearchesRooms()); },
+    axiosFetchLogSearchesGuests: () => { dispatch(axiosFetchLogSearchesGuests()); },
+    
+
 };
 
 };
