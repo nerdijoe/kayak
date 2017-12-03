@@ -360,7 +360,7 @@ export const searchHotel = (data) => {
     };
 };
 
-//-----------------------------------------------------------------
+
 // export const fetchHotelBillingAll = (data) => {
 //     return {
 //         type: actionType.FETCH_HOTEL_BILLING_ALL,
@@ -382,7 +382,7 @@ export const searchHotel = (data) => {
 //     };
 // };
 
-
+//hotel billing search by data month year
 export const fetchHotelBillingSearchDate = (data) => {
     return {
         type: actionType.FETCH_HOTEL_BILLING_SEARCH_DATE,
@@ -401,6 +401,26 @@ export const fetchHotelBillingSearchYear = (data) => {
         data,
     };
 };
+//flight billing search by data month year
+export const fetchFlightBillingSearchDate = (data) => {
+    return {
+        type: actionType.FETCH_FLIGHT_BILLING_SEARCH_DATE,
+        data,
+    };
+};
+export const fetchFlightBillingSearchMonth = (data) => {
+    return {
+        type: actionType.FETCH_FLIGHT_BILLING_SEARCH_MONTH,
+        data,
+    };
+};
+export const fetchFlightBillingSearchYear = (data) => {
+    return {
+        type: actionType.FETCH_FLIGHT_BILLING_SEARCH_YEAR,
+        data,
+    };
+};
+
 
 //-------------------------------------------------------------------
 

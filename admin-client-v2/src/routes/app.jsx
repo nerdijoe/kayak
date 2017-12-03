@@ -19,6 +19,7 @@ import UserList from 'views/Users/UserList';
 import FlightList from 'views/Flights/FlightList';
 import HotelList from 'views/Hotels/HotelList';
 import HotelBillingList from 'views/HotelBillings/HotelBillingList';
+import FlightBillingList from 'views/FlightBillings/FlightBillingList';
 
 const appRoutes = [
     { path: "/dashboardkayak", name: "Car Stats", icon: "pe-7s-graph", component: DashboardKayak },
@@ -36,7 +37,7 @@ const appRoutes = [
     { path: "/car", name: "Car Listing", icon: "pe-7s-car", component: CarList },
     { path: "/carBilling", name: "Car Billings", icon: "pe-7s-car", component: CarBillingList },
     { path: "/hotelBilling", name: "Hotel Billings", icon: "pe-7s-car", component: HotelBillingList },
-
+    { path: "/flightBilling", name: "Flight Billings", icon: "pe-7s-car", component: FlightBillingList },
     { path: "/flight", name: "Flight Listing", icon: "pe-7s-plane", component: FlightList },
     { path: "/hotel", name: "Hotel Listing", icon: "pe-7s-door-lock", component: HotelList },
     // { path: "/signin", name: "Sign In", icon: "pe-7s-bell", component: SignIn },
