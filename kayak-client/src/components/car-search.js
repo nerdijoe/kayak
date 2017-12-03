@@ -8,8 +8,6 @@ import {bindActionCreators} from 'redux';
 class CarSearch extends Component {
     constructor(props) {
         super(props);
-        // this.props.filterData(this.props.flightData);
-        console.log("filter data was called");
     }
 
     /*    componentWillMount() {

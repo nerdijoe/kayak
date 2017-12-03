@@ -190,7 +190,7 @@ class Dashboard extends Component {
                     <Row>
 
                     <Row>
-                        <Col md={6}>
+                        <Col md={12}>
                             <Card
                                 id="chartActivity"
                                 title="Total Clicks per Page"
@@ -214,8 +214,9 @@ class Dashboard extends Component {
                                 // }
                             />
                         </Col>
-
-                        <Col md={6}>
+                    </Row>
+                    <Row>
+                        <Col md={12}>
                             <Card
                                 id="chartActivity"
                                 title="2017 Total Clicks"

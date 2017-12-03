@@ -9,6 +9,8 @@ const cors = require('cors');
 const path = require('path');
 require('dotenv').config();
 
+const action = require('./helpers/actionConstants');
+
 const db = require('./models');
 
 const app = express();
@@ -104,12 +106,12 @@ app.use('/carbillings', carBillings);
 app.use('/logs', log);
 
 const hotels = require('./routes/hotels');
-const hotelBillings = require('./routes/flightBillings');
+const hotelBillings = require('./routes/hotelBillings');
 app.use('/hotels', hotels);
 app.use('/hotelBillings', hotelBillings);
 
 const flights = require('./routes/flights');
-const flightBillings = require('./routes/hotelBillings');
+const flightBillings = require('./routes/flightBillings');
 app.use('/flights', flights);
 app.use('/flightbillings', flightBillings);
 
@@ -168,6 +170,36 @@ passport.use('admin', new LocalStrategy({ usernameField: 'email', passwordField:
     done('Error');
   });
 }));
+
+// ------- Kafka -------
+const kafka = require('./routes/kafka/client');
+
+passport.use('kafka_user', new LocalStrategy({ usernameField: 'email', passwordField: 'password' }, (username, password, cb) => {
+  console.log('In Passport, going to make kafka.make_request');
+
+  kafka.make_request('request_topic', { action: action.USER_SIGN_IN, username: username, password: password }, (err, results) => {
+    console.log('passport.use -> in result');
+    console.log('   results=', results);
+    if (err) {
+      cb(err, {});
+    } else {
+      // if (results.code == 200) {
+      //   console.log(' results.code == 200');
+      //   cb(null,{ username, password });
+      // } else {
+      //   console.log(' else results.code');
+      //   cb(null,false);
+      // }
+
+      if (results) {
+        cb(null, results);
+      } else {
+        cb(null, false);
+      }
+    }
+  });
+}));
+
 
 const port = process.env.PORT || '3010';
 

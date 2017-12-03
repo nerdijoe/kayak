@@ -2,12 +2,18 @@
  * Created by ManaliJain on 11/29/17.
  */
 import React,{Component} from 'react';
+const moment = require('moment');
 
 class CarBooking extends Component{
 
     render(){
-       let carsData = this.props.carsData;
-       let carSelected = this.props.carSelected;
+        let carsData = this.props.carsData;
+        let carSelected = this.props.carSelected;
+        const startDate = moment(carsData.searchParams.startDate, 'MM/DD/YYYY');
+        const endDate = moment(carsData.searchParams.endDate, 'MM/DD/YYYY');
+        const daysBooked = endDate.diff(startDate, 'days');
+        let price = carSelected.price * daysBooked;
+
         return(
             <div>
                 <div className = "col-sm-offset-1 col-sm-4">
@@ -70,7 +76,7 @@ class CarBooking extends Component{
                     <div className="form-group row">
                         <label className="col-sm-4 col-form-label labelColorBooking">Price :</label>
                         <div className="col-sm-6">
-                            <label className="col-form-label labelColorBooking">${carSelected.price}</label>
+                            <label className="col-form-label labelColorBooking">${price}</label>
                         </div>
                     </div>
 

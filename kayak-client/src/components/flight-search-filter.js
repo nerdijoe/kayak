@@ -18,17 +18,16 @@ class FlightFilter extends Component {
             hourHigh:0,
             classFilter:[]
         }
-        // this.props.filterData(this.props.flightData);
     }
     componentWillMount() {
-        let i,low,max, flightData = this.props.flightData;
-        for ( i=0 ; i<flightData.length ; i++) {
-            if (!max || parseInt(flightData[i]['price']) > parseInt(max['price']))
-                max = flightData[i];
+        let i,low ='',max ='', flightsData = this.props.flightsData.flightSearch;
+        for ( i=0 ; i<flightsData.length ; i++) {
+            if (!max || parseInt(flightsData[i]['price']) > parseInt(max['price']))
+                max = flightsData[i];
         }
-        for ( i=0 ; i<flightData.length ; i++) {
-            if (!low || parseInt(flightData[i]['price']) < parseInt(low['price']))
-                low = flightData[i];
+        for ( i=0 ; i<flightsData.length ; i++) {
+            if (!low || parseInt(flightsData[i]['price']) < parseInt(low['price']))
+                low = flightsData[i];
         }
         if (low !== '' && max !== '') {
             this.state = {
@@ -37,24 +36,33 @@ class FlightFilter extends Component {
                 priceLow: low.price,
                 priceHigh: max.price,
                 departureHourSliderLow:0,
-                departureHourSliderHigh:0,
+                departureHourSliderHigh:24,
                 arrivalHourSliderLow:0,
-                arrivalHourSliderHigh:0,
+                arrivalHourSliderHigh:24,
                 classFilter: []
             }
         }
     }
+    getDateHours = (date)=>{
+        let newDate = new Date(date);
+        let hours = newDate.getHours();
+        return hours;
+    }
     applyFilter = ()=>{
-        var flightData = this.props.flightData;
+        var flightsData = this.props.flightsData.flightSearch;
         var lowPrice = this.state.priceSliderLow, highPrice = this.state.priceSliderHigh,
             departureHourHigh = this.state.departureHourSliderHigh,departureHourLow = this.state.departureHourSliderLow,
         arrivalHourHigh = this.state.arrivalHourSliderHigh,arrivalHourLow = this.state.arrivalHourSliderLow;
-        var filteredFlightData = flightData.filter(flight=>flight.price>=lowPrice & flight.price<=highPrice);
-        filteredFlightData = filteredFlightData.filter(flight=>flight.departureDate.getHours()>=departureHourLow & flight.departureDate.getHours()<=departureHourHigh);
-        filteredFlightData = filteredFlightData.filter(flight=>flight.arrivalDate.getHours()>=arrivalHourHigh & flight.departureDate.getHours()<=arrivalHourLow);
+        var filteredFlightData = flightsData.filter(flight=>flight.price>=lowPrice & flight.price<=highPrice);
+        // filteredFlightData = filteredFlightData.filter(flight=> new Date(flight.departTime).getHours()>=departureHourLow && new Date(flight.departTime).getHours()<=departureHourHigh);
+        // filteredFlightData = filteredFlightData.filter(flight=> new Date(flight.arrivalTime).getHours()>=arrivalHourHigh && new Date(flight.arrivalTime).getHours()<=arrivalHourLow);
+        filteredFlightData = filteredFlightData.filter
+        (flight=> this.getDateHours(flight.departTime)>=departureHourLow && this.getDateHours(flight.departTime)<=departureHourHigh);
+        filteredFlightData = filteredFlightData.filter
+        (flight=> this.getDateHours(flight.arrivalTime)>=arrivalHourLow && this.getDateHours(flight.arrivalTime)<=arrivalHourHigh);
         let classFilter = this.state.classFilter;
         if (classFilter.length > 0) {
-            filteredFlightData = filteredFlightData.filter(flight => classFilter.indexOf(flight.class) > -1);
+            filteredFlightData = filteredFlightData.filter(flight => classFilter.indexOf(flight.class.toLowerCase()) > -1);
         }
         console.log(filteredFlightData);
         this.props.flightFilterData(filteredFlightData);
@@ -62,7 +70,9 @@ class FlightFilter extends Component {
     classModified = (event,className)=>{
         if(event.target.checked === true){
             let classFilter = this.state.classFilter;
-            classFilter.push(className);
+            if(classFilter.indexOf(className) < 0) {
+                classFilter.push(className);
+            }
             this.setState({
                 ...this.state,
                 classFilter:[classFilter]
@@ -145,20 +155,20 @@ class FlightFilter extends Component {
                         <div className="checkbox">
                             <label>
                                 <input className="i-check" type="checkbox"
-                                onChange={(event)=>this.classModified(event,'Economy')}/>Economy
+                                onChange={(event)=>this.classModified(event,'economy')}/>Economy
                             </label>
                         </div>
                         <div className="checkbox">
                             <label>
                                 <input className="i-check" type="checkbox"
-                                       onChange={(event)=>this.classModified(event,'Business')}
+                                       onChange={(event)=>this.classModified(event,'business')}
                                 />Business
                             </label>
                         </div>
                         <div className="checkbox">
                             <label>
                                 <input className="i-check" type="checkbox"
-                                onChange={(event)=>this.classModified(event,'First')}
+                                onChange={(event)=>this.classModified(event,'first')}
                                 />First
                             </label>
                         </div>
@@ -257,8 +267,8 @@ function matchDispatchToProps(dispatch){
 function mapStateToProps(state) {
     // console.log("state App", state);
     return{
-        flightData : state.flightData,
-        filterData: state.filterData
+        flightsData : state.flightsData,
+        flightFilteredData: state.flightFilteredData
     };
 }
 

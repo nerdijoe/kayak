@@ -24,10 +24,21 @@ class Cars extends Component{
         var valid = Validate.carSearch(this.state);
         console.log("car state is", this.state);
         if(valid === ''){
+            let startDateSplit = this.state.startDate.split("-");
+            let endDateSplit = this.state.endDate.split("-");
+            let startDate = startDateSplit[1] + "/" + startDateSplit[2] + "/" + startDateSplit[0];
+            let endDate = endDateSplit[1] + "/" + endDateSplit[2] + "/" + endDateSplit[0];
+            // let date1 = new Date(this.state.startDate);
+            // let date2 = new Date(this.state.endDate);
+            // let startDate = date1.toUTCString();
+            // let endDate =  date2.toUTCString();
+            // let startDate1 = startDate.getMonth()+1 + "/" + startDate.getDate() + "/" + startDate.getYear();
+            // let endDate1 = endDate.getMonth()+1 + "/" + endDate.getDate() + "/" + endDate.getYear();
+
             let payload ={
                 location: this.state.location,
-                startDate: this.state.startDate,
-                endDate: this.state.endDate,
+                startDate: startDate,
+                endDate: endDate
             }
             this.callForCarSearch(payload);
         }else{

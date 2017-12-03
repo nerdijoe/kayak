@@ -21,12 +21,41 @@ import {
   axiosFetchCarBillingAll,
   axiosFetchCarBillingCount,
   axiosFetchCarBillingTotal,
+
+  axiosFetchHotelBillingAll,
+  axiosFetchHotelBillingCustom,
+  axiosFetchHotelBillingName,
+  axiosFetchHotelBillingCity,
+  axiosFetchHotelBillingCumulative,
+
+  axiosFetchFlightBillingAll,
+  axiosFetchFlightBillingCumulative,
+  axiosFetchFlightBillingName,
+  axiosFetchFlightBillingDepAirport,
+  axiosFetchFlightBillingDepCity,
+  axiosFetchFlightBillingArrAirport,
+  axiosFetchFlightBillingArrCity,
+  axiosFetchFlightBillingClass,
+  axiosFetchFlightBillingCustom,
+
   axiosFetchUser,
+
+  axiosFetchFlight,
+  axiosFetchAirport,
+  axiosFetchAirline,
+
+  axiosFetchHotel,
+
+  axiosFetchHotelBillingCount,
+  axiosFetchHotelBillingTotal,
+
   axiosFetchLogPages,
   axiosFetchLogPagesCount,
+
   axiosFetchLogSearches,
   axiosFetchLogSearchesType,
   axiosFetchLogSearchesDealerCity,
+
 } from '../../actions';
 
 
@@ -78,12 +107,41 @@ class App extends Component {
       this.props.axiosFetchCarBillingCount();
       this.props.axiosFetchCarBillingTotal();
 
+      this.props.axiosFetchHotelBillingAll();
+      this.props.axiosFetchHotelBillingCustom();
+      this.props.axiosFetchHotelBillingName();
+      this.props.axiosFetchHotelBillingCity();
+      this.props.axiosFetchHotelBillingCumulative();
+      
+      this.props.axiosFetchFlightBillingAll();
+      this.props.axiosFetchFlightBillingCumulative();
+      this.props.axiosFetchFlightBillingName();
+      this.props.axiosFetchFlightBillingDepAirport();
+      this.props.axiosFetchFlightBillingDepCity();
+      this.props.axiosFetchFlightBillingArrAirport();
+      this.props.axiosFetchFlightBillingArrCity();
+      this.props.axiosFetchFlightBillingClass();
+      this.props.axiosFetchFlightBillingCustom();
+      
+      this.props.axiosFetchAirport();
+      this.props.axiosFetchAirline();
       this.props.axiosFetchUser();
+
+      this.props.axiosFetchFlight();
+
+      this.props.axiosFetchHotel();
+    //   this.props.axiosFetchHotelBillingAll();
+    //   this.props.axiosFetchHotelBillingCount();
+    //   this.props.axiosFetchHotelBillingTotal();
+
       this.props.axiosFetchLogPages();
       this.props.axiosFetchLogPagesCount();
+
+
       this.props.axiosFetchLogSearches();
       this.props.axiosFetchLogSearchesType();
       this.props.axiosFetchLogSearchesDealerCity();
+
       
       if(localStorage.getItem('admin_token') == null) {
         this.props.history.push('/signin');
@@ -179,7 +237,31 @@ const mapDispatchToProps = (dispatch) => {
     axiosFetchCarBillingTotal: () => { dispatch(axiosFetchCarBillingTotal());},
 
     axiosFetchUser: () => { dispatch(axiosFetchUser()); },
+
+    axiosFetchFlight: () => { dispatch(axiosFetchFlight()); },
+    axiosFetchAirport: () => { dispatch(axiosFetchAirport()); },
+    axiosFetchAirline: () => { dispatch(axiosFetchAirline()); },
     
+    axiosFetchHotel: () => { dispatch(axiosFetchHotel()); },
+
+    axiosFetchHotelBillingAll: () => { dispatch(axiosFetchHotelBillingAll()); },
+    axiosFetchHotelBillingCustom: () => { dispatch(axiosFetchHotelBillingCustom()); },
+    axiosFetchHotelBillingName: () => { dispatch(axiosFetchHotelBillingName()); },
+    axiosFetchHotelBillingCity: () => { dispatch(axiosFetchHotelBillingCity()); },
+    axiosFetchHotelBillingCumulative: () => { dispatch(axiosFetchHotelBillingCumulative()); },
+
+
+    axiosFetchFlightBillingAll: () => { dispatch(axiosFetchFlightBillingAll()); },
+    axiosFetchFlightBillingCumulative: () => { dispatch(axiosFetchFlightBillingCumulative()); },
+    axiosFetchFlightBillingName: () => { dispatch(axiosFetchFlightBillingName()); },
+    axiosFetchFlightBillingDepAirport: () => { dispatch(axiosFetchFlightBillingDepAirport()); },
+    axiosFetchFlightBillingDepCity: () => { dispatch(axiosFetchFlightBillingDepCity()); },
+    axiosFetchFlightBillingArrAirport: () => { dispatch(axiosFetchFlightBillingArrAirport()); },
+    axiosFetchFlightBillingArrCity: () => { dispatch(axiosFetchFlightBillingArrCity()); },
+    axiosFetchFlightBillingClass: () => { dispatch(axiosFetchFlightBillingClass()); },
+    axiosFetchFlightBillingCustom: () => { dispatch(axiosFetchFlightBillingCustom()); },
+    
+
     axiosFetchLogPages: () => { dispatch(axiosFetchLogPages()); },
     axiosFetchLogPagesCount: () => { dispatch(axiosFetchLogPagesCount()); },
     axiosFetchLogSearches: () => { dispatch(axiosFetchLogSearches()); },
@@ -187,6 +269,7 @@ const mapDispatchToProps = (dispatch) => {
     axiosFetchLogSearchesDealerCity: () => { dispatch(axiosFetchLogSearchesDealerCity()); },
     
 };
+
 };
 
 const connectedApp = connect(null, mapDispatchToProps)(App);

@@ -2,6 +2,8 @@ const db = require('../models');
 const passwordHash = require('password-hash');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
+const kafka = require('../routes/kafka/client');
+const action = require('../helpers/actionConstants');
 
 exports.signup = (req, res) => {
   db.User.findOne({
@@ -63,5 +65,34 @@ exports.signin = (req, res, next) => {
     profileImage: user.profileImage,
     creditCardNum: user.creditCardNum,
     creditCardFullName: user.creditCardFullName,
+  });
+};
+
+
+exports.signinKafka = (req, res) => {
+  // req.user is passed from passport
+  kafka.make_request('request_topic', { action: action.USER_SIGN_IN_TOKEN, user: req.user }, (err, results) => {
+    console.log('signinKafka');
+    // console.log('   results=', results);
+    if (err) {
+      console.log('  ----> signinKafka Error');
+      res.json(err);
+    } else {
+      res.json(results);
+    }
+  });
+};
+
+exports.signupKafka = (req, res) => {
+
+  kafka.make_request('request_topic', { action: action.USER_SIGN_UP, body: req.body }, (err, results) => {
+    console.log('signupKafka');
+    // console.log('   results=', results);
+    if (err) {
+      console.log('  ----> signupKafka Error');
+      res.json(err);
+    } else {
+      res.json(results);
+    }
   });
 };

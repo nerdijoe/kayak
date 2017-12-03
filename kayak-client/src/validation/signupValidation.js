@@ -191,9 +191,9 @@ export const flightSearch = (data) => {
     const namePattern = /^[a-zA-Z\s]+$/;
 
     let strtDate = new Date(data.departureDate);
-    let endDate = new Date(data.arrivalDate);
+    // let endDate = new Date(data.arrivalDate);
 
-    if( data.place ==='' || data.departureDate ==='' || data.arrivalDate ==='' || data.departure === '' || data.source === ''){
+    if( data.place ==='' || data.departureDate ==='' || data.destination === '' || data.source === ''){
         msg = "All fields are mandatory. Please fill all details";
         return msg;
     }
@@ -201,14 +201,14 @@ export const flightSearch = (data) => {
         msg = "Enter correct Source";
         return msg;
     }
-    if (!(namePattern.test(data.departure))) {
+    if (!(namePattern.test(data.destination))) {
         msg = "Enter correct Departure";
         return msg;
     }
-    if(strtDate > endDate){
-        msg = "Arriving date should be after the departure date";
-        return msg;
-    }
+    // if(strtDate > endDate){
+    //     msg = "Arriving date should be after the departure date";
+    //     return msg;
+    // }
     return msg;
 };
 
@@ -217,6 +217,7 @@ export const makePayment = (data) => {
     let msg = "";
     const cardNamePattern = /^[a-zA-Z\s]+$/;
     const creditCardPattern = /[0-9]{4}[0-9]{4}[0-9]{4}[0-9]{4}/;
+    const cvvPattern = /^[0-9]{3}$/;
     if( data.creditCardNum ==='' || data.creditCardFullName ==='' || data.cvv ===''){
         msg = "All fields are mandatory. Please fill all details";
         return msg;
@@ -237,6 +238,9 @@ export const makePayment = (data) => {
         msg="Enter your 3 digit cvv number";
         return msg;
     }
-    // if()
+    if(!(cvvPattern.test(data.cvv))){
+        msg="Enter your 3 digit cvv number";
+        return msg;
+    }
     return msg;
 };
