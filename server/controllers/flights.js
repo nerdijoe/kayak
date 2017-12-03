@@ -74,6 +74,7 @@ exports.search = (req, res) => {
   var arrival = data.arrivalAt;
   var departureDate = data.departureDate;
 
+
   var results = [];
   var result_json;
 

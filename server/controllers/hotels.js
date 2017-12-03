@@ -4,6 +4,9 @@ const HotelRoom = require('../models/mongooseHotelRoom');
 const HotelReview = require('../models/mongooseHotelReview');
 // const HotelReview = require('../models/mongooseHotelReview');
 // const HotelRoom = require('../models/mongooseHotelRoom');
+
+const LogSearch = require('../models/mongooseLogSearch');
+
 const DBTool = require('../helpers/DBTool');
 
 exports.editRooms = (req, res) => {
@@ -120,6 +123,35 @@ exports.search = (req, res) => {
 
   var city = data.city;
   console.log(city);
+
+
+  console.log('----------Log search---------------------')
+  console.log(`req.headers.token=[${req.headers.token}]`);
+
+  let decoded = '';
+  let userId = 0;
+  if (req.headers.token) {
+    decoded = jwt.verify(req.headers.token, process.env.JWT_KEY);
+    if (decoded) {
+      userId = decoded.id;
+    }
+  }
+  console.log('    decoded=', decoded);
+  console.log('    userId=', userId);
+
+  LogSearch.create({
+    userId,
+    type: 'hotel',
+    hotelCity: city,
+  }, (err, log) => {
+    if (err) res.json(err);
+    console.log(log);
+  });
+  console.log('----------Log search---------------------')
+
+
+
+
 
   var result = [];
 
