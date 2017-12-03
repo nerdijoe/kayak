@@ -51,6 +51,7 @@ class Flights extends Component {
                 classType: this.state.classType,
                 seats: this.state.seats
             }
+            console.log("flight payload is manali",payload);
             this.callForFlightSearch(payload);
         } else {
             this.setState({
