@@ -122,11 +122,18 @@ exports.search = (req, res) => {
   console.log(data);
 
   var city = data.city;
+  var rooms = data.rooms;
+  var guests = data.guests;
+  var startDate = data.startDate;
+  var endDate = data.endDate;
   console.log(city);
 
 
   console.log('----------Log search---------------------')
   console.log(`req.headers.token=[${req.headers.token}]`);
+
+  console.log(`city=[${city}], rooms=[${rooms}], guests=[${guests}], startDate=[${startDate}], endDate=[${endDate}]`);
+
 
   let decoded = '';
   let userId = 0;
@@ -143,15 +150,15 @@ exports.search = (req, res) => {
     userId,
     type: 'hotel',
     hotelCity: city,
+    rooms,
+    guests,
+    startDate,
+    endDate,
   }, (err, log) => {
     if (err) res.json(err);
     console.log(log);
   });
   console.log('----------Log search---------------------')
-
-
-
-
 
   var result = [];
 

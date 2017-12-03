@@ -6,6 +6,8 @@ const moment = require('moment');
 const TimeTool = require('../helpers/TimeTool');
 const DBTool = require('../helpers/DBTool');
 
+const LogSearch = require('../models/mongooseLogSearch');
+
 // Edit flight
 // /flights/:id
 // 5a1cb1f0b2e35b2b6c4e9ff9
@@ -73,6 +75,40 @@ exports.search = (req, res) => {
   var departure = data.departure;
   var arrival = data.arrivalAt;
   var departureDate = data.departureDate;
+
+  const classType = data.classType;
+  const seats = data.seats;
+
+  console.log('----------Log search---------------------')
+  console.log(`req.headers.token=[${req.headers.token}]`);
+
+  console.log(`departure=[${departure}], arrival=[${arrival}], departureDate=[${departureDate}], classType=[${classType}], seats=[${seats}]`);
+
+  let decoded = '';
+  let userId = 0;
+  if (req.headers.token) {
+    decoded = jwt.verify(req.headers.token, process.env.JWT_KEY);
+    if (decoded) {
+      userId = decoded.id;
+    }
+  }
+  console.log('    decoded=', decoded);
+  console.log('    userId=', userId);
+
+  LogSearch.create({
+    userId,
+    type: 'flight',
+    airportA: departure,
+    airportB: arrival,
+    startDate: departureDate,
+    classType,
+    seats,
+  }, (err, log) => {
+    if (err) res.json(err);
+    console.log(log);
+  });
+  console.log('----------Log search---------------------')
+
 
 
   var results = [];
