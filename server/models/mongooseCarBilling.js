@@ -6,6 +6,7 @@ const carBillingSchema = new Schema({
   userId: { type: Number, required: true },
   car: { type: Schema.Types.ObjectId, ref: 'Car', required: true },
   dealer: { type: Schema.Types.ObjectId, ref: 'CarDealer', required: true },
+  dealerCity: { type: String, default: '' },
   daysBooked: { type: Number, required: true },
   priceBooked: { type: Number, required: true },
   totalAmount: { type: Number, required: true },
