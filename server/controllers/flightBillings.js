@@ -16,6 +16,9 @@ exports.getUserBillings = (req, res) => {
     .find({ userId })
     .sort({ startDate: -1 })
     .populate('flight')
+    .populate('airline')
+    .populate('departureAirport')
+    .populate('arrivalAirport')
     .exec((err, results) => {
     console.log('getAll results=', results);
   if (err) res.json(err);

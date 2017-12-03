@@ -183,6 +183,72 @@ export const fetchHotelBillingCumulative = (data) => {
 };
 
 
+export const fetchFlightBillingAll = (data) => {
+  return {
+    type: actionType.FETCH_FLIGHT_BILLING_ALL,
+    data,
+  };
+};
+
+export const fetchFlightBillingCumulative = (data) => {
+  return {
+    type: actionType.FETCH_FLIGHT_BILLING_CUMULATIVE,
+    data,
+  };
+};
+
+export const fetchFlightBillingName = (data) => {
+  return {
+    type: actionType.FETCH_FLIGHT_BILLING_NAME,
+    data,
+  };
+};
+
+export const fetchFlightBillingDepAirport = (data) => {
+  return {
+    type: actionType.FETCH_FLIGHT_BILLING_DEP_AIRPORT,
+    data,
+  };
+};
+
+export const fetchFlightBillingDepCity = (data) => {
+  return {
+    type: actionType.FETCH_FLIGHT_BILLING_DEP_CITY,
+    data,
+  };
+};
+
+export const fetchFlightBillingArrAirport = (data) => {
+  return {
+    type: actionType.FETCH_FLIGHT_BILLING_ARR_AIRPORT,
+    data,
+  };
+};
+
+export const fetchFlightBillingArrCity = (data) => {
+  return {
+    type: actionType.FETCH_FLIGHT_BILLING_ARR_CITY,
+    data,
+  };
+};
+
+
+export const fetchFlightBillingClass = (data) => {
+  return {
+    type: actionType.FETCH_FLIGHT_BILLING_CLASS,
+    data,
+  };
+};
+
+export const fetchFlightBillingCustom = (data) => {
+  return {
+    type: actionType.FETCH_FLIGHT_BILLING_CUSTOM,
+    data,
+  };
+};
+
+
+
 // add by NaYue 11/21/2017
 
 export const fetchUser = (data) => {
@@ -617,6 +683,49 @@ export const axiosFetchHotelBillingCumulative = () => (dispatch) => {
       console.log(err);
     });
 };
+
+
+// --- Flight
+export const axiosFetchFlightBillingAll = () => (dispatch) => {
+  //get admin token
+  const token = localStorage.getItem('admin_token');
+
+  axios.get('http://localhost:3010/flightbillings', {
+    headers: {
+      token,
+    },
+  })
+    .then((res) => {
+      console.log('--- after axiosFetchFlightBillingAll');
+      console.log(res.data);
+
+      dispatch(fetchFlightBillingAll(res.data));
+    }).catch((err) => {
+      console.log(err);
+    });
+};
+
+export const axiosFetchFlightBillingCumulative = () => (dispatch) => {
+  //get admin token
+  const token = localStorage.getItem('admin_token');
+
+  axios.get('http://localhost:3010/flightbillings/aggregate/cumulative', {
+    headers: {
+      token,
+    },
+  })
+    .then((res) => {
+      console.log('--- after axiosFetchFlightBillingCumulative');
+      console.log(res.data);
+
+      dispatch(fetchFlightBillingCumulative(res.data));
+    }).catch((err) => {
+      console.log(err);
+    });
+};
+
+
+
 
 
 export const axiosFetchUser = () => (dispatch) => {
