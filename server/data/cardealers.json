@@ -1,0 +1,71 @@
+[{
+  "name": "Hertz",
+  "address": "1000 Market St",
+  "city": "San Francisco",
+  "state": "CA",
+  "country": "United States",
+  "zipcode": "94100"
+},{
+  "name": "Enterprise",
+  "address": "300 S Almaden Blvd",
+  "city": "San Jose",
+  "state": "CA",
+  "country": "United States",
+  "zipcode": "95110"
+},{
+  "name": "Dolex",
+  "address": "201 Willow St",
+  "city": "San Jose",
+  "state": "CA",
+  "country": "United States",
+  "zipcode": "95110"
+},{
+  "name": "Alamo",
+  "address": "3355 Admiral Boland Way ",
+  "city": "San Diego",
+  "state": "CA",
+  "country": "United States",
+  "zipcode": "92101"
+},{
+  "name": "DOABA Motors",
+  "address": "478 E Santa Clara St",
+  "city": "San Jose",
+  "state": "CA",
+  "country": "United States",
+  "zipcode": "95112"
+},{
+  "name": "QCO Auto",
+  "address": "56 N 13th St #101",
+  "city": "San Jose",
+  "state": "CA",
+  "country": "United States",
+  "zipcode": "95112"
+},{
+  "name": "Auto Plaza",
+  "address": "798 S 1st St",
+  "city": "San Jose",
+  "state": "CA",
+  "country": "United States",
+  "zipcode": "95113"
+},{
+  "name": "Crow's Auto",
+  "address": "1141 S 1st St",
+  "city": "San Jose",
+  "state": "CA",
+  "country": "United States",
+  "zipcode": "95110"
+},{
+  "name": "Alberto's Auto Rental",
+  "address": "1260 E Santa Clara St",
+  "city": "San Jose",
+  "state": "CA",
+  "country": "United States",
+  "zipcode": "95116"
+},{
+  "name": "Citicars",
+  "address": "1295 W San Carlos St",
+  "city": "San Jose",
+  "state": "CA",
+  "country": "United States",
+  "zipcode": "95126"
+}]
