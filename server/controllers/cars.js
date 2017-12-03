@@ -164,7 +164,7 @@ exports.searchByQuery = (req, res) => {
   console.log('----------Log search---------------------')
   console.log(`req.headers.token=[${req.headers.token}]`);
 
-  console.log(`city=[${searchString.city}], startDate=[${searchString.startDate}]`);
+  console.log(`city=[${searchString.city}], startDate=[${searchString.startDate}], endDate=[${searchString.endDate}]`);
 
 
   let decoded = '';
@@ -183,6 +183,7 @@ exports.searchByQuery = (req, res) => {
     type: 'car',
     dealerCity: searchString.city,
     startDate: searchString.startDate,
+    endDate: searchString.endDate,
   }, (err, log) => {
     if (err) res.json(err);
     console.log(log);
