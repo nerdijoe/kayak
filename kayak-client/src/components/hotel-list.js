@@ -1,6 +1,18 @@
 import React , {Component} from 'react';
-
+import {hBookingSelected, bookingFlag} from "../actions/index";
+import { withRouter } from 'react-router-dom';
+import {connect} from 'react-redux';
 class HotelList extends Component{
+
+    handleHotelBooking =() => {
+        let hotelSelection = this.props.hotel;
+        let payload = 'H';
+        this.props.hBookingSelected(hotelSelection);
+        this.props.bookingFlag(payload);
+        this.props.history.push('/booking');
+        console.log('insdde booking hotel');
+    }
+
     render(){
         const hotel = this.props.hotel;
         console.log(hotel);
@@ -64,7 +76,7 @@ class HotelList extends Component{
                             <span className="booking-item-price-from">Size: {hotel.roomType}</span>
                             <br/>
                             <span className="booking-item-price">${hotel.price}</span><span>/night</span>
-                            <span className="btn btn-book">Book</span>
+                            <span className="btn btn-book" onClick={this.handleHotelBooking}>Book</span>
                         </div>
                     </div>
                 </a>
@@ -73,4 +85,19 @@ class HotelList extends Component{
     }
 }
 
-export default HotelList;
+function mapDispatchToProps(dispatch) {
+    return {
+        hBookingSelected: (data) => dispatch(hBookingSelected(data)),
+        bookingFlag: (data) => dispatch(bookingFlag(data))
+    };
+}
+
+function mapStateToProps(state) {
+    return{
+        bookingSelectedProp : state.hBookingSelected,
+        bookingFlagProp : state.bookingFlag
+    };
+}
+
+const hotelList = withRouter(connect(mapStateToProps, mapDispatchToProps)(HotelList));
+export default hotelList;

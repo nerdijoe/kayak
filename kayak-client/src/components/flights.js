@@ -40,7 +40,7 @@ class Flights extends Component {
     }
 
     handleFlightSearch = (event) => {
-        var valid = Validate.carSearch(this.state);
+        var valid = Validate.flightSearch(this.state);
         console.log("flight state is", this.state);
         if (valid === '') {
             let payload = {
@@ -90,6 +90,14 @@ class Flights extends Component {
     }
     
     render() {
+        let messagediv =null;
+        if(this.state.message !== ''){
+            messagediv = <div className="clearfix">
+                <div className="alert alert-info text-center" role="alert">{this.state.message}</div>
+            </div>;
+        } else{
+            messagediv = <div></div>;
+        }
         return (
             <div>
                 <div className="nav">
@@ -102,6 +110,7 @@ class Flights extends Component {
                         </li>
                     </ul>
                     <div className="tab-content">
+                        {messagediv}
                         <div className={this.isFLightTabActive('round')} id="flight-search-1">
                             <div className="row">
                                 <div className="col-md-5">
@@ -314,7 +323,7 @@ class Flights extends Component {
                         </div>
                     </div>
                 </div>
-                <button className="btn-lg btn-search" type="submit" onClick={() => this.handleFlightSearch()}>Search for
+                <button className="btn-lg btn-search" type="submit" onClick={this.handleFlightSearch}>Search for
                     Flights -->
                 </button>
             </div>

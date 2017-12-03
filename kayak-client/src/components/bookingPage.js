@@ -76,20 +76,18 @@ class BookingPage extends Component{
                         let flightsData = this.props.flightsDataProp;
                         let payload = {
                             flightId: bookingSelected.flightSelected._id,
-                            flightClass: flightsData.searchParams.class,
-                            qtyBooked: flightsData.searchParams.quantity,
-                            startDate: flightsData.searchParams.startDate,
-                            endDate: flightsData.searchParams.endDate
+                            flightClass: bookingSelected.flightSelected.class,
+                            qtyBooked: flightsData.searchParams.seats,
                         }
                         this.callFlightAPIForBilling(payload,userToken);
                     }
                     if(bookingSelected.bookingFlag === "H"){
                         let hotelsData = this.props.hotelsDataProp;
                         let payload = {
-                            hotelId: bookingSelected.hotelsData._id,
+                            hotelId: bookingSelected.hotelSelected._id,
                             startDate: hotelsData.searchParams.startDate,
                             endDate: hotelsData.searchParams.endDate,
-                            qtyBooked: flightsData.searchParams.quantity,
+                            qtyBooked: hotelsData.searchParams.rooms,
                         }
                         this.callHotelAPIForBilling(payload,userToken);
                     }
@@ -133,7 +131,7 @@ class BookingPage extends Component{
     callFlightAPIForBilling = (payload,userToken) => {
         console.log(" carrrr  payload is",payload);
         console.log(" carrrr  usertoken  is",userToken);
-        API.makeCarBooking(payload,userToken)
+        API.makeFlightBooking(payload,userToken)
             .then((res) => {
                 console.log(res);
                 console.log("billing response came",res);
@@ -157,9 +155,9 @@ class BookingPage extends Component{
         })
     };
     callHotelAPIForBilling = (payload,userToken) => {
-        console.log(" carrrr  payload is",payload);
-        console.log(" carrrr  usertoken  is",userToken);
-        API.makeCarBooking(payload,userToken)
+        console.log(" hotel  payload is",payload);
+        console.log(" hotel  usertoken  is",userToken);
+        API.makeHotelBooking(payload,userToken)
             .then((res) => {
                 console.log(res);
                 console.log("billing response came",res);
@@ -201,12 +199,12 @@ class BookingPage extends Component{
                 switchBookingDecision = <CarBooking carsData = {carsData} carSelected = {bookingSelected.carSelected} />
             }
             if(bookingSelected.bookingFlag === "F"){
-                let flightsData = this.props.carsDataProp;
-                switchBookingDecision = <FlightBooking flightData = {flightsData} flightSelected = {bookingSelected.flightSelected}/>
+                let flightsData = this.props.flightsDataProp;
+                switchBookingDecision = <FlightBooking flightsData = {flightsData} flightSelected = {bookingSelected.flightSelected}/>
             }
             if(bookingSelected.bookingFlag === "H"){
-                let hotelsData = this.props.carsDataProp;
-                switchBookingDecision = <HotelBooking hotelData = {hotelsData} hotelSelected = {bookingSelected.hotelSelected}/>
+                let hotelsData = this.props.hotelsDataProp;
+                switchBookingDecision = <HotelBooking hotelsData = {hotelsData} hotelSelected = {bookingSelected.hotelSelected}/>
             }
             // let userLoginData = localStorage.getItem('user_login_data');
             // let loginData = null;
@@ -312,7 +310,7 @@ class BookingPage extends Component{
                                                 <div className="form-group row">
                                                     <label className="col-sm-2 col-form-label labelColorBooking">CVC</label>
                                                     <div className="col-sm-2">
-                                                        <input type="number" className="form-control" placeholder="xxx"
+                                                        <input type="password" className="form-control" placeholder="xxx"
                                                                value={this.state.cvv}
                                                                onChange={(event) => {
                                                                    this.setState({...this.state,cvv: event.target.value});
