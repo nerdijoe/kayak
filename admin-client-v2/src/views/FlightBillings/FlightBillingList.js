@@ -224,6 +224,7 @@ class FlightBillingList extends Component {
           <thead>
             <tr>
               <th>ID</th>
+              <th>Flight Number</th>
               <th>Airline</th>
               <th>Departure Airport</th>
               <th>Arrival Airport</th>
@@ -240,13 +241,14 @@ class FlightBillingList extends Component {
                 return (
                   <tr key={item._id}>
                     <td>{item._id}</td>
+                    <td>{item.flightNumber}</td>
                     <td>{item.airline.name}</td>
                     <td>{item.departureAirport.name}</td>
                     <td>{item.arrivalAirport.name}</td>
                     <td>{item.priceBooked}</td>
                     <td>{item.qtyBooked}</td>
                     <td>{item.totalAmount}</td>
-                    <td>{Moment(item.createdAt).format('L LT')}</td>
+                    <td>{Moment(item.createdAt).format('L')}</td>
                     <td>
                       <Button bsStyle="info" onClick={() => this.openDetailModal(item)}>Detail</Button>
                       {/* <DropdownButton title="..." id="bg-nested-dropdown">

@@ -84,11 +84,11 @@ class Detail extends Component {
                     </tr>
                     <tr>
                     <td>Departure Time</td>
-                    <td>{Moment(this.props.detailBilling.departureTime).format('L')}</td>
+                    <td>{Moment(this.props.detailBilling.departureTime).format('L LT')}</td>
                     </tr>
                     <tr>
                     <td>Arrival Time</td>
-                    <td>{Moment(this.props.detailBilling.arrivalTime).format('L')}</td>
+                    <td>{Moment(this.props.detailBilling.arrivalTime).format('L LT')}</td>
                     </tr>
                     <tr>
                     <td>Class Type</td>
@@ -100,7 +100,7 @@ class Detail extends Component {
                     </tr>
                     <tr>
                       <td>Price Booked</td>
-                      <td>${this.props.detailBilling.priceBooked}/day</td>
+                      <td>${this.props.detailBilling.priceBooked}</td>
                     </tr>
                     <tr>
                       <td>Total Amount</td>
@@ -132,7 +132,7 @@ class Detail extends Component {
                   </tbody>
                 </Table>
               </ListGroupItem>
-              <ListGroupItem header="Airline">
+              {/*<ListGroupItem header="Airline">
                 <Table striped bordered condensed hover>
                   <tbody>
                     <tr>
@@ -148,7 +148,7 @@ class Detail extends Component {
                     </tr>
                   </tbody>
                 </Table>
-              </ListGroupItem>
+              </ListGroupItem>*/}
               <ListGroupItem header="DepartureAirport">
                   <Table striped bordered condensed hover>
                     <tbody>
@@ -160,7 +160,7 @@ class Detail extends Component {
                       <td>Address</td>
                         <td>
                           <p>{this.props.detailBilling.departureAirport.address}</p>
-                          <p>{this.props.detailBilling.departureAirport.city}, {this.props.detailBilling.departureAirport.state} {this.props.detailBilling.departureAirport.zipcode}</p>
+                          <p>{this.props.detailBilling.departureAirport.city}, {this.props.detailBilling.departureAirport.state} {this.props.detailBilling.departureAirport.country}</p>
                         </td>
                       </tr>
                     </tbody>
@@ -177,42 +177,13 @@ class Detail extends Component {
                       <td>Address</td>
                         <td>
                           <p>{this.props.detailBilling.arrivalAirport.address}</p>
-                          <p>{this.props.detailBilling.arrivalAirport.city}, {this.props.detailBilling.arrivalAirport.state} {this.props.detailBilling.arrivalAirport.zipcode}</p>
+                          <p>{this.props.detailBilling.arrivalAirport.city}, {this.props.detailBilling.arrivalAirport.state} {this.props.detailBilling.arrivalAirport.country}</p>
                         </td>
                       </tr>
                     </tbody>
                   </Table>
               </ListGroupItem>
-              <ListGroupItem header="Flight">
-                <Table striped bordered condensed hover>
-                  <tbody>
-                    <tr>
-                    <td>Flight Number</td>
-                    <td>{this.props.detailBilling.flightNumber}</td>
-                    </tr>
-                    <tr>
-                    <td>Airline</td>
-                    <td>{this.props.detailBilling.airline.name}</td>
-                    </tr>
-                    <tr>
-                    <td>Departure Airport</td>
-                    <td>{this.props.detailBilling.departureAirport.name}</td>
-                    </tr>
-                    <tr>
-                    <td>Arrival Airport</td>
-                    <td>{this.props.detailBilling.arrivalAirport.name}</td>
-                    </tr>
-                    <tr>
-                    <td>Departure Time</td>
-                    <td>{Moment(this.props.detailBilling.departureTime).format('L')}</td>
-                    </tr>
-                    <tr>
-                    <td>Arrival Time</td>
-                    <td>{Moment(this.props.detailBilling.arrivalTime).format('L')}</td>
-                    </tr>
-                  </tbody>
-                </Table>              
-              </ListGroupItem>
+
 
               </ListGroup>
             </div>
