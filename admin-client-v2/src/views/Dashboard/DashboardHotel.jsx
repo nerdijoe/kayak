@@ -52,10 +52,10 @@ class Dashboard extends Component {
         return legend;
     }
     render() {
-    const labels = this.props.hotelBillingName.map((item) => {
+    const labels = this.props.hotelBillingName.slice(0, 10).map((item) => {
       return item._id;
     });
-    const series = this.props.hotelBillingName.map((item) => {
+    const series = this.props.hotelBillingName.slice(0, 10).map((item) => {
       return item.total;
     });
 
@@ -192,13 +192,11 @@ class Dashboard extends Component {
                     </Row>
 
                     <Row>
-
-                    <Row>
                         <Col md={6}>
                             <Card
                                 id="chartActivity"
                                 title="2017 Hotel Revenue"
-                                category="Taxex included"
+                                category="Taxes included"
                                 stats="Data information certified"
                                 statsIcon="fa fa-check"
                                 content={
@@ -223,7 +221,7 @@ class Dashboard extends Component {
                             <Card
                                 id="chartActivity"
                                 title="2017 Hotel Revenue Monthly"
-                                category="All Rental Fees including Taxes"
+                                category="Taxes included"
                                 stats="Data information certified"
                                 statsIcon="fa fa-check"
                                 content={
@@ -244,7 +242,6 @@ class Dashboard extends Component {
                             />
                         </Col>
 
-                    </Row>
                     </Row>
 
                     <Row>

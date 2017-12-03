@@ -30,8 +30,14 @@ import {
 
   axiosFetchFlightBillingAll,
   axiosFetchFlightBillingCumulative,
-  
-  
+  axiosFetchFlightBillingName,
+  axiosFetchFlightBillingDepAirport,
+  axiosFetchFlightBillingDepCity,
+  axiosFetchFlightBillingArrAirport,
+  axiosFetchFlightBillingArrCity,
+  axiosFetchFlightBillingClass,
+  axiosFetchFlightBillingCustom,
+
   axiosFetchUser,
 
   axiosFetchFlight,
@@ -106,7 +112,14 @@ class App extends Component {
       
       this.props.axiosFetchFlightBillingAll();
       this.props.axiosFetchFlightBillingCumulative();
-
+      this.props.axiosFetchFlightBillingName();
+      this.props.axiosFetchFlightBillingDepAirport();
+      this.props.axiosFetchFlightBillingDepCity();
+      this.props.axiosFetchFlightBillingArrAirport();
+      this.props.axiosFetchFlightBillingArrCity();
+      this.props.axiosFetchFlightBillingClass();
+      this.props.axiosFetchFlightBillingCustom();
+      
       this.props.axiosFetchAirport();
       this.props.axiosFetchAirline();
       this.props.axiosFetchUser();
@@ -232,6 +245,14 @@ const mapDispatchToProps = (dispatch) => {
 
     axiosFetchFlightBillingAll: () => { dispatch(axiosFetchFlightBillingAll()); },
     axiosFetchFlightBillingCumulative: () => { dispatch(axiosFetchFlightBillingCumulative()); },
+    axiosFetchFlightBillingName: () => { dispatch(axiosFetchFlightBillingName()); },
+    axiosFetchFlightBillingDepAirport: () => { dispatch(axiosFetchFlightBillingDepAirport()); },
+    axiosFetchFlightBillingDepCity: () => { dispatch(axiosFetchFlightBillingDepCity()); },
+    axiosFetchFlightBillingArrAirport: () => { dispatch(axiosFetchFlightBillingArrAirport()); },
+    axiosFetchFlightBillingArrCity: () => { dispatch(axiosFetchFlightBillingArrCity()); },
+    axiosFetchFlightBillingClass: () => { dispatch(axiosFetchFlightBillingClass()); },
+    axiosFetchFlightBillingCustom: () => { dispatch(axiosFetchFlightBillingCustom()); },
+    
 
     axiosFetchLogPages: () => { dispatch(axiosFetchLogPages()); },
     axiosFetchLogPagesCount: () => { dispatch(axiosFetchLogPagesCount()); },
