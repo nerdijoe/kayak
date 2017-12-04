@@ -34,6 +34,7 @@ const initialState = {
   flightBillingArrCity: [],
   flightBillingClass: [],
   flightBillingCustom: [],
+  flightBillingSearch: [],
 
   logPages: [],
   logPagesCount: [],
@@ -155,6 +156,7 @@ const AdminReducer = (state = initialState, action) => {
       return {
         ...state,
         flightBillingAll: [...action.data],
+        flightBillingSearch: [...action.data],
       };
     }
     case actionType.FETCH_FLIGHT_BILLING_CUMULATIVE: {
@@ -205,8 +207,63 @@ const AdminReducer = (state = initialState, action) => {
         flightBillingCustom: [...action.data],
       };
     }
+//flight billing search date month year
+    case actionType.FETCH_FLIGHT_BILLING_SEARCH_DATE: {
+       let updated = [];
+       let date = action.data;
+       if(date) {
+            console.log('   date = ', Moment(date).format('L'));
+            updated = state.flightBillingAll.filter((item) => {
+            console.log(`${item.createdAt}-->`, Moment(item.createdAt).format('L'));
+                return Moment(item.createdAt).format('L') === Moment(date).format('L');
+            });
+            console.log('------------ updated=', updated);
+       } else {
+            updated = [...state.flightBillingAll];
+       }
 
+       return {
+            ...state,
+            flightBillingSearch: updated,
+       }
+    }
+    case actionType.FETCH_FLIGHT_BILLING_SEARCH_MONTH: {
+        let updated = [];
+        let date = action.data;
+        if(date) {
+            console.log('   date = ', Moment(date).format('MMM YY'));
+            updated = state.flightBillingAll.filter((item) => {
+            console.log(`${item.createdAt}-->`, Moment(item.createdAt).format('MMM YY'));
+            return Moment(item.createdAt).format('MMM YY') === Moment(date).format('MMM YY');
+            });
+            console.log('------------ updated=', updated);
+        } else {
+                updated = [...state.flightBillingAll];
+        }
 
+        return {
+            ...state,
+            flightBillingSearch: updated,
+        }
+    }
+    case actionType.FETCH_FLIGHT_BILLING_SEARCH_YEAR: {
+        let updated = [];
+        let date = action.data;
+        if(date) {
+            console.log('   date = ', Moment(date).format('YY'));
+            updated = state.flightBillingAll.filter((item) => {
+            console.log(`${item.createdAt}-->`, Moment(item.createdAt).format('YY'));
+                return Moment(item.createdAt).format('YY') === Moment(date).format('YY');
+            });
+            console.log('------------ updated=', updated);
+        } else {
+            updated = [...state.flightBillingAll];
+        }
+        return {
+            ...state,
+            flightBillingSearch: updated,
+        };
+    }
 
 
 
