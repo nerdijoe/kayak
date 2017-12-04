@@ -87,7 +87,7 @@ class MyBookings extends Component{
                                                         </div>
                                                     </div>
                                                 </h2>
-                                                <CarBookingList/>
+                                                {/*<CarBookingList/>*/}
                                             </div>
                                         </li>
                                         <li className="home-access-section">

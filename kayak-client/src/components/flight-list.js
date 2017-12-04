@@ -74,7 +74,7 @@ class FlightSearchList extends Component{
                             </div>
                             <div className="col-md-2" >
                                 <h5>Duration</h5>
-                                <h5>{Math.floor(durationHours)+"h "+durationMinutes+"m"}</h5>
+                                <h5>{Math.floor(durationHours)+"h "+Math.floor(durationMinutes)+"m"}</h5>
                             </div>
                             <div className="col-md-3"><span className="booking-item-price">${flight.price}</span><span>/person</span>
                                 <p className="booking-item-flight-className"> {flight.class}</p>

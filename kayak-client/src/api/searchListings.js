@@ -11,7 +11,7 @@ export const getFlightList = (payload) => {
     }
     // let apiCall = departure=San Jose&arrivalAt=New York&class=Economy&departureDate=11/25/2017
     console.log("`http://localhost:3010/flights/search?departure=${payload.source}&arrivalAt=${payload.destination");
-    return axios.get(`http://localhost:3010/flights/search?departure=${payload.source}&arrivalAt=${payload.destination}&departureDate=${payload.departureDate}`,
+    return axios.get(`http://localhost:3010/flights/search?departure=${payload.source}&arrivalAt=${payload.destination}&departureDate=${payload.departureDate}&class=${payload.classType}&seats=${payload.seats}`,
         {headers:{token:jwtToken}})
         .then(function (response) {
             console.log(response);
@@ -29,7 +29,7 @@ export const getCarList = (payload) => {
     if(!jwtToken){
         jwtToken ='';
     }
-    return axios.get(`http://localhost:3010/cars/search?city=${payload.location}`,{headers:{token:jwtToken}})
+    return axios.get(`http://localhost:3010/cars/search?city=${payload.location}&startDate=${payload.startDate}&endDate=${payload.endDate}`,{headers:{token:jwtToken}})
     //  return axios.get(`http://localhost:3010/cars`)
         .then(function (response) {
             console.log(response);
@@ -46,7 +46,7 @@ export const getHotelList = (payload) => {
     if(!jwtToken){
         jwtToken ='';
     }
-    return axios.get(`http://localhost:3010/hotels/search?city=${payload.place}`,
+    return axios.get(`http://localhost:3010/hotels/search?city=${payload.place}&rooms=${payload.rooms}&guests=${payload.guests}&startDate=${payload.startDate}&endDate=${payload.endDate}`,
         {headers:{ token : jwtToken}
     })
         .then(function (response) {

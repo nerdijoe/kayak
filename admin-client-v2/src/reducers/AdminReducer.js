@@ -34,12 +34,20 @@ const initialState = {
   flightBillingArrCity: [],
   flightBillingClass: [],
   flightBillingCustom: [],
+  flightBillingSearch: [],
 
   logPages: [],
   logPagesCount: [],
   logSearches: [],
   logSearchesType: [],
   logSearchesDealerCity: [],
+  logSearchesHotelCity: [],
+  logSearchesAirportA: [],
+  logSearchesAirportB: [],
+  logSearchesSeats: [],
+  logSearchesClassType: [],
+  logSearchesRooms: [],
+  logSearchesGuests: [],
 };
 
 const AdminReducer = (state = initialState, action) => {
@@ -148,6 +156,7 @@ const AdminReducer = (state = initialState, action) => {
       return {
         ...state,
         flightBillingAll: [...action.data],
+        flightBillingSearch: [...action.data],
       };
     }
     case actionType.FETCH_FLIGHT_BILLING_CUMULATIVE: {
@@ -198,8 +207,63 @@ const AdminReducer = (state = initialState, action) => {
         flightBillingCustom: [...action.data],
       };
     }
+//flight billing search date month year
+    case actionType.FETCH_FLIGHT_BILLING_SEARCH_DATE: {
+       let updated = [];
+       let date = action.data;
+       if(date) {
+            console.log('   date = ', Moment(date).format('L'));
+            updated = state.flightBillingAll.filter((item) => {
+            console.log(`${item.createdAt}-->`, Moment(item.createdAt).format('L'));
+                return Moment(item.createdAt).format('L') === Moment(date).format('L');
+            });
+            console.log('------------ updated=', updated);
+       } else {
+            updated = [...state.flightBillingAll];
+       }
 
+       return {
+            ...state,
+            flightBillingSearch: updated,
+       }
+    }
+    case actionType.FETCH_FLIGHT_BILLING_SEARCH_MONTH: {
+        let updated = [];
+        let date = action.data;
+        if(date) {
+            console.log('   date = ', Moment(date).format('MMM YY'));
+            updated = state.flightBillingAll.filter((item) => {
+            console.log(`${item.createdAt}-->`, Moment(item.createdAt).format('MMM YY'));
+            return Moment(item.createdAt).format('MMM YY') === Moment(date).format('MMM YY');
+            });
+            console.log('------------ updated=', updated);
+        } else {
+                updated = [...state.flightBillingAll];
+        }
 
+        return {
+            ...state,
+            flightBillingSearch: updated,
+        }
+    }
+    case actionType.FETCH_FLIGHT_BILLING_SEARCH_YEAR: {
+        let updated = [];
+        let date = action.data;
+        if(date) {
+            console.log('   date = ', Moment(date).format('YY'));
+            updated = state.flightBillingAll.filter((item) => {
+            console.log(`${item.createdAt}-->`, Moment(item.createdAt).format('YY'));
+                return Moment(item.createdAt).format('YY') === Moment(date).format('YY');
+            });
+            console.log('------------ updated=', updated);
+        } else {
+            updated = [...state.flightBillingAll];
+        }
+        return {
+            ...state,
+            flightBillingSearch: updated,
+        };
+    }
 
 
 
@@ -359,6 +423,50 @@ const AdminReducer = (state = initialState, action) => {
         logSearchesDealerCity: [...action.data],
       };
     }
+    case actionType.FETCH_LOG_SEARCHES_HOTELCITY: {
+      return {
+        ...state,
+        logSearchesHotelCity: [...action.data],
+      };
+    }
+    case actionType.FETCH_LOG_SEARCHES_AIRPORTA: {
+      return {
+        ...state,
+        logSearchesAirportA: [...action.data],
+      };
+    }
+    case actionType.FETCH_LOG_SEARCHES_AIRPORTB: {
+      return {
+        ...state,
+        logSearchesAirportB: [...action.data],
+      };
+    }
+    case actionType.FETCH_LOG_SEARCHES_SEATS: {
+      return {
+        ...state,
+        logSearchesSeats: [...action.data],
+      };
+    }
+    case actionType.FETCH_LOG_SEARCHES_CLASSTYPE: {
+      return {
+        ...state,
+        logSearchesClassType: [...action.data],
+      };
+    }
+    case actionType.FETCH_LOG_SEARCHES_ROOMS: {
+      return {
+        ...state,
+        logSearchesRooms: [...action.data],
+      };
+    }
+    case actionType.FETCH_LOG_SEARCHES_GUESTS: {
+      return {
+        ...state,
+        logSearchesGuests: [...action.data],
+      };
+    }
+
+
 
     default:
       return state;

@@ -10,11 +10,13 @@ const logSearchSchema = new Schema({
   // airportB: { type: Schema.Types.ObjectId, ref: 'FlightAirport' },
   airportA: { type: String, default: '' },
   airportB: { type: String, default: '' },
+  classType: { type: String, default: '' },
+  seats: { type: Number, default: 1 },
   hotelCity: { type: String, default: '' },
   startDate: { type: Date },
   endDate: { type: Date },
-  rooms: { type: Number, default: 0 },
-  guests: { type: Number, default: 0 },
+  rooms: { type: Number, default: 1 },
+  guests: { type: Number, default: 1 },
 }, {
   timestamps: true,
 });

@@ -40,6 +40,7 @@ class Cars extends Component{
                 startDate: startDate,
                 endDate: endDate
             }
+            console.log("caf payload is manali",payload);
             this.callForCarSearch(payload);
         }else{
             this.setState({

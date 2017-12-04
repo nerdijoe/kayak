@@ -384,7 +384,7 @@ export const searchHotel = (data) => {
     };
 };
 
-//-----------------------------------------------------------------
+
 // export const fetchHotelBillingAll = (data) => {
 //     return {
 //         type: actionType.FETCH_HOTEL_BILLING_ALL,
@@ -406,7 +406,7 @@ export const searchHotel = (data) => {
 //     };
 // };
 
-
+//hotel billing search by data month year
 export const fetchHotelBillingSearchDate = (data) => {
     return {
         type: actionType.FETCH_HOTEL_BILLING_SEARCH_DATE,
@@ -425,6 +425,26 @@ export const fetchHotelBillingSearchYear = (data) => {
         data,
     };
 };
+//flight billing search by data month year
+export const fetchFlightBillingSearchDate = (data) => {
+    return {
+        type: actionType.FETCH_FLIGHT_BILLING_SEARCH_DATE,
+        data,
+    };
+};
+export const fetchFlightBillingSearchMonth = (data) => {
+    return {
+        type: actionType.FETCH_FLIGHT_BILLING_SEARCH_MONTH,
+        data,
+    };
+};
+export const fetchFlightBillingSearchYear = (data) => {
+    return {
+        type: actionType.FETCH_FLIGHT_BILLING_SEARCH_YEAR,
+        data,
+    };
+};
+
 
 //-------------------------------------------------------------------
 
@@ -463,6 +483,52 @@ export const fetchLogSearchesDealerCity = (data) => {
     data,
   };
 };
+
+export const fetchLogSearchesHotelCity = (data) => {
+  return {
+    type: actionType.FETCH_LOG_SEARCHES_HOTELCITY,
+    data,
+  };
+};
+
+export const fetchLogSearchesAirportA = (data) => {
+  return {
+    type: actionType.FETCH_LOG_SEARCHES_AIRPORTA,
+    data,
+  };
+};
+export const fetchLogSearchesAirportB = (data) => {
+  return {
+    type: actionType.FETCH_LOG_SEARCHES_AIRPORTB,
+    data,
+  };
+};
+export const fetchLogSearchesSeats = (data) => {
+  return {
+    type: actionType.FETCH_LOG_SEARCHES_SEATS,
+    data,
+  };
+};
+export const fetchLogSearchesClassType = (data) => {
+  return {
+    type: actionType.FETCH_LOG_SEARCHES_CLASSTYPE,
+    data,
+  };
+};
+export const fetchLogSearchesRooms = (data) => {
+  return {
+    type: actionType.FETCH_LOG_SEARCHES_ROOMS,
+    data,
+  };
+};
+export const fetchLogSearchesGuests = (data) => {
+  return {
+    type: actionType.FETCH_LOG_SEARCHES_GUESTS,
+    data,
+  };
+};
+
+
 
 
 export const axiosSignIn = (data, router) => (dispatch) => {
@@ -1364,5 +1430,111 @@ export const axiosFetchLogSearchesDealerCity = () => (dispatch) => {
       console.log(err);
     });
 };
+
+export const axiosFetchLogSearchesHotelCity = () => (dispatch) => {
+  //get admin token
+
+  axios.get('http://localhost:3010/logs/searches/hotelcity')
+    .then((res) => {
+      console.log('--- after axiosFetchLogSearchesHotelCity');
+      console.log(res.data);
+
+      dispatch(fetchLogSearchesHotelCity(res.data));
+    }).catch((err) => {
+      console.log(err);
+    });
+};
+
+export const axiosFetchLogSearchesAirportA = () => (dispatch) => {
+  //get admin token
+
+  axios.get('http://localhost:3010/logs/searches/airporta')
+    .then((res) => {
+      console.log('--- after axiosFetchLogSearchesAirportA');
+      console.log(res.data);
+
+      dispatch(fetchLogSearchesAirportA(res.data));
+    }).catch((err) => {
+      console.log(err);
+    });
+};
+
+export const axiosFetchLogSearchesAirportB = () => (dispatch) => {
+  //get admin token
+
+  axios.get('http://localhost:3010/logs/searches/airportb')
+    .then((res) => {
+      console.log('--- after axiosFetchLogSearchesAirportB');
+      console.log(res.data);
+
+      dispatch(fetchLogSearchesAirportB(res.data));
+    }).catch((err) => {
+      console.log(err);
+    });
+};
+
+
+export const axiosFetchLogSearchesSeats = () => (dispatch) => {
+  //get admin token
+
+  axios.get('http://localhost:3010/logs/searches/seats')
+    .then((res) => {
+      console.log('--- after axiosFetchLogSearchesSeats');
+      console.log(res.data);
+
+      dispatch(fetchLogSearchesSeats(res.data));
+    }).catch((err) => {
+      console.log(err);
+    });
+};
+
+export const axiosFetchLogSearchesClassType = () => (dispatch) => {
+  //get admin token
+
+  axios.get('http://localhost:3010/logs/searches/classtype')
+    .then((res) => {
+      console.log('--- after axiosFetchLogSearchesClassType');
+      console.log(res.data);
+
+      dispatch(fetchLogSearchesClassType(res.data));
+    }).catch((err) => {
+      console.log(err);
+    });
+};
+export const axiosFetchLogSearchesRooms = () => (dispatch) => {
+  //get admin token
+
+  axios.get('http://localhost:3010/logs/searches/rooms')
+    .then((res) => {
+      console.log('--- after axiosFetchLogSearchesRooms');
+      console.log(res.data);
+
+      dispatch(fetchLogSearchesRooms(res.data));
+    }).catch((err) => {
+      console.log(err);
+    });
+};
+
+export const axiosFetchLogSearchesGuests = () => (dispatch) => {
+  //get admin token
+
+  axios.get('http://localhost:3010/logs/searches/guests')
+    .then((res) => {
+      console.log('--- after axiosFetchLogSearchesGuests');
+      console.log(res.data);
+
+      dispatch(fetchLogSearchesGuests(res.data));
+    }).catch((err) => {
+      console.log(err);
+    });
+};
+
+
+
+
+
+
+
+
 
 
