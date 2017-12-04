@@ -40,6 +40,13 @@ const initialState = {
   logSearches: [],
   logSearchesType: [],
   logSearchesDealerCity: [],
+  logSearchesHotelCity: [],
+  logSearchesAirportA: [],
+  logSearchesAirportB: [],
+  logSearchesSeats: [],
+  logSearchesClassType: [],
+  logSearchesRooms: [],
+  logSearchesGuests: [],
 };
 
 const AdminReducer = (state = initialState, action) => {
@@ -359,6 +366,50 @@ const AdminReducer = (state = initialState, action) => {
         logSearchesDealerCity: [...action.data],
       };
     }
+    case actionType.FETCH_LOG_SEARCHES_HOTELCITY: {
+      return {
+        ...state,
+        logSearchesHotelCity: [...action.data],
+      };
+    }
+    case actionType.FETCH_LOG_SEARCHES_AIRPORTA: {
+      return {
+        ...state,
+        logSearchesAirportA: [...action.data],
+      };
+    }
+    case actionType.FETCH_LOG_SEARCHES_AIRPORTB: {
+      return {
+        ...state,
+        logSearchesAirportB: [...action.data],
+      };
+    }
+    case actionType.FETCH_LOG_SEARCHES_SEATS: {
+      return {
+        ...state,
+        logSearchesSeats: [...action.data],
+      };
+    }
+    case actionType.FETCH_LOG_SEARCHES_CLASSTYPE: {
+      return {
+        ...state,
+        logSearchesClassType: [...action.data],
+      };
+    }
+    case actionType.FETCH_LOG_SEARCHES_ROOMS: {
+      return {
+        ...state,
+        logSearchesRooms: [...action.data],
+      };
+    }
+    case actionType.FETCH_LOG_SEARCHES_GUESTS: {
+      return {
+        ...state,
+        logSearchesGuests: [...action.data],
+      };
+    }
+
+
 
     default:
       return state;

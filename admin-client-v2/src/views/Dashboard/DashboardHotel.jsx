@@ -82,8 +82,6 @@ class Dashboard extends Component {
     let averagePrice = currencyWithDecimal(this.props.hotelBillingCumulative.prices / this.props.hotelBillingCumulative.count);
 
 
-
-
     const monthly = {};
     const monthlyArr = new Array(12);
     const uniqueUsers = {};

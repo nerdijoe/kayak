@@ -67,7 +67,6 @@ exports.getUserBillings = (req, res) => {
 
   CarBilling
     .find({ userId })
-    .sort({ startDate: -1 })
     .populate('car')
     .populate('dealer')
     .exec((err, results) => {

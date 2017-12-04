@@ -25,10 +25,16 @@ import {
     dataBar,
     optionsBar,
     responsiveBar,
-    legendBar
+    legendBar,
 } from 'variables/VariablesKayak.jsx';
 
+import {
+  currencyWithNoDecimal,
+  currencyWithDecimal,
+} from 'helpers/Currency';
+
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
+
 
 class Dashboard extends Component {
     createLegend(json){
@@ -46,60 +52,69 @@ class Dashboard extends Component {
         return legend;
     }
     render() {
+
     const labels = this.props.logPagesCount.map((item) => {
       return item._id;
     });
     const series = this.props.logPagesCount.map((item) => {
       return item.count;
     });
+    const customDataBar = { labels, series: [series] };
+    
+    // Class Type
+    const classLabels = this.props.logSearchesClassType.map((item) => {
+      return item._id;
+    });
+    const classSeries = this.props.logSearchesClassType.map((item) => {
+      return item.count;
+    });
+    const classDataBar = { labels: classLabels, series: [classSeries] };
+
+
 
     let totalRevenue = 0;
     let totalRentals = this.props.logPages.length;
     let totalRentalsDays = 0;
-    const customDataBar = { labels, series: [series] };
     console.log('--------this.props.logPagesCount=', this.props.logPagesCount);
 
     console.log('--------customDataBar=', customDataBar);
 
     const monthly = {};
-    const monthlyArr = new Array(12);
+    const monthlyArr = {};
     const uniqueUsers = {};
-
-    // this.props.carBillingAll.map((item) => {
-    //   let month = parseInt(Moment(item.createdAt).format('L').slice(0,2));
-    //   console.log('    moment formatted=', Moment(item.createdAt).format('L'));
-    //   console.log('    month=', month)
-    //   let amount = item.totalAmount;
-    //   totalRevenue += amount;
-    //   totalRentalsDays += item.daysBooked;
-    //   if(monthly.hasOwnProperty(month)) {
-    //     monthly[month] += amount;
-    //     monthlyArr[month-1] += amount;
-    //   } else {
-    //     monthly[month] = amount;
-    //     monthlyArr[month-1] = amount;
-    //   }
-
-    //   if(uniqueUsers.hasOwnProperty(item.userId)){
-    //     uniqueUsers[item.userId] += 1;
-    //   } else {
-    //     uniqueUsers[item.userId] = 1;
-    //   }
-    // });
-
+    const listUrl = {};
     this.props.logPages.map((item) => {
-      let month = parseInt(Moment(item.createdAt).format('L').slice(0,2));
-      console.log('    moment formatted=', Moment(item.createdAt).format('L'));
-      console.log('    month=', month)
-      let amount = 1;
-      totalRevenue += amount;
+      // let month = parseInt(Moment(item.createdAt).format('L').slice(0,2));
+      let url = item.url;
+      // console.log('    moment formatted=', Moment(item.createdAt).format('L'));
+      // console.log('    month=', month)
 
-      if(monthly.hasOwnProperty(month)) {
-        monthly[month] += amount;
-        monthlyArr[month-1] += amount;
+      if(listUrl.hasOwnProperty(url)) {
+
+        let nonuser = 0;
+        let user = 0;
+        if(item.userId === 0) {
+          nonuser = 1;
+        }
+        else {
+          user = 1;
+        }
+        listUrl[url]['nonuser'] += nonuser;
+        listUrl[url]['user'] += user;
+        
       } else {
-        monthly[month] = amount;
-        monthlyArr[month-1] = amount;
+        let nonuser = 0;
+        let user = 0;
+        if(item.userId === 0) {
+          nonuser = 1;
+        } else {
+          user = 1;
+        }
+
+        listUrl[url] = {
+          nonuser,
+          user,
+        };
       }
 
       if(uniqueUsers.hasOwnProperty(item.userId)){
@@ -110,7 +125,39 @@ class Dashboard extends Component {
     });
 
 
-    const totalUniqueUsers = Object.keys(uniqueUsers).length;
+    // vs chart
+    const vsSeries = this.props.logPagesCount.map((item) => {
+      return item.count;
+    });
+    
+
+    let vsLabels = []
+    let nonuserCount = [];
+    let userCount = [];
+
+    console.log('listUrl=', listUrl);
+    Object.keys(listUrl).forEach(function(key) {
+      var val = listUrl[key];
+      console.log(`[${key}]=[${val.nonuser}],[${val.user}]`);
+      nonuserCount.push(listUrl[key].nonuser);
+      userCount.push(listUrl[key].user);
+      vsLabels.push(key);
+
+    });
+    console.log(`user=${userCount}, nonuser=${nonuserCount}`);
+    console.log('vsLabels=', vsLabels);
+
+    const vsDataBar = { labels: vsLabels, series: [userCount, nonuserCount] };
+
+    var vsLegendBar = {
+      names: ["Registered Users","Anonymous Users"],
+      types: ["info","danger"]
+    };
+  
+    // -----------
+
+    const totalUniqueUsers = currencyWithNoDecimal(Object.keys(uniqueUsers).length);
+
     console.log('totalRevenue=', totalRevenue);
     console.log('totalRentals=', totalRentals);
     console.log('totalRentalsDays=', totalRentalsDays);
@@ -219,25 +266,25 @@ class Dashboard extends Component {
                         <Col md={12}>
                             <Card
                                 id="chartActivity"
-                                title="2017 Total Clicks"
+                                title="2017 Total Clicks Registered users vs Anonymous users"
                                 category="Including sign-in and anynomouse users"
                                 stats="Data information certified"
                                 statsIcon="fa fa-check"
                                 content={
                                     <div className="ct-chart">
                                         <ChartistGraph
-                                            data={dataBarMonthly}
+                                            data={vsDataBar}
                                             type="Bar"
                                             options={optionsBar}
                                             responsiveOptions={responsiveBar}
                                         />
                                     </div>
                                 }
-                                // legend={
-                                //     <div className="legend">
-                                //         {this.createLegend(legendBar)}
-                                //     </div>
-                                // }
+                                legend={
+                                    <div className="legend">
+                                        {this.createLegend(vsLegendBar)}
+                                    </div>
+                                }
                             />
                         </Col>
 
@@ -270,32 +317,188 @@ class Dashboard extends Component {
                             />
                         </Col>
                     </Row>
+
                     <Row>
-                      <h3>City Search By Keywords</h3>
-                      <Table striped bordered condensed hover>
-                        <thead>
-                          <tr>
-                            <th>#</th>
-                            <th>City Search keyword</th>
-                            <th>progressive bar</th>
-                            <th>Count</th>
-                          </tr>
-                        </thead>
-                        <tbody>
+                      <Col md={12}>
+                        <Card
+                          id="chartActivity"
+                          title="Car Search By Keywords"
+                          category="Taxes included"
+                          stats="Data information certified"
+                          statsIcon="fa fa-check"
+                          content={
+                            <Table striped bordered condensed hover>
+                              <thead>
+                                <tr>
+                                  <th>#</th>
+                                  <th>City Search keywords</th>
+                                  <th>progressive bar</th>
+                                  <th>Count</th>
+                                </tr>
+                              </thead>
+                              <tbody>
 
-                          { this.props.logSearchesDealerCity.map((item, i) => {
-                            return (
-                              <tr key={i}>
-                                <td>{i+1}</td>
-                                <td>{item._id}</td>
-                                <td><ProgressBar bsStyle="info" now={item.count} /></td>
-                                <td>{item.count}</td>
-                              </tr>
-                            );
-                          })}
+                                { this.props.logSearchesDealerCity.map((item, i) => {
+                                  return (
+                                    <tr key={i}>
+                                      <td>{i+1}</td>
+                                      <td>{item._id}</td>
+                                      <td><ProgressBar bsStyle="info" now={item.count} /></td>
+                                      <td>{item.count}</td>
+                                    </tr>
+                                  );
+                                })}
 
-                        </tbody>
-                      </Table>
+                              </tbody>
+                            </Table>
+                          }
+
+                          />
+                        </Col>
+
+                    </Row>
+
+                    <Row>
+                      <Col md={12}>
+                        <Card
+                          id="chartActivity"
+                          title="Hotel Search By Keywords"
+                          category="Taxes included"
+                          stats="Data information certified"
+                          statsIcon="fa fa-check"
+                          content={
+                            <Table striped bordered condensed hover>
+                              <thead>
+                                <tr>
+                                  <th>#</th>
+                                  <th>Hotel Search keywords</th>
+                                  <th>progressive bar</th>
+                                  <th>Count</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+
+                                { this.props.logSearchesHotelCity.map((item, i) => {
+                                  return (
+                                    <tr key={i}>
+                                      <td>{i+1}</td>
+                                      <td>{item._id}</td>
+                                      <td><ProgressBar bsStyle="info" now={item.count} /></td>
+                                      <td>{item.count}</td>
+                                    </tr>
+                                  );
+                                })}
+
+                              </tbody>
+                            </Table>
+                          }
+
+                          />
+                        </Col>
+                      </Row>
+
+                      <Row>
+                      <Col md={12}>
+                        <Card
+                          id="chartActivity"
+                          title="Flight Search Departure City"
+                          category="Taxes included"
+                          stats="Data information certified"
+                          statsIcon="fa fa-check"
+                          content={
+                            <Table striped bordered condensed hover>
+                              <thead>
+                                <tr>
+                                  <th>#</th>
+                                  <th>Departure City keywords</th>
+                                  <th>progressive bar</th>
+                                  <th>Count</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+
+                                { this.props.logSearchesAirportA.map((item, i) => {
+                                  return (
+                                    <tr key={i}>
+                                      <td>{i+1}</td>
+                                      <td>{item._id}</td>
+                                      <td><ProgressBar bsStyle="info" now={item.count} /></td>
+                                      <td>{item.count}</td>
+                                    </tr>
+                                  );
+                                })}
+
+                              </tbody>
+                            </Table>
+                          }
+
+                          />
+                        </Col>
+                      </Row>
+
+                      <Row>
+                      <Col md={12}>
+                        <Card
+                          id="chartActivity"
+                          title="Flight Search Destination City"
+                          category="Taxes included"
+                          stats="Data information certified"
+                          statsIcon="fa fa-check"
+                          content={
+                            <Table striped bordered condensed hover>
+                              <thead>
+                                <tr>
+                                  <th>#</th>
+                                  <th>Destination City keywords</th>
+                                  <th>progressive bar</th>
+                                  <th>Count</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+
+                                { this.props.logSearchesAirportB.map((item, i) => {
+                                  return (
+                                    <tr key={i}>
+                                      <td>{i+1}</td>
+                                      <td>{item._id}</td>
+                                      <td><ProgressBar bsStyle="info" now={item.count} /></td>
+                                      <td>{item.count}</td>
+                                    </tr>
+                                  );
+                                })}
+
+                              </tbody>
+                            </Table>
+                          }
+
+                          />
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col md={6}>
+                            <Card
+                                id="chartActivity"
+                                title="Total Search by Seat Class"
+                                category="For all users"
+                                stats="Data information certified"
+                                statsIcon="fa fa-check"
+                                content={
+                                    <div className="ct-chart">
+                                        <ChartistGraph
+                                            data={classDataBar}
+                                            type="Bar"
+                                            options={optionsBar}
+                                            responsiveOptions={responsiveBar}
+                                        />
+                                    </div>
+                                }
+                                // legend={
+                                //     <div className="legend">
+                                //         {this.createLegend(legendBar)}
+                                //     </div>
+                                // }
+                            />
+                        </Col>
                     </Row>
                 </Grid>
 
@@ -314,6 +517,13 @@ const mapStateToProps = (state) => {
     logSearches: state.AdminReducer.logSearches,
     logSearchesType: state.AdminReducer.logSearchesType,
     logSearchesDealerCity: state.AdminReducer.logSearchesDealerCity,
+    logSearchesHotelCity: state.AdminReducer.logSearchesHotelCity,
+    logSearchesAirportA: state.AdminReducer.logSearchesAirportA,
+    logSearchesAirportB: state.AdminReducer.logSearchesAirportB,
+    logSearchesSeats: state.AdminReducer.logSearchesSeats,
+    logSearchesClassType: state.AdminReducer.logSearchesClassType,
+    logSearchesRooms: state.AdminReducer.logSearchesRooms,
+    logSearchesGuests: state.AdminReducer.logSearchesGuests,
   };
 };
 
