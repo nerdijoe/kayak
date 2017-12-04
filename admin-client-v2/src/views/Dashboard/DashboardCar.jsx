@@ -10,8 +10,8 @@ import {
 
 import { connect } from 'react-redux';
 import Moment from 'moment';
-import ReactGridLayout from 'react-grid-layout';
-import { Responsive, WidthProvider } from 'react-grid-layout';
+// import ReactGridLayout from 'react-grid-layout';
+import { Responsive } from 'react-grid-layout';
 
 import {Card} from 'components/Card/Card.jsx';
 import {StatsCard} from 'components/StatsCard/StatsCard.jsx';
@@ -34,9 +34,20 @@ import {
   currencyWithDecimal,
 } from 'helpers/Currency';
 
+// React grid
+import PropTypes from 'prop-types';
+import _ from 'lodash';
+import RGL, { WidthProvider } from 'react-grid-layout';
+
+const ReactGridLayout = WidthProvider(RGL);
+
+
+
+
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 class Dashboard extends Component {
+
     createLegend(json){
         var legend = [];
         for(var i = 0; i < json["names"].length; i++){
@@ -126,16 +137,79 @@ class Dashboard extends Component {
     console.log('customDataBar=', customDataBar);
 
     const layout = [
-      {i: 'a', x: 0, y: 0, w: 2, h: 2},
-      {i: 'b', x: 2, y: 1, w: 2, h: 2},
-      {i: 'c', x: 4, y: 0, w: 2, h: 2}
+      {i: 'a', x: 0, y: 2, w: 3, h: 2},
+      {i: 'b', x: 3, y: 2, w: 3, h: 2},
+      {i: 'c', x: 6, y: 2, w: 3, h: 2},
+      {i: 'd', x: 0, y: 2, w: 3, h: 2},
+      {i: 'e', x: 3, y: 2, w: 3, h: 2},
     ];
 
+    const layout2 = [
+      {i: 'a', x: 0, y: 2, w: 6, h: 2},
+      {i: 'b', x: 6, y: 2, w: 6, h: 2},
+      {i: 'c', x: 0, y: 2, w: 12, h: 2},
+      {i: 'd', x: 0, y: 2, w: 12, h: 2},
+    ];
+
+    const layout3 = [
+      {i: 'a', x: 0, y: 2, w: 12, h: 2},
+      {i: 'b', x: 0, y: 2, w: 12, h: 2},
+    ];
 
         return (
             <div className="content">
                 <Grid fluid>
-                    <Row>
+                  <ReactGridLayout className="layout" layout={layout} cols={12} rowHeight={80} width={1200}>
+                      <div key="a">
+                            <StatsCard
+                                bigIcon={<i className="pe-7s-car text-warning"></i>}
+                                statsText="Total Rentals"
+                                statsValue={totalCount}
+                                statsIcon={<i className="fa fa-refresh"></i>}
+                                statsIconText="Updated now"
+                            />
+                      </div>
+                      <div key="b">
+                      <StatsCard
+                          bigIcon={<i className="pe-7s-cash text-success"></i>}
+                          statsText="Total Revenue"
+                          statsValue={totalRevenue}
+                          statsIcon={<i className="fa fa-calendar-o"></i>}
+                          statsIconText="Last day"
+                      />
+                      </div>
+                      <div key="c">
+
+                      <StatsCard
+                          bigIcon={<i className="pe-7s-date text-danger"></i>}
+                          statsText="Days Booked"
+                          statsValue={totalDays}
+                          statsIcon={<i className="fa fa-clock-o"></i>}
+                          statsIconText="In the last hour"
+                      />
+                      </div>
+                      <div key="d">
+                        <StatsCard
+                          bigIcon={<i className="pe-7s-graph1 text-success"></i>}
+                          statsText="Average Rental Price"
+                          statsValue={averagePrice}
+                          statsIcon={<i className="fa fa-calendar-o"></i>}
+                          statsIconText="in USD"
+                        />
+                      </div>
+                      <div key="e">
+                        <StatsCard
+                            bigIcon={<i className="fa pe-7s-smile text-info"></i>}
+                            statsText="Unique Users"
+                            statsValue={totalUniqueUsers}
+                            statsIcon={<i className="fa fa-refresh"></i>}
+                            statsIconText="In the last hour"
+                        />
+                      </div>
+                </ReactGridLayout>
+
+
+                    {/* <Row>
                         <Col lg={4} sm={6}>
                             <StatsCard
                                 bigIcon={<i className="pe-7s-car text-warning"></i>}
@@ -186,10 +260,10 @@ class Dashboard extends Component {
                             />
                         </Col>
 
-                    </Row>
+                    </Row> */}
 
 
-                    <Row>
+                    {/* <Row>
                         <Col md={6}>
                             <Card
                                 id="chartActivity"
@@ -240,8 +314,124 @@ class Dashboard extends Component {
                             />
                         </Col>
 
-                    </Row>
-                    
+                    </Row> */}
+
+                    <ReactGridLayout className="layout" layout={layout2} cols={12} rowHeight={220} width={1200}>
+                      <div key='a'>
+                        <Card
+                            id="chartActivity"
+                            title="2017 Car Rental"
+                            category="All Rental Fees including Taxes"
+                            stats="Data information certified"
+                            statsIcon="fa fa-check"
+                            content={
+                                <div className="ct-chart">
+                                    <ChartistGraph
+                                        data={customDataBar}
+                                        type="Bar"
+                                        options={optionsBar}
+                                        responsiveOptions={responsiveBar}
+                                    />
+                                </div>
+                            }
+                            // legend={
+                            //     <div className="legend">
+                            //         {this.createLegend(legendBar)}
+                            //     </div>
+                            // }
+                        />
+                      </div>
+                      <div key='b'>
+                        <Card
+                            id="chartActivity"
+                            title="2017 Car Rental Monthly"
+                            category="All Rental Fees including Taxes"
+                            stats="Data information certified"
+                            statsIcon="fa fa-check"
+                            content={
+                                <div className="ct-chart">
+                                    <ChartistGraph
+                                        data={dataBarMonthly}
+                                        type="Bar"
+                                        options={optionsBar}
+                                        responsiveOptions={responsiveBar}
+                                    />
+                                </div>
+                            }
+                            // legend={
+                            //     <div className="legend">
+                            //         {this.createLegend(legendBar)}
+                            //     </div>
+                            // }
+                        />
+                      </div>
+
+                    </ReactGridLayout>
+
+                    {/* <ReactGridLayout className="layout" layout={layout3} cols={12} rowHeight={500} width={1200}>
+                    <div key="a">
+                      <Card
+                            id="chartActivity"
+                            title="Total Revenue by City"
+                            category=""
+                            stats="Data information certified"
+                            statsIcon="fa fa-check"
+                            content={
+                                <div className="ct-chart">
+                                    <ChartistGraph
+                                        data={cityDataBar}
+                                        type="Bar"
+                                        options={optionsBar}
+                                        responsiveOptions={responsiveBar}
+                                    />
+                                </div>
+                            }
+                            // legend={
+                            //     <div className="legend">
+                            //         {this.createLegend(legendBar)}
+                            //     </div>
+                            // }
+                        />
+                      </div>
+
+                      <div key="b">
+                      <Card
+                          id="chartActivity"
+                          title="Top 10 Revenue By Airlines"
+                          category="Taxes included"
+                          stats="Data information certified"
+                          statsIcon="fa fa-check"
+                          content={
+                            <Table striped bordered condensed hover>
+                              <thead>
+                                <tr>
+                                  <th>#</th>
+                                  <th>Hotel</th>
+                                  <th>Total days</th>
+                                  <th>Total Revenue</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+
+                                { this.props.carBillingName.slice(0, 10).map((item, i) => {
+                                  return (
+                                    <tr key={i}>
+                                      <td>{i+1}</td>
+                                      <td>{item._id.name}</td>
+                                      <td>{item.days}</td>
+                                      <td>{currencyWithNoDecimal(item.total)}</td>
+                                    </tr>
+                                  );
+                                })}
+
+                              </tbody>
+                            </Table>
+                          }
+                          />
+                      </div>
+                    </ReactGridLayout> */}
+
+
                     <Row>
                       <Col md={12}>
                         <Card
@@ -303,11 +493,6 @@ class Dashboard extends Component {
                               </tbody>
                             </Table>
                           }
-                          // legend={
-                          //     <div className="legend">
-                          //         {this.createLegend(legendBar)}
-                          //     </div>
-                          // }
                           />
                         </Col>
 
@@ -316,67 +501,7 @@ class Dashboard extends Component {
 
                 </Grid>
 
-                <ReactGridLayout className="layout" layout={layout} cols={12} rowHeight={30} width={1200}>
-                  <div key="a">
-                    <StatsCard
-                      bigIcon={<i className="pe-7s-car text-warning"></i>}
-                      statsText="Total Rentals"
-                      statsValue={totalCount}
-                      statsIcon={<i className="fa fa-refresh"></i>}
-                      statsIconText="Updated now"
-                    />
-                  </div>
-                  <div key="b">
-                    <StatsCard
-                      bigIcon={<i className="pe-7s-wallet text-success"></i>}
-                      statsText="Total Revenue"
-                      statsValue={totalRevenue}
-                      statsIcon={<i className="fa fa-calendar-o"></i>}
-                      statsIconText="Last day"
-                    />
-                  </div>
-                  <div key="c">
-                    <StatsCard
-                      bigIcon={<i className="pe-7s-date text-danger"></i>}
-                      statsText="Days Booked"
-                      statsValue={totalDays}
-                      statsIcon={<i className="fa fa-clock-o"></i>}
-                      statsIconText="In the last hour"
-                    />
-                  </div>
-                </ReactGridLayout>
 
-                <ResponsiveReactGridLayout className="layout"
-                  breakpoints={{lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0}}
-                  cols={{lg: 12, md: 10, sm: 6, xs: 4, xxs: 2}}>
-                  <div key="1">
-                    <StatsCard
-                      bigIcon={<i className="pe-7s-car text-warning"></i>}
-                      statsText="Total Rentals"
-                      statsValue={totalCount}
-                      statsIcon={<i className="fa fa-refresh"></i>}
-                      statsIconText="Updated now"
-                    />
-                  </div>
-                  <div key="2">
-                    <StatsCard
-                      bigIcon={<i className="pe-7s-wallet text-success"></i>}
-                      statsText="Total Revenue"
-                      statsValue={totalRevenue}
-                      statsIcon={<i className="fa fa-calendar-o"></i>}
-                      statsIconText="Last day"
-                    />
-                  </div>
-                  <div key="3">
-                    <StatsCard
-                      bigIcon={<i className="pe-7s-date text-danger"></i>}
-                      statsText="Days Booked"
-                      statsValue={totalDays}
-                      statsIcon={<i className="fa fa-clock-o"></i>}
-                      statsIconText="In the last hour"
-                    />
-                  </div>
-                </ResponsiveReactGridLayout>
             </div>
         );
     }
