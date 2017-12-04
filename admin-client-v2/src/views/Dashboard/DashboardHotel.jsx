@@ -10,8 +10,6 @@ import {
 
 import { connect } from 'react-redux';
 import Moment from 'moment';
-import ReactGridLayout from 'react-grid-layout';
-import { Responsive, WidthProvider } from 'react-grid-layout';
 
 import {Card} from 'components/Card/Card.jsx';
 import {StatsCard} from 'components/StatsCard/StatsCard.jsx';
@@ -34,7 +32,13 @@ import {
   currencyWithDecimal,
 } from 'helpers/Currency';
 
-const ResponsiveReactGridLayout = WidthProvider(Responsive);
+// React grid
+import PropTypes from 'prop-types';
+import _ from 'lodash';
+import RGL, { WidthProvider } from 'react-grid-layout';
+
+const ReactGridLayout = WidthProvider(RGL);
+
 
 class Dashboard extends Component {
     createLegend(json){
@@ -130,16 +134,78 @@ class Dashboard extends Component {
     console.log('customDataBar=', customDataBar);
 
     const layout = [
-      {i: 'a', x: 0, y: 0, w: 2, h: 2},
-      {i: 'b', x: 2, y: 1, w: 2, h: 2},
-      {i: 'c', x: 4, y: 0, w: 2, h: 2}
-    ];
-
+        {i: 'a', x: 0, y: 2, w: 3, h: 2},
+        {i: 'b', x: 3, y: 2, w: 3, h: 2},
+        {i: 'c', x: 6, y: 2, w: 3, h: 2},
+        {i: 'd', x: 0, y: 2, w: 3, h: 2},
+        {i: 'e', x: 3, y: 2, w: 3, h: 2},
+        {i: 'f', x: 6, y: 2, w: 3, h: 2},
+      ];
+  
 
         return (
             <div className="content">
                 <Grid fluid>
-                    <Row>
+                <ReactGridLayout className="layout" layout={layout} cols={12} rowHeight={80} width={1200}>
+                <div key='a'>
+                  <StatsCard
+                    bigIcon={<i className="pe-7s-ticket text-warning"></i>}
+                    statsText="Total Bookings"
+                    statsValue={totalCount}
+                    statsIcon={<i className="fa fa-refresh"></i>}
+                    statsIconText="In the last hour"
+                  />
+                </div>
+                <div key='b'>
+                  <StatsCard
+                      bigIcon={<i className="pe-7s-cash text-success"></i>}
+                      statsText="Total Revenue"
+                      statsValue={totalRevenue}
+                      statsIcon={<i className="fa fa-calendar-o"></i>}
+                      statsIconText="in USD"
+                  />
+
+                </div>
+                <div key='c'>
+                  <StatsCard
+                    bigIcon={<i className="pe-7s-date text-danger"></i>}
+                    statsText="Days Booked"
+                    statsValue={totalDays}
+                    statsIcon={<i className="fa fa-clock-o"></i>}
+                    statsIconText="In the last hour"
+                  />
+                </div>
+                <div key="d">
+                  <StatsCard
+                    bigIcon={<i className="pe-7s-door-lock text-info"></i>}
+                    statsText="Total Rooms"
+                    statsValue={totalRooms}
+                    statsIcon={<i className="fa fa-calendar-o"></i>}
+                    statsIconText="In the last hour"
+                  />
+                </div>
+                <div key="e">
+                  <StatsCard
+                    bigIcon={<i className="pe-7s-graph1 text-success"></i>}
+                    statsText="Average Room Price"
+                    statsValue={averagePrice}
+                    statsIcon={<i className="fa fa-calendar-o"></i>}
+                    statsIconText="in USD"
+                  />
+                </div>
+                <div key="f">
+                  <StatsCard
+                    bigIcon={<i className="fa pe-7s-smile text-info"></i>}
+                    statsText="Unique Users"
+                    statsValue={totalUniqueUsers}
+                    statsIcon={<i className="fa fa-refresh"></i>}
+                    statsIconText="In the last hour"
+                  />
+                </div>
+                </ReactGridLayout>
+
+
+                    {/* <Row>
                         <Col lg={4} sm={6}>
                             <StatsCard
                                 bigIcon={<i className="pe-7s-ticket text-warning"></i>}
@@ -198,7 +264,7 @@ class Dashboard extends Component {
                             />
                         </Col>
 
-                    </Row>
+                    </Row> */}
 
                     <Row>
                         <Col md={6}>
