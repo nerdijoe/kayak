@@ -207,19 +207,59 @@ exports.searchByQuery = (req, res) => {
 
   console.log('    searchString=', searchString);
 
-  CarDealer
-    .find({ $text: { $search: searchString.city } })
-    .exec((err, results) => {
-      console.log('CarDealer.find results=', results);
+  // CarDealer
+  //   .find({ $text: { $search: searchString.city } })
+  //   .exec((err, results) => {
+  //     console.log('CarDealer.find results=', results);
 
+  //     // const dealers = results.map((item) => {
+  //     //   return item._id.toString();
+  //     // })
+
+  //     // console.log('jiaqi dealers=', dealers);
+  //     // Car
+  //     //   .find({ dealer: { $in: results } })
+  //     //   .populate('dealer')
+  //     //   .exec((err, cars) => {
+  //     //     console.log('Car.find cars=', cars);
+  //     //     if (err) res.json(err);
+  //     //     res.json(cars);
+  //     //   });
+
+  //   });
+
+
+  var redis_key = redis_keyHelper.generateKey(redis_keyConstants.SEARCH_CARS, searchString);
+  cache.get(redis_key, function (reply) {
+    if(reply){
+      console.log("get data from Redis");
+      res.json(JSON.parse(reply));
+    } else{
+      console.log("get data from database");
       Car
-        .find({ dealer: { $in: results } })
-        .populate('dealer')
-        .exec((err, cars) => {
-          console.log('Car.find cars=', cars);
-          if (err) res.json(err);
-          res.json(cars);
-        });
+    .find({})
+    .populate('dealer')
+    .exec((err, cars) => {
+      // console.log('Car.find cars=', cars);
+
+      let matched= [];
+      cars.map((car) => {
+        // console.log(`${car.dealer.city}, ${searchString.city}`);
+        if (car.dealer.city === searchString.city) {
+          matched.push(car);
+        }
+
+      });
+
+      if (err) res.json(err);
+      cache.set(redis_key, JSON.stringify(matched));
+      res.json(matched);
     });
+  }
+});
+
+
+
+    
 };
 
