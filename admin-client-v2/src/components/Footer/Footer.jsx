@@ -6,7 +6,7 @@ class Footer extends Component {
 		return (
             <footer className="footer">
                 <Grid>
-                    <nav className="pull-left">
+                    {/* <nav className="pull-left">
                         <ul>
                             <li>
                                 <a href="#pablo">
@@ -29,7 +29,7 @@ class Footer extends Component {
                                 </a>
                             </li>
                         </ul>
-                    </nav>
+                    </nav> */}
                     <p className="copyright pull-right">
                         &copy; {(new Date()).getFullYear()} <a href="https://github.com/nerdijoe/kayak">The 8 Team </a>, sincerely made with love
                     </p>

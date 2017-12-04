@@ -33,7 +33,7 @@ class HeaderLinks extends Component {
         );
         return (
             <div>
-                <Nav>
+                {/* <Nav>
                     <NavItem eventKey={1} href="#">
                         <i className="fa fa-dashboard"></i>
                         <p className="hidden-lg hidden-md">Dashboard</p>
@@ -49,7 +49,7 @@ class HeaderLinks extends Component {
                         <i className="fa fa-search"></i>
                         <p className="hidden-lg hidden-md">Search</p>
                     </NavItem>
-                </Nav>
+                </Nav> */}
                 <Nav pullRight>
                     {/* <NavItem eventKey={1} href="#">Account</NavItem>
                     <NavDropdown eventKey={2} title="Dropdown" id="basic-nav-dropdown-right">
