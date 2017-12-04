@@ -29,6 +29,18 @@ $ bin/kafka-topics.sh --list --zookeeper localhost:2181
 
 ```
 
+### 2. Start Redis Server
+```
+// download redis package and install
+$ wget http://download.redis.io/releases/redis-4.0.4.tar.gz
+$ tar xzf redis-4.0.4.tar.gz
+$ cd redis-4.0.4
+$ make
+ run Redis server
+//
+$ ./src/redis-server
+```
+
 ## How to deploy
 
 
