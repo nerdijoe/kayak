@@ -245,7 +245,7 @@ exports.searchByQuery = (req, res) => {
       let matched= [];
       cars.map((car) => {
         // console.log(`${car.dealer.city}, ${searchString.city}`);
-        if (car.dealer.city === searchString.city) {
+        if (car.dealer.city.toLowerCase() === searchString.city.toLowerCase()) {
           matched.push(car);
         }
 
