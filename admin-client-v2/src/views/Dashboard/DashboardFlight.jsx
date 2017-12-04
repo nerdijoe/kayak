@@ -10,8 +10,7 @@ import {
 
 import { connect } from 'react-redux';
 import Moment from 'moment';
-import ReactGridLayout from 'react-grid-layout';
-import { Responsive, WidthProvider } from 'react-grid-layout';
+
 
 import {Card} from 'components/Card/Card.jsx';
 import {StatsCard} from 'components/StatsCard/StatsCard.jsx';
@@ -34,7 +33,13 @@ import {
   currencyWithDecimal,
 } from 'helpers/Currency';
 
-const ResponsiveReactGridLayout = WidthProvider(Responsive);
+// React grid
+import PropTypes from 'prop-types';
+import _ from 'lodash';
+import RGL, { WidthProvider } from 'react-grid-layout';
+
+const ReactGridLayout = WidthProvider(RGL);
+
 
 class Dashboard extends Component {
     createLegend(json){
@@ -166,16 +171,74 @@ class Dashboard extends Component {
     console.log('customDataBar=', customDataBar);
 
     const layout = [
-      {i: 'a', x: 0, y: 0, w: 2, h: 2},
-      {i: 'b', x: 2, y: 1, w: 2, h: 2},
-      {i: 'c', x: 4, y: 0, w: 2, h: 2}
-    ];
+        {i: 'a', x: 0, y: 2, w: 3, h: 2},
+        {i: 'b', x: 3, y: 2, w: 3, h: 2},
+        {i: 'c', x: 6, y: 2, w: 3, h: 2},
+        {i: 'd', x: 0, y: 2, w: 3, h: 2},
+        {i: 'e', x: 3, y: 2, w: 3, h: 2},
+        {i: 'f', x: 6, y: 2, w: 3, h: 2},
+      ];
 
+      const layout2 = [
+        {i: 'a', x: 0, y: 2, w: 6, h: 2},
+        {i: 'b', x: 6, y: 2, w: 6, h: 2},
+        {i: 'c', x: 0, y: 2, w: 6, h: 2},
+      ];
+  
 
         return (
             <div className="content">
                 <Grid fluid>
-                    <Row>
+                    <ReactGridLayout className="layout" layout={layout} cols={12} rowHeight={80} width={1200}>
+                      <div key="a">
+                        <StatsCard
+                            bigIcon={<i className="pe-7s-ticket text-warning"></i>}
+                            statsText="Transaction Count"
+                            statsValue={totalCount}
+                            statsIcon={<i className="fa fa-refresh"></i>}
+                            statsIconText="In the last hour"
+                        />
+                      </div>
+                      <div key="b">
+                        <StatsCard
+                            bigIcon={<i className="pe-7s-cash text-success"></i>}
+                            statsText="Total Revenue"
+                            statsValue={totalRevenue}
+                            statsIcon={<i className="fa fa-calendar-o"></i>}
+                            statsIconText="in USD"
+                        />                      
+                      </div>
+                      <div key="c">
+                        <StatsCard
+                            bigIcon={<i className="fa pe-7s-smile text-info"></i>}
+                            statsText="Unique Users"
+                            statsValue={totalUniqueUsers}
+                            statsIcon={<i className="fa fa-refresh"></i>}
+                            statsIconText="In the last hour"
+                        />
+                      </div>
+                      <div key="d">
+                        <StatsCard
+                          bigIcon={<i className="pe-7s-ticket text-info"></i>}
+                          statsText="Tickets Sold"
+                          statsValue={totalSeats}
+                          statsIcon={<i className="fa fa-calendar-o"></i>}
+                          statsIconText="In the last hour"
+                        />
+
+                      </div>
+                      <div key="e">
+                        <StatsCard
+                          bigIcon={<i className="pe-7s-graph1 text-success"></i>}
+                          statsText="Average Ticket Price"
+                          statsValue={averagePrice}
+                          statsIcon={<i className="fa fa-calendar-o"></i>}
+                          statsIconText="in USD"
+                        />
+                      </div>
+
+                  </ReactGridLayout>
+                    {/* <Row>
                         <Col lg={4} sm={6}>
                             <StatsCard
                                 bigIcon={<i className="pe-7s-ticket text-warning"></i>}
@@ -226,9 +289,78 @@ class Dashboard extends Component {
                             />
                         </Col>
 
-                    </Row>
+                    </Row> */}
 
-                    <Row>
+                    <ReactGridLayout className="layout" layout={layout2} cols={12} rowHeight={220} width={1200}>
+                      <div key="a">
+                        <Card
+                            statsIcon="fa fa-clock-o"
+                            title="Seat Class Booked"
+                            category=""
+                            stats="In the last hour"
+                            content={
+                                <div id="chartPreferences" className="ct-chart ct-perfect-fourth">
+                                    <ChartistGraph data={classDataPie} type="Pie"/>
+                                </div>
+                            }
+                            legend={
+                                <div className="legend">
+                                    {this.createLegend(classLegendPie)}
+                                </div>
+                            }
+                        />
+                      </div>
+                      <div key="b">
+                        <Card
+                          id="chartActivity"
+                          title="2017 Flight Revenue By Airlines"
+                          category="Taxes included"
+                          stats="Data information certified"
+                          statsIcon="fa fa-check"
+                          content={
+                              <div className="ct-chart">
+                                  <ChartistGraph
+                                      data={customDataBar}
+                                      type="Line"
+                                      options={optionsBar}
+                                      responsiveOptions={responsiveBar}
+                                  />
+                              </div>
+                          }
+                          // legend={
+                          //     <div className="legend">
+                          //         {this.createLegend(legendBar)}
+                          //     </div>
+                          // }
+                        />
+                      </div>
+                      <div key="c">
+                        <Card
+                          id="chartActivity"
+                          title="2017 Flight Revenue Monthly"
+                          category="Taxes included"
+                          stats="Data information certified"
+                          statsIcon="fa fa-check"
+                          content={
+                              <div className="ct-chart">
+                                  <ChartistGraph
+                                      data={dataBarMonthly}
+                                      type="Bar"
+                                      options={optionsBar}
+                                      responsiveOptions={responsiveBar}
+                                  />
+                              </div>
+                          }
+                          // legend={
+                          //     <div className="legend">
+                          //         {this.createLegend(legendBar)}
+                          //     </div>
+                          // }
+                        />
+                      </div>
+                  </ReactGridLayout>
+                    
+                    {/* <Row>
                       <Col md={3}>
                       </Col>
                       <Col md={6}>
@@ -306,7 +438,7 @@ class Dashboard extends Component {
                             />
                         </Col>
 
-                    </Row>
+                    </Row> */}
 
                     <Row>
                       <Col md={12}>
