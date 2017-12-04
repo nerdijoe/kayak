@@ -59,3 +59,21 @@ export const getHotelList = (payload) => {
         });
 };
 
+export const updateReview = (payload, hotelId ) => {
+    // let jwtToken =localStorage.getItem('user_token');
+    // if(!jwtToken){
+    //     jwtToken ='';
+    // }
+    console.log("hoel id is",hotelId);
+    console.log('http://localhost:3010/hotels/'+hotelId+'/review');
+    return axios.post(`http://localhost:3010/hotels/${hotelId}/review`, payload)
+        .then(function (response) {
+            console.log("update review response",response);
+            return response
+        })
+        .catch(function (error) {
+            console.log(error);
+            return error
+        });
+};
+

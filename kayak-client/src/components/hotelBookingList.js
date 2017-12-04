@@ -13,8 +13,7 @@ class HotelBookingList extends Component{
             message:''
         }
     }
-
-    render() {
+    componentDidMount(){
         let userToken = localStorage.getItem('user_token');
         API.getHotelBookings(userToken)
             .then((hotelRes) => {
@@ -30,8 +29,8 @@ class HotelBookingList extends Component{
                 ...this.state
             });
         });
-
-
+    }
+    render() {
         if(this.state.hotelBookings === ''){
             return (
                 <div>
