@@ -72,6 +72,14 @@ $ npm install
 $ npm start
 ```
 
+### Kafka Back End
+```
+$ cd kafka-back-end
+$ npm install
+$ npm start
+```
+
+
 
 
 ```
