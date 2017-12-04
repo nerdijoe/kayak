@@ -5,6 +5,7 @@ const FlightAirport = require('../models/mongooseFlightAirport');
 const moment = require('moment');
 const TimeTool = require('../helpers/TimeTool');
 const DBTool = require('../helpers/DBTool');
+const jwt = require('jsonwebtoken');
 
 const LogSearch = require('../models/mongooseLogSearch');
 
