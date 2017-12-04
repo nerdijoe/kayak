@@ -11,6 +11,6 @@ exports.get = function(key, callback){
 };
 
 exports.set = function(key, value){
-  redisClient.set(key, value, 'EX', 20);
+  redisClient.set(key, value, 'EX', 30);
 }
 
