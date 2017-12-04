@@ -57,7 +57,11 @@ exports.aggregatePages = (req, res) => {
               _id: '$url',
               count: { $sum: 1 },
             },
-          }], (err, result) => {
+          },
+          {
+            $sort: { count: -1 },
+          },
+        ], (err, result) => {
           if (err) res.json(err);
           res.json(result);
         });
@@ -82,80 +86,29 @@ exports.aggregatePages = (req, res) => {
         });
       break;
     }
-    // case 'monthly': {
-    //   const monthStartDate = moment('01/01/2017', 'MM/DD/YYYY'); //'2017-01-01';
-      
-    //   const monthEndDate = moment('12/31/2017', 'MM/DD/YYYY'); //'2017-12-30';
+    case 'userid': {
+      // count how many hotels
+      logPage
+        .aggregate([
+          {
+            $group: {
+              _id: '$userId',
+              count: { $sum: 1 },
+            },
+          },
+          {
+            $sort: { count: -1 },
+          },
+        ], (err, result) => {
+          if (err) res.json(err);
+          res.json(result);
+        });
+      break;
+    }
 
-    //   console.log('monthStartDate = ', monthStartDate);
-    //   console.log('monthEndDate = ', monthEndDate);
-      
-    //   CarBilling.aggregate()
-    //     .project({
-    //       'month': {
-    //         '$cond': { if: {
-    //           '$and': [
-    //             { $gte: [ 'createdAt', monthStartDate ] },
-    //             { $lte: [ 'createdAt', monthEndDate ] },
-    //           ]}, then: 'totalAmount', else: 0
-    //         } 
-    //       },
-    //     })
-    //     // .group({
-    //     //    _id: '_id',
-    //     //    month: { $sum: '$month' },
-    //     // })
-    //     .exec(function(err, result) {
-    //       if (err) res.json(err);
-    //       res.json(result);
-    //     })
-    //   break;
-    // }
     default:
       res.json('invalid type');
   }
-
-  // sum of total amount per dealer
-  // CarBilling
-  //   .aggregate([
-  //     {
-  //       $group: {
-  //         _id: '$dealer',
-  //         total: { $sum: '$totalAmount' },
-  //       },
-  //     },
-  //   ], (err, result) => {
-  //     if (err) res.json(err);
-  //     res.json(result);
-  //   });
-
-  // CarBilling
-  //   .find({})
-  //   .populate('car')
-  //   .populate({
-  //     path: 'dealer',
-  //     match: { name: { $eq: 'Hertz' } },
-  //   })
-  //   .exec((err, result) => {
-  //     console.log('getOne result=', result);
-  //     if (err) res.json(err);
-  //     res.json(result);
-  //   });
-
-  // CarBilling.lookup(
-  //   {
-  //     path: 'dealer',
-  //     query: { 'dealer.name' : { $in: ['Hertz'] } },
-  //   },
-  //   (err, result) => {
-  //     console.log('getOne result=', result);
-  //     if (err) res.json(err);
-  //     res.json(result);
-  //   }
-  // );
-
-
-
 };
 
 
