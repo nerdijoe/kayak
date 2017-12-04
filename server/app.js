@@ -64,6 +64,12 @@ mongoose.connect(dbConfig[appEnv], { useMongoClient: true }, (err, res) => {
 // mongoose setup end ####
 
 
+// Redis setup
+var redis = require('./routes/redis/redis');
+redis.setupClient();
+
+// Redis setup end
+
 const index = require('./routes/index');
 const auth = require('./routes/auth');
 const authAdmin = require('./routes/authAdmin');

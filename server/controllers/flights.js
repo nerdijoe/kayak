@@ -5,6 +5,9 @@ const FlightAirport = require('../models/mongooseFlightAirport');
 const moment = require('moment');
 const TimeTool = require('../helpers/TimeTool');
 const DBTool = require('../helpers/DBTool');
+const cache = require('../routes/redis/cache');
+const redis_keyConstants = require('../routes/redis/keyConstants');
+const redis_keyHelper = require('../routes/redis/keyHelper');
 
 const LogSearch = require('../models/mongooseLogSearch');
 
@@ -114,38 +117,50 @@ exports.search = (req, res) => {
   var results = [];
   var result_json;
 
-  Flight.find({})
-    .populate('departureAirport arrivalAirport airline')
-    .exec(function(err, flights){
-      // console.log(flights);
-      if (err){
-        console.error(err);
-      } else{
-        for (var i = 0; i < flights.length; i++){
+  var redis_key = redis_keyHelper.generateKey(redis_keyConstants.SEARCH_FLIGHTS, req.query);
+  cache.get(redis_key, function (reply) {
+    if(reply){
+      console.log("get data from Redis");
+      res.json(JSON.parse(reply));
+    } else{
+      console.log("get data from database");
+      Flight.find({})
+        .populate('departureAirport arrivalAirport airline')
+        .exec(function(err, flights){
+          // console.log(flights);
+          if (err){
+            console.error(err);
+          } else{
+            for (var i = 0; i < flights.length; i++){
 
-          var flight = flights[i];
+              var flight = flights[i];
 
-          if(TimeTool.isSameDay(flight.departureTime, departureDate) && flight.departureAirport.city.toUpperCase() === departure.toUpperCase() && flight.arrivalAirport.city.toUpperCase() === arrival.toUpperCase()){
+              if(TimeTool.isSameDay(flight.departureTime, departureDate) && flight.departureAirport.city.toUpperCase() === departure.toUpperCase() && flight.arrivalAirport.city.toUpperCase() === arrival.toUpperCase()){
 
-            // console.log(flight);
-            result_json = {};
-            result_json._id = flight._id;
-            result_json.airlines = flight.airline.name;
-            result_json.flightNumber = flight.flightNumber;
-            result_json.departTime = flight.departureTime;
-            result_json.arrivalTime = flight.arrivalTime;
-            result_json.origin = getAirportLocation(flight.departureAirport);
-            result_json.destination = getAirportLocation(flight.arrivalAirport);
-            result_json.flightDuration = TimeTool.getDuration(flight.departureTime, flight.arrivalTime);
-            result_json.class = flight.class;
-            result_json.price = flight.price;
+                // console.log(flight);
+                result_json = {};
+                result_json._id = flight._id;
+                result_json.airlines = flight.airline.name;
+                result_json.flightNumber = flight.flightNumber;
+                result_json.departTime = flight.departureTime;
+                result_json.arrivalTime = flight.arrivalTime;
+                result_json.origin = getAirportLocation(flight.departureAirport);
+                result_json.destination = getAirportLocation(flight.arrivalAirport);
+                result_json.flightDuration = TimeTool.getDuration(flight.departureTime, flight.arrivalTime);
+                result_json.class = flight.class;
+                result_json.price = flight.price;
 
-            results.push(result_json);
+                results.push(result_json);
+              }
+            }
+            cache.set(redis_key, JSON.stringify(results));
+            res.json(results);
           }
-        }
-        res.json(results);
-      }
-    });
+        });
+    }
+  });
+
+
 };
 
 function getAirportLocation(airport){
@@ -188,16 +203,29 @@ exports.create = (req, res) => {
 };
 
 exports.getAll = (req, res) => {
-  Flight
-    .find({})
-    .populate('departureAirport')
-    .populate('arrivalAirport')
-    .populate('airline')
-    .exec((err, results) => {
-      // console.log('getAll results=', results);
+  cache.get(redis_keyConstants.ALL_FLIGHTS, function (reply) {
+    console.log("all flight from redisClient");
+    if(reply){
+      console.log("get data from Redis");
+      res.json(JSON.parse(reply));
+    } else{
+      console.log("get data from database");
+      Flight
+        .find({})
+        .populate('departureAirport')
+        .populate('arrivalAirport')
+        .populate('airline')
+        .exec((err, results) => {
+        // console.log('getAll results=', results);
+        cache.set(redis_keyConstants.ALL_FLIGHTS, JSON.stringify(results));
       if (err) res.json(err);
       res.json(results);
     });
+    }
+  });
+
+
+
 };
 
 exports.getAllAirlines = (req, res) => {

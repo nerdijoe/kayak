@@ -6,7 +6,8 @@
   "scripts": {
     "setup-sequelize": "node_modules/sequelize-cli/lib/sequelize db:migrate",
     "setup-mongodb": "sh ./data/import-data.sh",
-    "prestart": "npm run setup-sequelize && npm run setup-mongodb",
+    "setup-redis": "sh ./data/setup-redis.sh",
+    "prestart": "npm run setup-sequelize && npm run setup-mongodb && npm run setup-redis",
     "start": "nodemon app.js",
     "dev": "nodemon app.js",
     "test": "NODE_ENV=test mocha"
@@ -30,6 +31,7 @@
     "passport-local": "^1.0.0",
     "password-hash": "^1.2.2",
     "path": "^0.12.7",
+    "redis": "^2.8.0",
     "sequelize": "^4.22.5",
     "sequelize-cli": "^3.0.0"
   },

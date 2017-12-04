@@ -8,6 +8,9 @@ const HotelReview = require('../models/mongooseHotelReview');
 const LogSearch = require('../models/mongooseLogSearch');
 
 const DBTool = require('../helpers/DBTool');
+const cache = require('../routes/redis/cache');
+const redis_keyConstants = require('../routes/redis/keyConstants');
+const redis_keyHelper = require('../routes/redis/keyHelper');
 
 exports.editRooms = (req, res) => {
   console.log('hotel add room');
@@ -35,7 +38,6 @@ exports.editRooms = (req, res) => {
 });
 };
 
-// 莉莉
 exports.addReviews = (req, res) => {
   console.log('hotel add review');
   const id = req.params.id;
@@ -162,15 +164,25 @@ exports.search = (req, res) => {
 
   var result = [];
 
-  Hotel.find({city: DBTool.getPartialRegex(city)})
-    .exec(function(err, hotels){
-      if (err){
-        console.error(err);
-      } else{
-        // console.log(hotels);
-        res.json(hotels);
-      }
-    });
+  var redis_key = redis_keyHelper.generateKey(redis_keyConstants.SEARCH_HOTELS, req.query);
+  cache.get(redis_key, function (reply) {
+    if(reply){
+      console.log("get data from Redis");
+      res.json(JSON.parse(reply));
+    } else{
+      console.log("get data from database");
+      Hotel.find({city: DBTool.getPartialRegex(city)})
+        .exec(function(err, hotels){
+          if (err){
+            console.error(err);
+          } else{
+            // console.log(hotels);
+            cache.set(redis_key, JSON.stringify(results));
+            res.json(hotels);
+          }
+        });
+    }
+  });
 };
 
 exports.create = (req, res) => {

@@ -6,6 +6,10 @@ const CarDealer = require('../models/mongooseCarDealer');
 const CarBilling = require('../models/mongooseCarBilling');
 const LogSearch = require('../models/mongooseLogSearch');
 
+const cache = require('../routes/redis/cache');
+const redis_keyConstants = require('../routes/redis/keyConstants');
+const redis_keyHelper = require('../routes/redis/keyHelper');
+
 exports.create = (req, res) => {
   console.log('createNewCar');
   const data = req.body;
@@ -136,10 +140,17 @@ exports.search = (req, res) => {
   const searchString = req.body.searchString;
   console.log('    searchString=', searchString);
 
-  CarDealer
-    .find({ $text: { $search: searchString } })
-    .exec((err, results) => {
-      console.log('CarDealer.find results=', results);
+  var redis_key = redis_keyHelper.generateKey(redis_keyConstants.SEARCH_CARS, searchString);
+  cache.get(redis_key, function (reply) {
+    if(reply){
+      console.log("get data from Redis");
+      res.json(JSON.parse(reply));
+    } else{
+      console.log("get data from database");
+      CarDealer
+        .find({ $text: { $search: searchString } })
+        .exec((err, results) => {
+        console.log('CarDealer.find results=', results);
 
       Car
         .find({ dealer: { $in: results } })
@@ -147,9 +158,14 @@ exports.search = (req, res) => {
         .exec((err, cars) => {
           console.log('Car.find cars=', cars);
           if (err) res.json(err);
+          cache.set(redis_key, JSON.stringify(cars));
           res.json(cars);
         });
-    });
+    })
+    }
+  });
+
+
 };
 
 // function insertLogSearch() {
