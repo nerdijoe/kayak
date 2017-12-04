@@ -178,7 +178,7 @@ exports.search = (req, res) => {
             console.error(err);
           } else{
             // console.log(hotels);
-            cache.set(redis_key, JSON.stringify(results));
+            cache.set(redis_key, JSON.stringify(hotels));
             res.json(hotels);
           }
         });
