@@ -4,6 +4,7 @@ const HotelRoom = require('../models/mongooseHotelRoom');
 const HotelReview = require('../models/mongooseHotelReview');
 // const HotelReview = require('../models/mongooseHotelReview');
 // const HotelRoom = require('../models/mongooseHotelRoom');
+const jwt = require('jsonwebtoken');
 
 const LogSearch = require('../models/mongooseLogSearch');
 

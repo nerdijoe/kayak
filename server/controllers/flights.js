@@ -8,6 +8,7 @@ const DBTool = require('../helpers/DBTool');
 const cache = require('../routes/redis/cache');
 const redis_keyConstants = require('../routes/redis/keyConstants');
 const redis_keyHelper = require('../routes/redis/keyHelper');
+const jwt = require('jsonwebtoken');
 
 const LogSearch = require('../models/mongooseLogSearch');
 
