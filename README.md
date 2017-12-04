@@ -86,3 +86,26 @@ $ npm start
 copy the .env key values from Trello on Reference List
 
 ```
+
+
+### Database information
+
+# MySQL
+All of the 10,000 user listing 
+
+# MongoDB
+All of the listing of flights, hotels, cars, billing, logging, are in the cloud
+
+Here is the cluster address of the Mongo Atlas Database
+```
+mongodb://${username}:${password}@cluster0-shard-00-00-i5u9w.mongodb.net:27017,cluster0-shard-00-01-i5u9w.mongodb.net:27017,cluster0-shard-00-02-i5u9w.mongodb.net:27017/kayak_dev?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin
+```
+
+
+
+
+
+
+
+
+
