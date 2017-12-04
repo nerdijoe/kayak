@@ -11,8 +11,7 @@ class FlightBookingList extends Component{
             flightBookings: ''
         }
     }
-
-    render() {
+    componentDidMount(){
         let userToken = localStorage.getItem('user_token');
         API.getFlightBookings(userToken)
             .then((flightRes) => {
@@ -29,7 +28,9 @@ class FlightBookingList extends Component{
                 ...this.state
             });
         })
+    }
 
+    render() {
         if(this.state.flightBookings === ''){
             return (
                 <div>

@@ -24,49 +24,6 @@ class MyBookings extends Component{
             this.props.history.push('/');
         }
     }
-            // API.getCarBookings(userToken)
-            //     .then((res) => {
-            //         console.log("billing car response came111",res);
-            //         if(res.data !== null){
-            //             this.setState({
-            //                 message: res.data.message,
-            //                 carBookings: res.data
-            //             });
-            //         }
-            //         API.getHotelBookings(userToken)
-            //             .then((hotelRes) => {
-            //                 console.log("billing hotel response came111",hotelRes);
-            //                 if(hotelRes.data !== null){
-            //                     this.setState({
-            //                         message: hotelRes.data.message,
-            //                         hotelBookings: hotelRes.data
-            //                     });
-            //                 }
-            //                 API.getFlightBookings(userToken)
-            //                     .then((flightRes) => {
-            //                         console.log("billing flight response came111",flightRes);
-            //                         if(flightRes.data !== null){
-            //                             this.setState({
-            //                                 message: flightRes.data.message,
-            //                                 flightBookings: flightRes.data
-            //                             });
-            //                         }
-            //
-            //                     }).catch( (error) => {
-            //                     this.setState({
-            //                         ...this.state
-            //                     });
-            //                 })
-            //             }).catch( (error) => {
-            //             this.setState({
-            //                 ...this.state
-            //             });
-            //         })
-            //     }).catch( (error) => {
-            //     this.setState({
-            //         ...this.state
-            //     });
-            // })
 
     render() {
             return(
@@ -87,7 +44,7 @@ class MyBookings extends Component{
                                                         </div>
                                                     </div>
                                                 </h2>
-                                                {/*<CarBookingList/>*/}
+                                                <CarBookingList/>
                                             </div>
                                         </li>
                                         <li className="home-access-section">
@@ -95,7 +52,7 @@ class MyBookings extends Component{
                                                 <h2 className="home-access-section__header">
                                                     <div className="home-access-section__title">
                                                         <div className="home-access-section__title-text">
-                                                            <div>Hotel Bookings</div>
+                                                            <div>Your Hotel Bookings</div>
                                                         </div>
                                                     </div>
                                                 </h2>
@@ -107,7 +64,7 @@ class MyBookings extends Component{
                                                 <h2 className="home-access-section__header">
                                                     <div className="home-access-section__title">
                                                         <div className="home-access-section__title-text">
-                                                            <div>Flight Bookings</div>
+                                                            <div>Your Flight Bookings</div>
                                                         </div>
                                                     </div>
                                                 </h2>

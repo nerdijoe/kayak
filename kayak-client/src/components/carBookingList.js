@@ -13,8 +13,7 @@ class CarBookingList extends Component{
         }
     }
 
-    render() {
-
+    componentDidMount(){
         let userToken = localStorage.getItem('user_token');
         API.getCarBookings(userToken)
             .then((res) => {
@@ -30,7 +29,9 @@ class CarBookingList extends Component{
                 ...this.state
             });
         });
+    }
 
+    render() {
         if(this.state.carBookings === ''){
             return(
                 <div>
