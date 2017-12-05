@@ -4,8 +4,8 @@ const hotelBillingController = require('../controllers/hotelBillings');
 // User
 router.get('/user', helper.auth, hotelBillingController.getUserBillings);
 router.post('/book', helper.auth, hotelBillingController.book);
-router.put('/:billingId/delete', helper.authAdmin, hotelBillingController.delete);
-router.put('/:billingId/cancel', helper.authAdmin, hotelBillingController.cancel);
+router.put('/:billingId/delete', helper.auth, hotelBillingController.delete);
+router.put('/:billingId/cancel', helper.auth, hotelBillingController.cancel);
 
 // Admin
 router.get('/', helper.authAdmin, hotelBillingController.getAll);
