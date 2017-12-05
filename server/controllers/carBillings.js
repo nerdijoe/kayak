@@ -5,6 +5,41 @@ const Car = require('../models/mongooseCar');
 const CarDealer = require('../models/mongooseCarDealer');
 const CarBilling = require('../models/mongooseCarBilling');
 
+exports.cancel = (req, res) => {
+    const billingId = req.params.billingId;
+    // const userId = req.decoded.id;
+
+    CarBilling.findByIdAndUpdate(
+        billingId,
+        {
+            $set: {
+                isCanceled: true,
+            },
+        },
+        (err, result) => {
+        if (err) res.json(false);
+    res.json(true);
+}
+);
+};
+
+exports.delete = (req, res) => {
+    const billingId = req.params.billingId;
+    // const userId = req.decoded.id;
+
+    CarBilling.findByIdAndUpdate(
+        billingId,
+        {
+            $set: {
+                isDeleted: true,
+            },
+        },
+        (err, result) => {
+        if (err) res.json(false);
+    res.json(true);
+}
+);
+};
 
 exports.book = (req, res) => {
   console.log('carBillings book req.decoded.id=', req.decoded.id);

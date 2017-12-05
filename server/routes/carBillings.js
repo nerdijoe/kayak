@@ -8,6 +8,8 @@ const carBillingController = require('../controllers/carBillings');
 // User
 router.get('/user', helper.auth, carBillingController.getUserBillings);
 router.post('/book', helper.auth, carBillingController.book);
+router.put('/:billingId/delete', helper.authAdmin, carBillingController.delete);
+router.put('/:billingId/cancel', helper.authAdmin, carBillingController.cancel);
 
 // Admin
 router.get('/', helper.authAdmin, carBillingController.getAll);

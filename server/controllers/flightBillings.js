@@ -7,6 +7,42 @@ const Airline = require('../models/mongooseFlightAirline');
 const Airport = require('../models/mongooseFlightAirport');
 
 // User
+exports.cancel = (req, res) => {
+    const billingId = req.params.billingId;
+    // const userId = req.decoded.id;
+
+    FlightBilling.findByIdAndUpdate(
+        billingId,
+        {
+            $set: {
+                isCanceled: true,
+            },
+        },
+        (err, result) => {
+        if (err) res.json(false);
+    res.json(true);
+}
+);
+};
+
+exports.delete = (req, res) => {
+    const billingId = req.params.billingId;
+    // const userId = req.decoded.id;
+
+    FlightBilling.findByIdAndUpdate(
+        billingId,
+        {
+            $set: {
+                isDeleted: true,
+            },
+        },
+        (err, result) => {
+        if (err) res.json(false);
+    res.json(true);
+}
+);
+};
+
 // router.get('/user', helper.auth, hotelBillingController.getUserBillings);
 exports.getUserBillings = (req, res) => {
   console.log('getUserBillings req.decoded.id=', req.decoded.id);
